@@ -1,4 +1,4 @@
-package com.flyjingfish.formattextview
+package com.flyjingfish.FormatTexttextview
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
@@ -9,23 +9,46 @@ class FormatText {
     var color = 0
     var bold = false
     var underline = false
+    var italic = false
     var strValue: String? = null
 
     @StringRes
-    var intValue = 0
+    var resValue = 0
+    var textSize = 0;
 
-    constructor(color: Int, bold: Boolean, underline: Boolean, strValue: String?) {
+    fun setColor(@ColorRes color: Int): FormatText {
         this.color = color
-        this.bold = bold
-        this.underline = underline
-        this.strValue = strValue
+        return this
     }
 
-    constructor(color: Int, bold: Boolean, underline: Boolean, intValue: Int) {
-        this.color = color
+    fun setBold(bold: Boolean): FormatText {
         this.bold = bold
+        return this
+    }
+
+    fun setUnderline(underline: Boolean): FormatText {
         this.underline = underline
-        this.intValue = intValue
+        return this
+    }
+
+    fun setItalic(italic: Boolean): FormatText {
+        this.italic = italic
+        return this
+    }
+
+    fun setStrValue(strValue: String?): FormatText {
+        this.strValue = strValue
+        return this
+    }
+
+    fun setResValue(@StringRes resValue: Int): FormatText {
+        this.resValue = resValue
+        return this
+    }
+
+    fun setTextSize(textSize: Int): FormatText {
+        this.textSize = textSize
+        return this
     }
 
 }

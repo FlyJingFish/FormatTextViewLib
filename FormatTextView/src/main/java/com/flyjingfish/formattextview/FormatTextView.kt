@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
+import android.text.style.AbsoluteSizeSpan
 import android.text.style.ClickableSpan
 import android.text.style.URLSpan
 import android.text.util.Linkify
@@ -12,6 +13,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
+import com.flyjingfish.FormatTexttextview.FormatText
 
 class FormatTextView :AppCompatTextView {
 
@@ -35,20 +37,24 @@ class FormatTextView :AppCompatTextView {
         val strings = arrayOfNulls<String>(args.size)
         val colors = IntArray(args.size)
         val bolds = BooleanArray(args.size)
+        val italics = BooleanArray(args.size)
         val underlines = BooleanArray(args.size)
-        for (i in 0 until args.size) {
+        val textSizes = IntArray(args.size)
+        for (i in args.indices) {
             if (args[i] != null){
-                if (args[i]!!.intValue != 0) {
-                    strings[i] = resources.getString(args[i]!!.intValue)
+                if (args[i]!!.resValue != 0) {
+                    strings[i] = resources.getString(args[i]!!.resValue)
                 } else {
                     strings[i] = args[i]!!.strValue
                 }
                 colors[i] = args[i]!!.color
                 bolds[i] = args[i]!!.bold
+                italics[i] = args[i]!!.italic
                 underlines[i] = args[i]!!.underline
+                textSizes[i] = args[i]!!.textSize
             }
         }
-        setFormatText(colors, bolds, underlines, formatTextValue, strings)
+        setFormatText(colors, bolds,italics, underlines,textSizes, formatTextValue, strings)
     }
 
 
@@ -59,7 +65,7 @@ class FormatTextView :AppCompatTextView {
     fun setFormatText(formatTextValue: String, vararg args: Int) {
         val formatTexts: Array<FormatText?> = arrayOfNulls<FormatText>(args.size)
         for (i in 0 until args.size) {
-            formatTexts[i] = FormatText(0, false, false, args[i])
+            formatTexts[i] = FormatText().setResValue(args[i])
         }
         setFormatTextBean(formatTextValue, *formatTexts)
     }
@@ -71,7 +77,7 @@ class FormatTextView :AppCompatTextView {
     fun setFormatText(formatTextValue: String, vararg args: String) {
         val formatTexts: Array<FormatText?> = arrayOfNulls<FormatText>(args.size)
         for (i in 0 until args.size) {
-            formatTexts[i] = FormatText(0, false, false, args[i])
+            formatTexts[i] = FormatText().setStrValue(args[i])
         }
         setFormatTextBean(formatTextValue, *formatTexts)
     }
@@ -80,17 +86,9 @@ class FormatTextView :AppCompatTextView {
     private fun setFormatText(
         colors: IntArray,
         bolds: BooleanArray,
+        italics: BooleanArray,
         underlines: BooleanArray,
-        @StringRes formatTextRes: Int,
-        args: Array<String?>
-    ) {
-        setFormatText(colors, bolds, underlines, resources.getString(formatTextRes), args)
-    }
-
-    private fun setFormatText(
-        colors: IntArray,
-        bolds: BooleanArray,
-        underlines: BooleanArray,
+        textSizes: IntArray,
         formatTextValue: String,
         args: Array<String?>
     ) {
@@ -98,17 +96,18 @@ class FormatTextView :AppCompatTextView {
         for (i in args.indices) { //%1$s
             var start = "<a href=\"$i\">"
             var end = "</a>"
-            val value = "%" + (i + 1) + "\$s"
-            if (bolds[i]) {
-                strings[i] = "<b>$value</b>"
-            } else {
-                strings[i] = value
+            var value = strings[i]
+            if (italics[i]) {
+                value = "<em>$value</em>"
             }
-            strings[i] = start + strings[i] + end
+            if (bolds[i]) {
+                value = "<b>$value</b>"
+            }
+
+            strings[i] = start + value + end
         }
         val formatText = String.format(formatTextValue, *strings as Array<Any?>)
-        val showText = String.format(formatText, *args as Array<Any?>)
-        text = getClickableHtml(showText, colors, underlines)
+        text = getClickableHtml(formatText, colors, underlines,textSizes)
         highlightColor = resources.getColor(R.color.transparent)
         autoLinkMask = Linkify.WEB_URLS
     }
@@ -116,7 +115,8 @@ class FormatTextView :AppCompatTextView {
     private fun getClickableHtml(
         html: String,
         colors: IntArray,
-        underlines: BooleanArray
+        underlines: BooleanArray,
+        textSizes: IntArray
     ): CharSequence? {
         val spannedHtml = Html.fromHtml(html)
         val clickableHtmlBuilder = SpannableStringBuilder(spannedHtml)
@@ -126,7 +126,7 @@ class FormatTextView :AppCompatTextView {
         )
         for (i in spans.indices) {
             val span = spans[i]
-            setLinkClickable(clickableHtmlBuilder, span, colors[i], underlines[i])
+            setLinkClickable(clickableHtmlBuilder, span, colors[i], underlines[i] ,textSizes[i])
         }
         return clickableHtmlBuilder
     }
@@ -135,7 +135,8 @@ class FormatTextView :AppCompatTextView {
         clickableHtmlBuilder: SpannableStringBuilder,
         urlSpan: URLSpan,
         color: Int,
-        underline: Boolean
+        underline: Boolean,
+        textSize: Int
     ) {
         val start = clickableHtmlBuilder.getSpanStart(urlSpan)
         val end = clickableHtmlBuilder.getSpanEnd(urlSpan)
@@ -160,6 +161,9 @@ class FormatTextView :AppCompatTextView {
             }
         }
         clickableHtmlBuilder.setSpan(clickableSpan, start, end, flags)
+        if (textSize > 0){
+            clickableHtmlBuilder.setSpan(AbsoluteSizeSpan(textSize,true), start, end, flags)
+        }
     }
 
     override fun setOnClickListener(l: OnClickListener?) {

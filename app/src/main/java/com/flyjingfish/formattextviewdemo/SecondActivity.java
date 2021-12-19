@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.flyjingfish.formattextview.FormatTextView;
 
-import java.util.Arrays;
 
 public class SecondActivity extends AppCompatActivity {
     @Override
