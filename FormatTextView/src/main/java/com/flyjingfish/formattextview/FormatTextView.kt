@@ -5,7 +5,6 @@ import android.content.Context
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
-import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.URLSpan
 import android.text.util.Linkify
@@ -17,7 +16,8 @@ import androidx.appcompat.widget.AppCompatTextView
 class FormatTextView :AppCompatTextView {
 
     private var onFormatClickListener: OnFormatClickListener? = null
-    var isClickSpanItem = false
+    private var isClickSpanItem = false
+    var isSetOnClick = false
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -143,7 +143,7 @@ class FormatTextView :AppCompatTextView {
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 val url = urlSpan.url
-                onFormatClickListener?.onItemClick(url.toInt())
+                onFormatClickListener?.onLabelClick(url.toInt())
                 isClickSpanItem = true
             }
 
@@ -162,20 +162,20 @@ class FormatTextView :AppCompatTextView {
         clickableHtmlBuilder.setSpan(clickableSpan, start, end, flags)
     }
 
-
     override fun setOnClickListener(l: OnClickListener?) {
 //        为了处理ClickableSpan和View.OnClickListener点击事件冲突
-    }
-
-    fun setOnFormatClickListener(onFormatClickListener: OnFormatClickListener){
-        movementMethod = LinkMovementMethod.getInstance()
-        this.onFormatClickListener = onFormatClickListener
         super.setOnClickListener {
             if (!isClickSpanItem){
-                this@FormatTextView.onFormatClickListener?.onNoItemClick(this@FormatTextView)
+                l?.onClick(this@FormatTextView)
             }
             isClickSpanItem = false
         }
+        isSetOnClick = l!=null
+    }
+
+    fun setOnFormatClickListener(onFormatClickListener: OnFormatClickListener){
+        movementMethod = ClickableMovementMethod.instance
+        this.onFormatClickListener = onFormatClickListener
     }
 
 }

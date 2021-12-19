@@ -22,16 +22,12 @@ class MainActivity : AppCompatActivity() {
         text7.setFormatTextBean("%1\$s欢迎%2\$s", FormatText(R.color.colorAccent,true,false,R.string.we),FormatText(R.color.colorPrimaryDark,true,true,R.string.you))
         text8.setFormatTextBean("%1\$s欢迎%2\$s", FormatText(R.color.colorAccent,true,false,"we"),FormatText(R.color.colorPrimaryDark,true,true,"you"))
         text8.setOnFormatClickListener(object : OnFormatClickListener{
-            override fun onItemClick(position: Int) {
+            override fun onLabelClick(position: Int) {
                 Toast.makeText(this@MainActivity,"onItemClick-item"+position,Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNoItemClick(view: View) {
-                Toast.makeText(this@MainActivity,"onNoItemClick-out",Toast.LENGTH_SHORT).show()
             }
         })
         text8.setOnClickListener {
-            Toast.makeText(this@MainActivity,"onClick-out",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity,"onClick-view",Toast.LENGTH_SHORT).show()
         }
 
         root.setOnClickListener{
