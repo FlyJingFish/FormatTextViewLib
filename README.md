@@ -17,5 +17,5 @@
 第二步. 需要引用的build.gradle
 
     dependencies {
-        implementation 'com.github.FlyJingFish:FormatTextViewLib:v1.2'
+        implementation 'com.github.FlyJingFish:FormatTextViewLib:v1.3'
     }
