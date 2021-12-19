@@ -96,7 +96,7 @@ class FormatTextView :AppCompatTextView {
         for (i in args.indices) { //%1$s
             var start = "<a href=\"$i\">"
             var end = "</a>"
-            var value = strings[i]
+            var value = args[i]
             if (italics[i]) {
                 value = "<em>$value</em>"
             }
