@@ -1,5 +1,6 @@
 # FormatTextViewLib
 [![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)
+
 ###多数app登陆首页都需要显示用户协议和隐私政策并且需要能够点击，遇到需要翻译多个国家语言的，多个TextView拼接会导致语序不对，而且换行也是个问题
 
 ##本库支持字体设置字体颜色，加粗，斜体，下划线，字体大小
