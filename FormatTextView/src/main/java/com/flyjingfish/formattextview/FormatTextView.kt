@@ -1,12 +1,14 @@
 package com.flyjingfish.formattextview
 
-import android.R
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Typeface
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.util.AttributeSet
@@ -34,27 +36,25 @@ class FormatTextView :AppCompatTextView {
     }
 
     fun setFormatTextBean(formatTextValue: String, vararg args: FormatText?) {
+        var textValue = formatTextValue.replace("\\r\\n".toRegex(), "<br>")
+        textValue = textValue.replace("\\n".toRegex(), "<br>")
+        textValue = textValue.replace("\\r".toRegex(), "<br>")
         val strings = arrayOfNulls<String>(args.size)
-        val colors = IntArray(args.size)
-        val bolds = BooleanArray(args.size)
-        val italics = BooleanArray(args.size)
-        val underlines = BooleanArray(args.size)
-        val textSizes = IntArray(args.size)
-        for (i in args.indices) {
-            if (args[i] != null){
-                if (args[i]!!.resValue != 0) {
-                    strings[i] = resources.getString(args[i]!!.resValue)
-                } else {
-                    strings[i] = args[i]!!.strValue
-                }
-                colors[i] = args[i]!!.color
-                bolds[i] = args[i]!!.bold
-                italics[i] = args[i]!!.italic
-                underlines[i] = args[i]!!.underline
-                textSizes[i] = args[i]!!.textSize
+        for (i in args.indices) { //%1$s
+            val start = "<a href=\"$i\">"
+            val end = "</a>"
+            var value: String? = if (args[i]!!.resValue != 0) {
+                resources.getString(args[i]!!.resValue)
+            } else {
+                args[i]!!.strValue
             }
+            strings[i] = start + value + end
         }
-        setFormatText(colors, bolds,italics, underlines,textSizes, formatTextValue, strings)
+        val richText = String.format(textValue, *strings as Array<Any?>)
+
+        text = getClickableHtml(richText, *args)
+        highlightColor = Color.TRANSPARENT
+        autoLinkMask = Linkify.WEB_URLS
     }
 
 
@@ -83,41 +83,7 @@ class FormatTextView :AppCompatTextView {
     }
 
 
-    private fun setFormatText(
-        colors: IntArray,
-        bolds: BooleanArray,
-        italics: BooleanArray,
-        underlines: BooleanArray,
-        textSizes: IntArray,
-        formatTextValue: String,
-        args: Array<String?>
-    ) {
-        val strings = arrayOfNulls<String>(args.size)
-        for (i in args.indices) { //%1$s
-            var start = "<a href=\"$i\">"
-            var end = "</a>"
-            var value = args[i]
-            if (italics[i]) {
-                value = "<em>$value</em>"
-            }
-            if (bolds[i]) {
-                value = "<b>$value</b>"
-            }
-
-            strings[i] = start + value + end
-        }
-        val formatText = String.format(formatTextValue, *strings as Array<Any?>)
-        text = getClickableHtml(formatText, colors, underlines,textSizes)
-        highlightColor = resources.getColor(R.color.transparent)
-        autoLinkMask = Linkify.WEB_URLS
-    }
-
-    private fun getClickableHtml(
-        html: String,
-        colors: IntArray,
-        underlines: BooleanArray,
-        textSizes: IntArray
-    ): CharSequence? {
+    private fun getClickableHtml(html: String,vararg args: FormatText?): CharSequence? {
         val spannedHtml = Html.fromHtml(html)
         val clickableHtmlBuilder = SpannableStringBuilder(spannedHtml)
         val spans = clickableHtmlBuilder.getSpans(
@@ -126,7 +92,9 @@ class FormatTextView :AppCompatTextView {
         )
         for (i in spans.indices) {
             val span = spans[i]
-            setLinkClickable(clickableHtmlBuilder, span, colors[i], underlines[i] ,textSizes[i])
+            val pos = span.url.toInt()
+
+            args[pos]?.let { setLinkClickable(clickableHtmlBuilder, span, it) }
         }
         return clickableHtmlBuilder
     }
@@ -134,10 +102,13 @@ class FormatTextView :AppCompatTextView {
     private fun setLinkClickable(
         clickableHtmlBuilder: SpannableStringBuilder,
         urlSpan: URLSpan,
-        color: Int,
-        underline: Boolean,
-        textSize: Int
+        formatText: FormatText
     ) {
+        val color: Int = formatText.color
+        val underline: Boolean = formatText.underline
+        val textSize: Int = formatText.textSize
+        val bold: Boolean = formatText.bold
+        val italic: Boolean = formatText.italic
         val start = clickableHtmlBuilder.getSpanStart(urlSpan)
         val end = clickableHtmlBuilder.getSpanEnd(urlSpan)
         val flags = clickableHtmlBuilder.getSpanFlags(urlSpan)
@@ -163,6 +134,12 @@ class FormatTextView :AppCompatTextView {
         clickableHtmlBuilder.setSpan(clickableSpan, start, end, flags)
         if (textSize > 0){
             clickableHtmlBuilder.setSpan(AbsoluteSizeSpan(textSize,true), start, end, flags)
+        }
+        if (bold) {
+            clickableHtmlBuilder.setSpan(StyleSpan(Typeface.BOLD), start, end, flags)
+        }
+        if (italic) {
+            clickableHtmlBuilder.setSpan(StyleSpan(Typeface.ITALIC), start, end, flags)
         }
     }
 
