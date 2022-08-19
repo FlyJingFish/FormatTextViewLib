@@ -21,11 +21,11 @@
         }
     }
 ```
-第二步，需要引用的build.gradle
+第二步，需要引用的build.gradle （最新版本[![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)）
 
 ```gradle
     dependencies {
-        implementation 'com.github.FlyJingFish:FormatTextViewLib:v1.4'
+        implementation 'com.github.FlyJingFish:FormatTextViewLib:latest.release.here'
     }
 ```
 第三步，使用示例
