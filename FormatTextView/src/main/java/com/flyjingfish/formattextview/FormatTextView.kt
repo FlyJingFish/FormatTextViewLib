@@ -65,7 +65,7 @@ class FormatTextView :AppCompatTextView {
     fun setFormatText(formatTextValue: String, vararg args: Int) {
         val formatTexts: Array<FormatText?> = arrayOfNulls<FormatText>(args.size)
         for (i in 0 until args.size) {
-            formatTexts[i] = FormatText().setResValue(args[i])
+            formatTexts[i] = FormatText().setTextResValue(args[i])
         }
         setFormatTextBean(formatTextValue, *formatTexts)
     }
@@ -77,7 +77,7 @@ class FormatTextView :AppCompatTextView {
     fun setFormatText(formatTextValue: String, vararg args: String) {
         val formatTexts: Array<FormatText?> = arrayOfNulls<FormatText>(args.size)
         for (i in 0 until args.size) {
-            formatTexts[i] = FormatText().setStrValue(args[i])
+            formatTexts[i] = FormatText().setTextStrValue(args[i])
         }
         setFormatTextBean(formatTextValue, *formatTexts)
     }
