@@ -52,7 +52,7 @@ class FormatTextView :AppCompatTextView {
         }
         val richText = String.format(textValue, *strings as Array<Any?>)
 
-        text = getClickableHtml(richText, *args)
+        text = getCustomStyleHtml(richText, *args)
         highlightColor = Color.TRANSPARENT
         autoLinkMask = Linkify.WEB_URLS
     }
@@ -83,10 +83,10 @@ class FormatTextView :AppCompatTextView {
     }
 
 
-    private fun getClickableHtml(html: String,vararg args: FormatText?): CharSequence? {
+    private fun getCustomStyleHtml(html: String, vararg args: FormatText?): CharSequence? {
         val spannedHtml = Html.fromHtml(html)
-        val clickableHtmlBuilder = SpannableStringBuilder(spannedHtml)
-        val spans = clickableHtmlBuilder.getSpans(
+        val htmlBuilder = SpannableStringBuilder(spannedHtml)
+        val spans = htmlBuilder.getSpans(
             0, spannedHtml.length,
             URLSpan::class.java
         )
@@ -94,13 +94,13 @@ class FormatTextView :AppCompatTextView {
             val span = spans[i]
             val pos = span.url.toInt()
 
-            args[pos]?.let { setLinkClickable(clickableHtmlBuilder, span, it) }
+            args[pos]?.let { setLinkStyle(htmlBuilder, span, it) }
         }
-        return clickableHtmlBuilder
+        return htmlBuilder
     }
 
-    private fun setLinkClickable(
-        clickableHtmlBuilder: SpannableStringBuilder,
+    private fun setLinkStyle(
+        htmlBuilder: SpannableStringBuilder,
         urlSpan: URLSpan,
         formatText: FormatText
     ) {
@@ -109,9 +109,9 @@ class FormatTextView :AppCompatTextView {
         val textSize: Int = formatText.textSize
         val bold: Boolean = formatText.bold
         val italic: Boolean = formatText.italic
-        val start = clickableHtmlBuilder.getSpanStart(urlSpan)
-        val end = clickableHtmlBuilder.getSpanEnd(urlSpan)
-        val flags = clickableHtmlBuilder.getSpanFlags(urlSpan)
+        val start = htmlBuilder.getSpanStart(urlSpan)
+        val end = htmlBuilder.getSpanEnd(urlSpan)
+        val flags = htmlBuilder.getSpanFlags(urlSpan)
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 val url = urlSpan.url
@@ -131,15 +131,15 @@ class FormatTextView :AppCompatTextView {
                 ds.isUnderlineText = underline
             }
         }
-        clickableHtmlBuilder.setSpan(clickableSpan, start, end, flags)
+        htmlBuilder.setSpan(clickableSpan, start, end, flags)
         if (textSize > 0){
-            clickableHtmlBuilder.setSpan(AbsoluteSizeSpan(textSize,true), start, end, flags)
+            htmlBuilder.setSpan(AbsoluteSizeSpan(textSize,true), start, end, flags)
         }
         if (bold) {
-            clickableHtmlBuilder.setSpan(StyleSpan(Typeface.BOLD), start, end, flags)
+            htmlBuilder.setSpan(StyleSpan(Typeface.BOLD), start, end, flags)
         }
         if (italic) {
-            clickableHtmlBuilder.setSpan(StyleSpan(Typeface.ITALIC), start, end, flags)
+            htmlBuilder.setSpan(StyleSpan(Typeface.ITALIC), start, end, flags)
         }
     }
 
