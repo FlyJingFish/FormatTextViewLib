@@ -17,10 +17,10 @@ class MainActivity : AppCompatActivity() {
         text4.setFormatText("%1\$s欢迎%2\$s", "wo","you")
         text5.setFormatTextBean(R.string.test_text,
             FormatText().setTextColor(R.color.colorAccent).setTextBold(true).setTextUnderline(true).setTextItalic(true).setTextResValue(R.string.we).setTextSizes(30),
-            FormatText().setTextColor(R.color.colorPrimaryDark).setTextBold(true).setTextUnderline(false).setTextItalic(false).setTextStrValue("you"))
-        text6.setFormatTextBean("%1\$s欢迎%2\$s",
+            FormatText().setTextColor(R.color.colorPrimaryDark).setTextBold(true).setTextUnderline(true).setTextItalic(false).setTextStrValue("you"))
+        text6.setFormatTextBean("%1\$s欢迎欢迎欢迎欢迎欢迎欢迎%2\$s",
             FormatText().setTextColor(R.color.colorAccent).setTextBold(false).setTextUnderline(true).setTextItalic(true).setTextResValue(R.string.we),
-            FormatText().setTextColor(R.color.colorPrimaryDark).setTextBold(false).setTextUnderline(true).setTextItalic(false).setTextStrValue("you").setTextSizes(60))
+            FormatText().setTextColor(R.color.colorPrimaryDark).setTextBold(false).setTextUnderline(true).setTextItalic(false).setTextStrValue("y ou").setTextSizes(60))
         text6.setOnFormatClickListener(object : OnFormatClickListener{
             override fun onLabelClick(position: Int) {
                 Toast.makeText(this@MainActivity,"onItemClick-item"+position,Toast.LENGTH_SHORT).show()
