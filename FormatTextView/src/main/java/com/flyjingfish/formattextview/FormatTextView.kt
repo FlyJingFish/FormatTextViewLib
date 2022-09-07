@@ -2,27 +2,32 @@ package com.flyjingfish.formattextview
 
 import android.content.Context
 import android.graphics.*
-import android.os.Build
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.InsetDrawable
+import android.graphics.drawable.LevelListDrawable
 import android.text.Html
-import android.text.Layout
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
-import android.text.style.AbsoluteSizeSpan
-import android.text.style.ClickableSpan
-import android.text.style.StyleSpan
-import android.text.style.URLSpan
+import android.text.style.*
 import android.text.util.Linkify
 import android.util.AttributeSet
+import android.util.LayoutDirection
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
 import com.flyjingfish.FormatTexttextview.FormatText
-import java.util.ArrayList
+import java.lang.NullPointerException
+import androidx.core.text.TextUtilsCompat
+import java.util.*
+import kotlin.math.max
+
 
 class FormatTextView : AppCompatTextView {
 
     private var onFormatClickListener: OnFormatClickListener? = null
+    private var onInflateImageListener: OnInflateImageListener? = null
     private var isClickSpanItem = false
     var isSetOnClick = false
     private val underLineTexts: ArrayList<UnderLineText> = ArrayList()
@@ -35,11 +40,11 @@ class FormatTextView : AppCompatTextView {
         defStyleAttr
     )
 
-    fun setFormatTextBean(@StringRes formatTextRes: Int, vararg args: FormatText?) {
+    fun setFormatTextBean(@StringRes formatTextRes: Int, vararg args: BaseFormat?) {
         setFormatTextBean(resources.getString(formatTextRes), *args)
     }
 
-    fun setFormatTextBean(formatTextValue: String, vararg args: FormatText?) {
+    fun setFormatTextBean(formatTextValue: String, vararg args: BaseFormat?) {
         var textValue = formatTextValue.replace("\\r\\n".toRegex(), "<br>")
         textValue = textValue.replace("\\n".toRegex(), "<br>")
         textValue = textValue.replace("\\r".toRegex(), "<br>")
@@ -47,12 +52,39 @@ class FormatTextView : AppCompatTextView {
         for (i in args.indices) { //%1$s
             val start = "<a href=\"$i\">"
             val end = "</a>"
-            var value: String? = if (args[i]!!.resValue != 0) {
-                resources.getString(args[i]!!.resValue)
+
+            if (args[i] is FormatImage) {
+                val formatImage = args[i] as FormatImage
+                val isRtl =
+                    TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == LayoutDirection.RTL
+                formatImage.width = dp2px(formatImage.width)
+                formatImage.height = dp2px(formatImage.height)
+                formatImage.marginLeft = dp2px(
+                    max(
+                        if (isRtl) formatImage.marginEnd else formatImage.marginStart,
+                        formatImage.marginLeft
+                    )
+                )
+                formatImage.marginRight = dp2px(
+                    max(
+                        if (isRtl) formatImage.marginStart else formatImage.marginEnd,
+                        formatImage.marginRight
+                    )
+                )
+
+                strings[i] =
+                    start + "<img src=\"" + (if (formatImage.imageResValue !== 0) formatImage.imageResValue else formatImage.imageUrlValue) + "\"></img>" + end
             } else {
-                args[i]!!.strValue
+                val formatText = args[i] as FormatText
+                var value: String? = if (formatText.resValue != 0) {
+                    resources.getString(formatText.resValue)
+                } else {
+                    formatText.strValue
+                }
+                strings[i] = start + value + end
             }
-            strings[i] = start + value + end
+
+
         }
         val richText = String.format(textValue, *strings as Array<Any?>)
 
@@ -69,7 +101,7 @@ class FormatTextView : AppCompatTextView {
     fun setFormatText(formatTextValue: String, vararg args: Int) {
         val formatTexts: Array<FormatText?> = arrayOfNulls<FormatText>(args.size)
         for (i in 0 until args.size) {
-            formatTexts[i] = FormatText().setTextResValue(args[i])
+            formatTexts[i] = FormatText().setResValue(args[i])
         }
         setFormatTextBean(formatTextValue, *formatTexts)
     }
@@ -81,13 +113,13 @@ class FormatTextView : AppCompatTextView {
     fun setFormatText(formatTextValue: String, vararg args: String) {
         val formatTexts: Array<FormatText?> = arrayOfNulls<FormatText>(args.size)
         for (i in 0 until args.size) {
-            formatTexts[i] = FormatText().setTextStrValue(args[i])
+            formatTexts[i] = FormatText().setStrValue(args[i])
         }
         setFormatTextBean(formatTextValue, *formatTexts)
     }
 
 
-    private fun getCustomStyleHtml(html: String, vararg args: FormatText?): CharSequence? {
+    private fun getCustomStyleHtml(html: String, vararg args: BaseFormat?): CharSequence? {
         val spannedHtml = Html.fromHtml(html)
         val htmlBuilder = SpannableStringBuilder(spannedHtml)
         val spans = htmlBuilder.getSpans(
@@ -98,16 +130,159 @@ class FormatTextView : AppCompatTextView {
             val span = spans[i]
             val pos = span.url.toInt()
 
-            args[pos]?.let { setLinkStyle(htmlBuilder, span, it) }
+            if (args[pos] is FormatImage) {
+                setImageLinkStyle(htmlBuilder, span, args[pos] as FormatImage)
+            } else {
+                setTextLinkStyle(htmlBuilder, span, args[pos] as FormatText)
+            }
         }
         return htmlBuilder
     }
-    private fun setLinkStyle(
+
+    private fun setImageLinkStyle(
+        htmlBuilder: SpannableStringBuilder,
+        urlSpan: URLSpan,
+        formatText: FormatImage
+    ) {
+        val start = htmlBuilder.getSpanStart(urlSpan)
+        val end = htmlBuilder.getSpanEnd(urlSpan)
+        val flags = htmlBuilder.getSpanFlags(urlSpan)
+        val clickableSpan: ClickableSpan = object : FormatClickableSpan(urlSpan) {
+
+        }
+
+        htmlBuilder.setSpan(clickableSpan, start, end, flags)
+
+        val drawable = LevelListDrawable()
+        if (formatText.imageResValue != 0) {
+            val d = resources.getDrawable(formatText.imageResValue)
+            val wh = getImageSpanWidthHeight(if (formatText.width != 0f) formatText.width else d.intrinsicWidth.toFloat(),
+                if (formatText.height != 0f) formatText.height else d.intrinsicHeight.toFloat(),
+                d)
+            val insetDrawable =
+                InsetDrawable(
+                    d,
+                    formatText.marginLeft.toInt(),
+                    0,
+                    formatText.marginRight.toInt(),
+                    0
+                )
+            drawable.addLevel(1, 1, insetDrawable)
+            drawable.setBounds(
+                0, 0,
+                wh[0].toInt() + formatText.marginLeft.toInt() + formatText.marginRight.toInt(),
+                wh[1].toInt()
+            )
+            drawable.level = 1
+            val imageSpan = FormatImageSpan(drawable, formatText.verticalAlignment)
+            htmlBuilder.setSpan(imageSpan, start, end, flags)
+        } else {
+            if (formatText.imagePlaceHolder != 0) {
+                val d = resources.getDrawable(formatText.imagePlaceHolder)
+                val wh = getImageSpanWidthHeight(if (formatText.width != 0f) formatText.width else d.intrinsicWidth.toFloat(),
+                    if (formatText.height != 0f) formatText.height else d.intrinsicHeight.toFloat(),
+                    d)
+                val insetDrawable =
+                    InsetDrawable(
+                        d,
+                        formatText.marginLeft.toInt(),
+                        0,
+                        formatText.marginRight.toInt(),
+                        0
+                    )
+                drawable.addLevel(1, 1, insetDrawable)
+                drawable.setBounds(
+                    0, 0,
+                    wh[0].toInt() + formatText.marginLeft.toInt() + formatText.marginRight.toInt(),
+                    wh[1].toInt()
+                )
+                drawable.level = 1
+            }
+            val imageSpan = FormatImageSpan(drawable, formatText.verticalAlignment)
+            htmlBuilder.setSpan(imageSpan, start, end, flags)
+            if (onInflateImageListener != null) {
+                onInflateImageListener!!.onInflate(
+                    formatText,
+                    object : OnReturnDrawableListener {
+                        override fun onReturnDrawable(d: Drawable) {
+                            val insetDrawable = InsetDrawable(
+                                d,
+                                formatText.marginLeft.toInt(),
+                                0,
+                                formatText.marginRight.toInt(),
+                                0
+                            )
+                            val wh = getImageSpanWidthHeight(if (formatText.width != 0f) formatText.width else d.intrinsicWidth.toFloat(),
+                                if (formatText.height != 0f) formatText.height else d.intrinsicHeight.toFloat(),
+                                d)
+                            drawable.addLevel(2, 2, insetDrawable)
+                            drawable.setBounds(
+                                0, 0,
+                                wh[0].toInt() + formatText.marginLeft.toInt() + formatText.marginRight.toInt(),
+                                wh[1].toInt()
+                            )
+                            drawable.level = 2
+                            invalidate()
+                            text = text
+                        }
+                    })
+            } else {
+                throw NullPointerException("If contain url for FormatImage,must call setOnInflateImageListener before setFormatText")
+            }
+        }
+    }
+
+    private fun getImageSpanWidthHeight(viewWidth: Float, viewHeight: Float, drawable: Drawable): FloatArray {
+        val drawableWidth = drawable.intrinsicWidth
+        val drawableHeight = drawable.intrinsicHeight
+        val imageHeightWidthRatio = drawableHeight * 1f / drawableWidth
+        val viewHeightWidthRatio: Float = viewHeight / viewWidth
+        val wh = FloatArray(2)
+        if (imageHeightWidthRatio > viewHeightWidthRatio){
+            wh[0] = viewHeight / imageHeightWidthRatio
+            wh[1] = viewHeight
+        }else{
+            wh[0] = viewWidth
+            wh[1] = viewWidth * imageHeightWidthRatio
+        }
+        return wh
+    }
+
+    class FormatImageSpan(drawable: Drawable, verticalAlignment: Int) :
+        ImageSpan(drawable, verticalAlignment) {
+
+        override fun draw(
+            canvas: Canvas,
+            text: CharSequence?,
+            start: Int,
+            end: Int,
+            x: Float,
+            top: Int,
+            y: Int,
+            bottom: Int,
+            paint: Paint
+        ) {
+            if (verticalAlignment == ALIGN_CENTER) {
+                val b = drawable
+                val fm = paint.fontMetricsInt
+                val transY = (y + fm.descent + y + fm.ascent) / 2 - b.bounds.bottom / 2
+                canvas.save()
+                canvas.translate(x, transY.toFloat())
+                b.draw(canvas)
+                canvas.restore()
+            } else {
+                super.draw(canvas, text, start, end, x, top, y, bottom, paint)
+            }
+        }
+
+    }
+
+    private fun setTextLinkStyle(
         htmlBuilder: SpannableStringBuilder,
         urlSpan: URLSpan,
         formatText: FormatText
     ) {
-        val color: Int = formatText.color
+        val color: Int = formatText.textColor
         val underline: Boolean = formatText.underline
         val textSize: Int = formatText.textSize
         val bold: Boolean = formatText.bold
@@ -115,22 +290,20 @@ class FormatTextView : AppCompatTextView {
         val start = htmlBuilder.getSpanStart(urlSpan)
         val end = htmlBuilder.getSpanEnd(urlSpan)
         val flags = htmlBuilder.getSpanFlags(urlSpan)
-        if (underline) {
-            // TODO: 2022/9/6 写一下距离字体baseline的下划线距离
+        var userDefaultUnder = true
+        if (underline && (formatText.underlineColor != 0 || formatText.underlineTopForBaseline != 0f || formatText.underlineWidth != 0f)) {
             val underLineText = UnderLineText(
-                start, end,
-                if (color != 0) resources.getColor(color) else currentTextColor
-            ,90,12f)
+                start,
+                end,
+                if (formatText.underlineColor != 0) resources.getColor(formatText.underlineColor) else currentTextColor,
+                dp2px(formatText.underlineTopForBaseline),
+                if (formatText.underlineWidth == 0f) 1f else dp2px(formatText.underlineWidth)
+            )
             underLineTexts.add(underLineText)
+            userDefaultUnder = false
         }
 
-        val clickableSpan: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                val url = urlSpan.url
-                onFormatClickListener?.onLabelClick(url.toInt())
-                isClickSpanItem = true
-            }
-
+        val clickableSpan: ClickableSpan = object : FormatClickableSpan(urlSpan) {
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
                 //设置颜色
@@ -140,7 +313,7 @@ class FormatTextView : AppCompatTextView {
                     ds.color = currentTextColor
                 }
                 //设置是否要下划线
-                ds.isUnderlineText = false
+                ds.isUnderlineText = userDefaultUnder
             }
         }
         htmlBuilder.setSpan(clickableSpan, start, end, flags)
@@ -152,6 +325,14 @@ class FormatTextView : AppCompatTextView {
         }
         if (italic) {
             htmlBuilder.setSpan(StyleSpan(Typeface.ITALIC), start, end, flags)
+        }
+    }
+
+    open inner class FormatClickableSpan(private val urlSpan: URLSpan) : ClickableSpan() {
+        override fun onClick(widget: View) {
+            val url = urlSpan.url
+            onFormatClickListener?.onLabelClick(url.toInt())
+            isClickSpanItem = true
         }
     }
 
@@ -174,10 +355,10 @@ class FormatTextView : AppCompatTextView {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        drawBgShape(canvas)
+        drawUnderline(canvas)
     }
 
-    private fun drawBgShape(canvas: Canvas?) {
+    private fun drawUnderline(canvas: Canvas?) {
         if (underLineTexts.size == 0) {
             return
         }
@@ -212,33 +393,61 @@ class FormatTextView : AppCompatTextView {
         layout.getLineBounds(line, bound)
         bound.bottom = layout.getLineBaseline(line)
         bound.left = layout.getPrimaryHorizontal(index).toInt()
-        bound.right = layout.getPrimaryHorizontal(index+1).toInt()
-        if (bound.right < bound.left){
+        bound.right = layout.getPrimaryHorizontal(index + 1).toInt()
+        if (bound.right < bound.left) {
             bound.right = layout.getLineRight(line).toInt()
         }
         return bound;
     }
 
-    private class UnderLineText(var start: Int, var end: Int, var underLineColor: Int,var underLineTop: Int,var underLineWidth: Float) {
+    private class UnderLineText(
+        var start: Int,
+        var end: Int,
+        var underLineColor: Int,
+        var underLineTop: Float,
+        var underLineWidth: Float
+    ) {
 
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        if (underLineTexts.size > 0){
+        if (underLineTexts.size > 0) {
 
-            val underLineText = underLineTexts[underLineTexts.size-1]
+            val underLineText = underLineTexts[underLineTexts.size - 1]
             val line = layout.getLineForOffset(underLineText.end - 1)
             val layout = layout
             val bound = Rect()
-            layout.getLineBounds(lineCount-1, bound)
-            if (measuredHeight - paddingTop - paddingBottom == layout.height && line == lineCount-1) {
-                setMeasuredDimension(measuredWidth,measuredHeight+ underLineText.underLineTop + underLineText.underLineWidth.toInt())
+            layout.getLineBounds(lineCount - 1, bound)
+            if (measuredHeight - paddingTop - paddingBottom == layout.height && line == lineCount - 1) {
+                setMeasuredDimension(
+                    measuredWidth,
+                    measuredHeight + underLineText.underLineTop.toInt() + underLineText.underLineWidth.toInt()
+                )
             }
-            Log.e("onMeasure",this.toString()+measuredHeight.toString() + "=="+bound.bottom+"==="+layout.height)
+            Log.e(
+                "onMeasure",
+                this.toString() + measuredHeight.toString() + "==" + bound.bottom + "===" + layout.height
+            )
 //            setMeasuredDimension(measuredWidth,measuredHeight+lineSpacingExtra.toInt())
         }
 
 
+    }
+
+    interface OnInflateImageListener {
+        fun onInflate(formatImage: FormatImage?, drawableListener: OnReturnDrawableListener?)
+    }
+
+    interface OnReturnDrawableListener {
+        fun onReturnDrawable(drawable: Drawable)
+    }
+
+    fun setOnInflateImageListener(onInflateImageListener: OnInflateImageListener?) {
+        this.onInflateImageListener = onInflateImageListener
+    }
+
+    private fun dp2px(dp: Float): Float {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
     }
 }

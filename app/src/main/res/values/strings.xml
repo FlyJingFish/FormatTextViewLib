@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FormatTextViewDemo</string>
+    <string name="app_name">FormatTextView</string>
     <string name="test_text">%1$s欢迎%2$s</string>
     <string name="we">我们</string>
     <string name="you">你</string>

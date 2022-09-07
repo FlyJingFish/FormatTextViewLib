@@ -5,7 +5,7 @@
 
 ## 本库支持字体设置字体颜色，加粗，斜体，下划线，字体大小
 
-<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220819_135240.jpg" width="405px" height="842px" alt="show" />
+<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220907_145501.jpg" width="405px" height="842px" alt="show" />
 
 
 使用示例：
