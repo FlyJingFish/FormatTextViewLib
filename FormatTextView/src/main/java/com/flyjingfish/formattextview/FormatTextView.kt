@@ -5,6 +5,7 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
 import android.graphics.drawable.LevelListDrawable
+import android.os.Build
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
@@ -56,7 +57,11 @@ class FormatTextView : AppCompatTextView {
             if (args[i] is FormatImage) {
                 val formatImage = args[i] as FormatImage
                 val isRtl =
-                    TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == LayoutDirection.RTL
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == LayoutDirection.RTL
+                    } else {
+                        false
+                    }
                 formatImage.width = dp2px(formatImage.width)
                 formatImage.height = dp2px(formatImage.height)
                 formatImage.marginLeft = dp2px(
@@ -73,20 +78,23 @@ class FormatTextView : AppCompatTextView {
                 )
 
                 strings[i] =
-                    start + "<img src=\"" + (if (formatImage.imageResValue !== 0) formatImage.imageResValue else formatImage.imageUrlValue) + "\"></img>" + end
+                    start + "<img src=\"" + (if (formatImage.imageResValue != 0) formatImage.imageResValue else formatImage.imageUrlValue) + "\"></img>" + end
             } else {
                 val formatText = args[i] as FormatText
-                var value: String? = if (formatText.resValue != 0) {
+                val value: String? = if (formatText.resValue != 0) {
                     resources.getString(formatText.resValue)
                 } else {
                     formatText.strValue
                 }
-                strings[i] = start + value + end
+                var value1 = value?.replace("\\r\\n".toRegex(), "<br>")
+                value1 = value1?.replace("\\n".toRegex(), "<br>")
+                value1 = value1?.replace("\\r".toRegex(), "<br>")
+                strings[i] = start + value1 + end
             }
 
 
         }
-        val richText = String.format(textValue, *strings as Array<Any?>)
+        val richText = String.format(textValue, *strings)
 
         text = getCustomStyleHtml(richText, *args)
         highlightColor = Color.TRANSPARENT
@@ -416,20 +424,12 @@ class FormatTextView : AppCompatTextView {
 
             val underLineText = underLineTexts[underLineTexts.size - 1]
             val line = layout.getLineForOffset(underLineText.end - 1)
-            val layout = layout
-            val bound = Rect()
-            layout.getLineBounds(lineCount - 1, bound)
             if (measuredHeight - paddingTop - paddingBottom == layout.height && line == lineCount - 1) {
                 setMeasuredDimension(
                     measuredWidth,
                     measuredHeight + underLineText.underLineTop.toInt() + underLineText.underLineWidth.toInt()
                 )
             }
-            Log.e(
-                "onMeasure",
-                this.toString() + measuredHeight.toString() + "==" + bound.bottom + "===" + layout.height
-            )
-//            setMeasuredDimension(measuredWidth,measuredHeight+lineSpacingExtra.toInt())
         }
 
 
