@@ -178,11 +178,12 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 
 ## 我的更多开源库推荐
 
-支持点击小图查看大图的动画打开效果的图片查看器
-
-- [OpenImage](https://github.com/FlyJingFish/OpenImage)
 
 支持不操作Bitmap的圆图或圆角图，可绘制圆环背景边框或圆角框背景边框，除ImageView自带属性外新增4中显示模式
 
 - [ShapeImageView](https://github.com/FlyJingFish/ShapeImageView)
+
+支持点击小图查看大图的动画打开效果的图片查看器，内置了ShapeImageView
+
+- [OpenImage](https://github.com/FlyJingFish/OpenImage)
 
