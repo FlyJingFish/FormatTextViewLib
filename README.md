@@ -182,7 +182,7 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 
 - [OpenImage](https://github.com/FlyJingFish/OpenImage)
 
-支持设置部分字体各种样式，支持部分TextView部分位置设置网络或本地图片
+支持不操作Bitmap的圆图或圆角图，可绘制圆环背景边框或圆角框背景边框，除ImageView自带属性外新增4中显示模式
 
-- [FormatTextViewLib](https://github.com/FlyJingFish/FormatTextViewLib)
+- [ShapeImageView](https://github.com/FlyJingFish/ShapeImageView)
 
