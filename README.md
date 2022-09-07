@@ -165,8 +165,8 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 ## FormatImage 参数一览
 |属性|参数类型|描述|
 |---|:---:|:---:|
-|imageResValue|String|网络图片Url|
-|imageUrlValue|@DrawableRes int|本地图片资源Id|
+|imageUrlValue|String|网络图片Url|
+|imageResValue|@DrawableRes int|本地图片资源Id|
 |imagePlaceHolder|@DrawableRes int|网络图片加载时图片资源Id|
 |width|int|图片宽度(单位：DP)|
 |height|int|图片高度(单位：DP)|
