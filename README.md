@@ -175,3 +175,10 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 |marginRight|float|图片距离右侧距离(单位：DP)|
 |marginStart|float|图片距离左侧(Rtl:右侧)距离(单位：DP)|
 |marginEnd|float|图片距离右侧(Rtl:左侧)距离(单位：DP)|
+
+## 我的更多开源库推荐
+支持点击小图查看大图的动画打开效果的图片查看器
+- [OpenImage](https://github.com/FlyJingFish/OpenImage)
+支持设置部分字体各种样式，支持部分TextView部分位置设置网络或本地图片
+- [FormatTextViewLib](https://github.com/FlyJingFish/FormatTextViewLib)
+
