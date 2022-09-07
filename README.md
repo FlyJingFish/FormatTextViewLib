@@ -5,16 +5,17 @@
 
 # 特色功能
 
-### 本库支持字体设置字体颜色，加粗，斜体，下划线，字体大小
+### 1、本库支持字体设置字体颜色，加粗，斜体，下划线，字体大小
 
-### 本库支持设置图片，大小，左右距离，加载本地、网络图片
+### 2、本库支持下划线支持设置线宽，距离文字距离，下划线颜色
+
+### 3、本库支持设置图片，大小，左右距离，加载本地、网络图片
+
+### 4、支持给每个位置的富文本添加点击事件
 
 
 <img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220907_145501.jpg" width="405px" height="842px" alt="show" />
 
-
-使用示例：
-    可以看示例代码Demo
 
 第一步，根目录build.gradle
 
@@ -146,3 +147,31 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
                 .setMarginStart(20f)
                 .setMarginEnd(20f));
 ```
+
+## FormatText 参数一览
+|属性|参数类型|描述|
+|---|:---:|:---:|
+|textColor|@ColorRes int|文字资源颜色Id|
+|bold|boolean|文字是否加粗|
+|italic|boolean|文字是否斜体|
+|strValue|String|文字String类型值|
+|resValue|@StringRes int|文字文本资源Id|
+|textSize|int|文字字体大小(单位：SP)|
+|underline|boolean|文字是否下划线|
+|underlineColor|@ColorRes int|文字下划线颜色|
+|underlineWidth|float|文字下划线线宽|
+|underlineTopForBaseline|float|文字下划线距离文字baseline的距离|
+
+## FormatImage 参数一览
+|属性|参数类型|描述|
+|---|:---:|:---:|
+|imageResValue|String|网络图片Url|
+|imageUrlValue|@DrawableRes int|本地图片资源Id|
+|imagePlaceHolder|@DrawableRes int|网络图片加载时图片资源Id|
+|width|int|图片宽度(单位：DP)|
+|height|int|图片高度(单位：DP)|
+|verticalAlignment|int|图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
+|marginLeft|float|图片距离左侧距离(单位：DP)|
+|marginRight|float|图片距离右侧距离(单位：DP)|
+|marginStart|float|图片距离左侧(Rtl:右侧)距离(单位：DP)|
+|marginEnd|float|图片距离右侧(Rtl:左侧)距离(单位：DP)|
