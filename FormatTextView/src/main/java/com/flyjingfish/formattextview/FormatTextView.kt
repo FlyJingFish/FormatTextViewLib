@@ -461,7 +461,7 @@ class FormatTextView : AppCompatTextView {
             for (i in deleteLineText.start until deleteLineText.end) {
                 val bound = getDeleteLineBound(i)
                 pts[ptsIndex + 0] = bound.left.toFloat()
-                pts[ptsIndex + 1] = bound.bottom.toFloat() + bound.top.toFloat()
+                pts[ptsIndex + 1] = (bound.bottom + bound.top).toFloat()
                 pts[ptsIndex + 2] = bound.right.toFloat()
                 pts[ptsIndex + 3] = pts[ptsIndex + 1]
                 ptsIndex += 4
@@ -478,10 +478,7 @@ class FormatTextView : AppCompatTextView {
         val bound = Rect()
         val line = layout.getLineForOffset(index)
         layout.getLineBounds(line,bound)
-        val baseline = layout.getLineBaseline(line)
         val lineAscent = layout.getLineAscent(line)
-        val lineDescent = layout.getLineDescent(line)
-        val bottom = layout.getLineBottom(line)
         bound.top = layout.getLineTop(line)
         bound.bottom = -lineAscent*3/4
         bound.left = layout.getPrimaryHorizontal(index).toInt()
