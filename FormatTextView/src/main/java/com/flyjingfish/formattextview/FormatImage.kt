@@ -1,6 +1,7 @@
 package com.flyjingfish.formattextview
 
 import android.text.style.ImageSpan
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 
 class FormatImage : BaseFormat() {
@@ -95,6 +96,11 @@ class FormatImage : BaseFormat() {
 
     fun setMarginEnd(marginEnd: Float): FormatImage {
         this.marginEnd = marginEnd
+        return this
+    }
+
+    fun setBackgroundColor(@ColorRes backgroundColor: Int): FormatImage {
+        this.backgroundColor = backgroundColor
         return this
     }
 

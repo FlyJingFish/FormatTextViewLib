@@ -13,7 +13,6 @@ import android.text.style.*
 import android.text.util.Linkify
 import android.util.AttributeSet
 import android.util.LayoutDirection
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import androidx.annotation.StringRes
@@ -31,7 +30,8 @@ class FormatTextView : AppCompatTextView {
     private var onInflateImageListener: OnInflateImageListener? = null
     private var isClickSpanItem = false
     var isSetOnClick = false
-    private val underLineTexts: ArrayList<UnderLineText> = ArrayList()
+    private val underLineTexts: ArrayList<LineText> = ArrayList()
+    private val deleteLineTexts: ArrayList<LineText> = ArrayList()
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -150,7 +150,7 @@ class FormatTextView : AppCompatTextView {
     private fun setImageLinkStyle(
         htmlBuilder: SpannableStringBuilder,
         urlSpan: URLSpan,
-        formatText: FormatImage
+        formatImage: FormatImage
     ) {
         val start = htmlBuilder.getSpanStart(urlSpan)
         val end = htmlBuilder.getSpanEnd(urlSpan)
@@ -162,71 +162,77 @@ class FormatTextView : AppCompatTextView {
         htmlBuilder.setSpan(clickableSpan, start, end, flags)
 
         val drawable = LevelListDrawable()
-        if (formatText.imageResValue != 0) {
-            val d = resources.getDrawable(formatText.imageResValue)
-            val wh = getImageSpanWidthHeight(if (formatText.width != 0f) formatText.width else d.intrinsicWidth.toFloat(),
-                if (formatText.height != 0f) formatText.height else d.intrinsicHeight.toFloat(),
-                d)
+        if (formatImage.imageResValue != 0) {
+            val d = resources.getDrawable(formatImage.imageResValue)
+            val wh = getImageSpanWidthHeight(
+                if (formatImage.width != 0f) formatImage.width else d.intrinsicWidth.toFloat(),
+                if (formatImage.height != 0f) formatImage.height else d.intrinsicHeight.toFloat(),
+                d
+            )
             val insetDrawable =
                 InsetDrawable(
                     d,
-                    formatText.marginLeft.toInt(),
+                    formatImage.marginLeft.toInt(),
                     0,
-                    formatText.marginRight.toInt(),
+                    formatImage.marginRight.toInt(),
                     0
                 )
             drawable.addLevel(1, 1, insetDrawable)
             drawable.setBounds(
                 0, 0,
-                wh[0].toInt() + formatText.marginLeft.toInt() + formatText.marginRight.toInt(),
+                wh[0].toInt() + formatImage.marginLeft.toInt() + formatImage.marginRight.toInt(),
                 wh[1].toInt()
             )
             drawable.level = 1
-            val imageSpan = FormatImageSpan(drawable, formatText.verticalAlignment)
+            val imageSpan = FormatImageSpan(drawable, formatImage.verticalAlignment)
             htmlBuilder.setSpan(imageSpan, start, end, flags)
         } else {
-            if (formatText.imagePlaceHolder != 0) {
-                val d = resources.getDrawable(formatText.imagePlaceHolder)
-                val wh = getImageSpanWidthHeight(if (formatText.width != 0f) formatText.width else d.intrinsicWidth.toFloat(),
-                    if (formatText.height != 0f) formatText.height else d.intrinsicHeight.toFloat(),
-                    d)
+            if (formatImage.imagePlaceHolder != 0) {
+                val d = resources.getDrawable(formatImage.imagePlaceHolder)
+                val wh = getImageSpanWidthHeight(
+                    if (formatImage.width != 0f) formatImage.width else d.intrinsicWidth.toFloat(),
+                    if (formatImage.height != 0f) formatImage.height else d.intrinsicHeight.toFloat(),
+                    d
+                )
                 val insetDrawable =
                     InsetDrawable(
                         d,
-                        formatText.marginLeft.toInt(),
+                        formatImage.marginLeft.toInt(),
                         0,
-                        formatText.marginRight.toInt(),
+                        formatImage.marginRight.toInt(),
                         0
                     )
                 drawable.addLevel(1, 1, insetDrawable)
                 drawable.setBounds(
                     0, 0,
-                    wh[0].toInt() + formatText.marginLeft.toInt() + formatText.marginRight.toInt(),
+                    wh[0].toInt() + formatImage.marginLeft.toInt() + formatImage.marginRight.toInt(),
                     wh[1].toInt()
                 )
                 drawable.level = 1
             }
-            val imageSpan = FormatImageSpan(drawable, formatText.verticalAlignment)
+            val imageSpan = FormatImageSpan(drawable, formatImage.verticalAlignment)
             htmlBuilder.setSpan(imageSpan, start, end, flags)
             if (onInflateImageListener != null) {
                 onInflateImageListener!!.onInflate(
-                    formatText,
+                    formatImage,
                     object : OnReturnDrawableListener {
                         override fun onReturnDrawable(d: Drawable) {
                             val insetDrawable = InsetDrawable(
                                 d,
-                                formatText.marginLeft.toInt(),
+                                formatImage.marginLeft.toInt(),
                                 0,
-                                formatText.marginRight.toInt(),
+                                formatImage.marginRight.toInt(),
                                 0
                             )
-                            val wh = getImageSpanWidthHeight(if (formatText.width != 0f) formatText.width else d.intrinsicWidth.toFloat(),
-                                if (formatText.height != 0f) formatText.height else d.intrinsicHeight.toFloat(),
-                                d)
+                            val wh = getImageSpanWidthHeight(
+                                if (formatImage.width != 0f) formatImage.width else d.intrinsicWidth.toFloat(),
+                                if (formatImage.height != 0f) formatImage.height else d.intrinsicHeight.toFloat(),
+                                d
+                            )
                             drawable.addLevel(2, 2, insetDrawable)
                             drawable.setBounds(
                                 0, 0,
-                                wh[0].toInt() + formatText.marginLeft.toInt() + formatText.marginRight.toInt(),
+                                wh[0].toInt() + formatImage.marginLeft.toInt() + formatImage.marginRight.toInt(),
                                 wh[1].toInt()
                             )
                             drawable.level = 2
@@ -238,18 +244,23 @@ class FormatTextView : AppCompatTextView {
                 throw NullPointerException("If contain url for FormatImage,must call setOnInflateImageListener before setFormatText")
             }
         }
+        setCommonLinkStyle(htmlBuilder, urlSpan, formatImage)
     }
 
-    private fun getImageSpanWidthHeight(viewWidth: Float, viewHeight: Float, drawable: Drawable): FloatArray {
+    private fun getImageSpanWidthHeight(
+        viewWidth: Float,
+        viewHeight: Float,
+        drawable: Drawable
+    ): FloatArray {
         val drawableWidth = drawable.intrinsicWidth
         val drawableHeight = drawable.intrinsicHeight
         val imageHeightWidthRatio = drawableHeight * 1f / drawableWidth
         val viewHeightWidthRatio: Float = viewHeight / viewWidth
         val wh = FloatArray(2)
-        if (imageHeightWidthRatio > viewHeightWidthRatio){
+        if (imageHeightWidthRatio > viewHeightWidthRatio) {
             wh[0] = viewHeight / imageHeightWidthRatio
             wh[1] = viewHeight
-        }else{
+        } else {
             wh[0] = viewWidth
             wh[1] = viewWidth * imageHeightWidthRatio
         }
@@ -292,6 +303,7 @@ class FormatTextView : AppCompatTextView {
     ) {
         val color: Int = formatText.textColor
         val underline: Boolean = formatText.underline
+        val deleteLine: Boolean = formatText.deleteLine
         val textSize: Int = formatText.textSize
         val bold: Boolean = formatText.bold
         val italic: Boolean = formatText.italic
@@ -299,40 +311,78 @@ class FormatTextView : AppCompatTextView {
         val end = htmlBuilder.getSpanEnd(urlSpan)
         val flags = htmlBuilder.getSpanFlags(urlSpan)
         var userDefaultUnder = true
+        val textColor = if (color != 0) {
+            resources.getColor(color)
+        } else {
+            currentTextColor
+        }
         if (underline && (formatText.underlineColor != 0 || formatText.underlineTopForBaseline != 0f || formatText.underlineWidth != 0f)) {
-            val underLineText = UnderLineText(
+            val underLineText = LineText(
                 start,
                 end,
-                if (formatText.underlineColor != 0) resources.getColor(formatText.underlineColor) else currentTextColor,
+                if (formatText.underlineColor != 0) resources.getColor(formatText.underlineColor) else textColor,
                 dp2px(formatText.underlineTopForBaseline),
-                if (formatText.underlineWidth == 0f) 1f else dp2px(formatText.underlineWidth)
+                if (formatText.underlineWidth == 0f) dp2px(1f) else dp2px(formatText.underlineWidth)
             )
             underLineTexts.add(underLineText)
             userDefaultUnder = false
+        }
+        var userDefaultDelete = true
+        if (deleteLine && (formatText.deleteLineColor != 0 || formatText.deleteLineWidth != 0f)) {
+            val deleteLineText = LineText(
+                start,
+                end,
+                if (formatText.deleteLineColor != 0) resources.getColor(formatText.deleteLineColor) else textColor,
+                0f,
+                if (formatText.deleteLineWidth == 0f) dp2px(1f) else dp2px(formatText.deleteLineWidth)
+            )
+            deleteLineTexts.add(deleteLineText)
+            userDefaultDelete = false
+
         }
 
         val clickableSpan: ClickableSpan = object : FormatClickableSpan(urlSpan) {
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
                 //设置颜色
-                if (color != 0) {
-                    ds.color = resources.getColor(color)
-                } else {
-                    ds.color = currentTextColor
-                }
+                ds.color = textColor
                 //设置是否要下划线
-                ds.isUnderlineText = userDefaultUnder
+                ds.isUnderlineText = userDefaultUnder && underline
+                if (userDefaultDelete && deleteLine) {
+                    ds.flags = ds.flags or Paint.STRIKE_THRU_TEXT_FLAG
+                }
             }
         }
         htmlBuilder.setSpan(clickableSpan, start, end, flags)
         if (textSize > 0) {
-            htmlBuilder.setSpan(AbsoluteSizeSpan(textSize, true), start, end, flags)
+            htmlBuilder.setSpan(AbsoluteSizeSpan(sp2px(textSize.toFloat()).toInt(), false), start, end, flags)
         }
-        if (bold) {
+        if (bold && italic) {
+            htmlBuilder.setSpan(StyleSpan(Typeface.BOLD_ITALIC), start, end, flags)
+        } else if (bold) {
             htmlBuilder.setSpan(StyleSpan(Typeface.BOLD), start, end, flags)
-        }
-        if (italic) {
+        } else if (italic) {
             htmlBuilder.setSpan(StyleSpan(Typeface.ITALIC), start, end, flags)
+        }
+        setCommonLinkStyle(htmlBuilder, urlSpan, formatText)
+    }
+
+    private fun setCommonLinkStyle(
+        htmlBuilder: SpannableStringBuilder,
+        urlSpan: URLSpan,
+        formatText: BaseFormat
+    ) {
+        val start = htmlBuilder.getSpanStart(urlSpan)
+        val end = htmlBuilder.getSpanEnd(urlSpan)
+        val flags = htmlBuilder.getSpanFlags(urlSpan)
+        val backgroundColor: Int = formatText.backgroundColor
+        if (backgroundColor != 0) {
+            htmlBuilder.setSpan(
+                BackgroundColorSpan(resources.getColor(backgroundColor)),
+                start,
+                end,
+                flags
+            )
         }
     }
 
@@ -364,6 +414,7 @@ class FormatTextView : AppCompatTextView {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         drawUnderline(canvas)
+        drawDeleteLine(canvas)
     }
 
     private fun drawUnderline(canvas: Canvas?) {
@@ -380,25 +431,68 @@ class FormatTextView : AppCompatTextView {
             val pts = FloatArray((underLineText.end - underLineText.start) * 4)
             var ptsIndex = 0
             for (i in underLineText.start until underLineText.end) {
-                val bound = getTextBound(i)
+                val bound = getUnderLineBound(i)
                 pts[ptsIndex + 0] = bound.left.toFloat()
-                pts[ptsIndex + 1] = bound.bottom.toFloat() + underLineText.underLineTop
+                pts[ptsIndex + 1] = bound.bottom.toFloat() + underLineText.lineTop
                 pts[ptsIndex + 2] = bound.right.toFloat()
-                pts[ptsIndex + 3] = bound.bottom.toFloat() + underLineText.underLineTop
+                pts[ptsIndex + 3] = pts[ptsIndex + 1]
                 ptsIndex += 4
             }
-            underlinePaint.strokeWidth = underLineText.underLineWidth
-            underlinePaint.color = underLineText.underLineColor
+            underlinePaint.strokeWidth = underLineText.lineWidth
+            underlinePaint.color = underLineText.lineColor
             canvas.drawLines(pts, underlinePaint)
         }
         canvas.restoreToCount(saveCount)
     }
 
-    private fun getTextBound(index: Int): Rect {
+    private fun drawDeleteLine(canvas: Canvas?) {
+        if (deleteLineTexts.size == 0) {
+            return
+        }
+        val underlinePaint = Paint()
+        underlinePaint.isAntiAlias = true
+
+        val saveCount = canvas!!.saveCount
+        canvas.save()
+        //绘制下划线
+        for (deleteLineText in deleteLineTexts) {
+            val pts = FloatArray((deleteLineText.end - deleteLineText.start) * 4)
+            var ptsIndex = 0
+            for (i in deleteLineText.start until deleteLineText.end) {
+                val bound = getDeleteLineBound(i)
+                pts[ptsIndex + 0] = bound.left.toFloat()
+                pts[ptsIndex + 1] = bound.bottom.toFloat() + deleteLineText.lineTop
+                pts[ptsIndex + 2] = bound.right.toFloat()
+                pts[ptsIndex + 3] = pts[ptsIndex + 1]
+                ptsIndex += 4
+            }
+            underlinePaint.strokeWidth = deleteLineText.lineWidth
+            underlinePaint.color = deleteLineText.lineColor
+            canvas.drawLines(pts, underlinePaint)
+        }
+        canvas.restoreToCount(saveCount)
+    }
+
+    private fun getDeleteLineBound(index: Int): Rect {
         val layout = layout
         val bound = Rect()
         val line = layout.getLineForOffset(index)
-        layout.getLineBounds(line, bound)
+        layout.getLineBounds(line,bound)
+        val baseline = layout.getLineBaseline(line)
+        val lineAscent = layout.getLineAscent(line)
+        bound.bottom = baseline + lineAscent/4
+        bound.left = layout.getPrimaryHorizontal(index).toInt()
+        bound.right = layout.getPrimaryHorizontal(index + 1).toInt()
+        if (bound.right < bound.left) {
+            bound.right = layout.getLineRight(line).toInt()
+        }
+        return bound;
+    }
+
+    private fun getUnderLineBound(index: Int): Rect {
+        val layout = layout
+        val bound = Rect()
+        val line = layout.getLineForOffset(index)
         bound.bottom = layout.getLineBaseline(line)
         bound.left = layout.getPrimaryHorizontal(index).toInt()
         bound.right = layout.getPrimaryHorizontal(index + 1).toInt()
@@ -408,15 +502,13 @@ class FormatTextView : AppCompatTextView {
         return bound;
     }
 
-    private class UnderLineText(
+    private class LineText(
         var start: Int,
         var end: Int,
-        var underLineColor: Int,
-        var underLineTop: Float,
-        var underLineWidth: Float
-    ) {
-
-    }
+        var lineColor: Int,
+        var lineTop: Float,
+        var lineWidth: Float
+    )
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -427,7 +519,7 @@ class FormatTextView : AppCompatTextView {
             if (measuredHeight - paddingTop - paddingBottom == layout.height && line == lineCount - 1) {
                 setMeasuredDimension(
                     measuredWidth,
-                    measuredHeight + underLineText.underLineTop.toInt() + underLineText.underLineWidth.toInt()
+                    measuredHeight + underLineText.lineTop.toInt() + underLineText.lineWidth.toInt()
                 )
             }
         }
@@ -449,5 +541,8 @@ class FormatTextView : AppCompatTextView {
 
     private fun dp2px(dp: Float): Float {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
+    }
+    private fun sp2px(sp: Float): Float {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.displayMetrics)
     }
 }

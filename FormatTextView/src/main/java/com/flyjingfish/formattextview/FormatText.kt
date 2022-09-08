@@ -39,6 +39,17 @@ class FormatText : BaseFormat() {
     @JvmField
     var underlineTopForBaseline = 0f
 
+    @JvmField
+    var deleteLine = false
+
+    @JvmField
+    @ColorRes
+    var deleteLineColor = 0
+
+    @JvmField
+    var deleteLineWidth = 0f
+
+
     fun setTextColor(@ColorRes color: Int): FormatText {
         this.textColor = color
         return this
@@ -75,20 +86,39 @@ class FormatText : BaseFormat() {
     }
 
 
-    fun setUnderlineColor(@ColorRes color: Int): FormatText {
-        this.underlineColor = color
+    fun setUnderlineColor(@ColorRes underlineColor: Int): FormatText {
+        this.underlineColor = underlineColor
         return this
     }
 
-    fun setUnderlineWidth(width: Float): FormatText {
-        this.underlineWidth = width
+    fun setUnderlineWidth(underlineWidth: Float): FormatText {
+        this.underlineWidth = underlineWidth
         return this
     }
 
-    fun setUnderlineTopForBaseline(underlineTop: Float): FormatText {
-        this.underlineTopForBaseline = underlineTop
+    fun setUnderlineTopForBaseline(underlineTopForBaseline: Float): FormatText {
+        this.underlineTopForBaseline = underlineTopForBaseline
         return this
     }
 
+    fun setBackgroundColor(@ColorRes backgroundColor: Int): FormatText {
+        this.backgroundColor = backgroundColor
+        return this
+    }
+
+    fun setDeleteLine(deleteLine: Boolean): FormatText {
+        this.deleteLine = deleteLine
+        return this
+    }
+
+    fun setDeleteLineColor(@ColorRes deleteLineColor: Int): FormatText {
+        this.deleteLineColor = deleteLineColor
+        return this
+    }
+
+    fun setDeleteLineWidth(deleteLineWidth: Float): FormatText {
+        this.deleteLineWidth = deleteLineWidth
+        return this
+    }
 
 }

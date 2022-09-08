@@ -77,14 +77,18 @@ class MainActivity : AppCompatActivity() {
                 marginStart = 10f
                 marginEnd = 10f
             },
-            FormatImage().apply {
-                imagePlaceHolder = R.mipmap.ic_launcher_round
-                imageUrlValue = "https://pics4.baidu.com/feed/50da81cb39dbb6fd95aa0c599b8d0d1e962b3708.jpeg?token=bf17224f51a6f4bb389e787f9c487940"
-                verticalAlignment = FormatImage.ALIGN_CENTER
-                width = 25f
-                height = 25f
-                marginStart = 10f
-                marginEnd = 10f
+            FormatText().apply {
+                textSize = 30
+                textColor = R.color.colorAccent
+                bold = false
+                italic = true
+                underline = true
+                underlineColor = R.color.color_red
+                underlineTopForBaseline = 10f
+                strValue = "你们你们"
+                deleteLine = true
+                deleteLineColor = R.color.color_red
+                deleteLineWidth = 1f
             })
         text6.setOnFormatClickListener(object : OnFormatClickListener{
             override fun onLabelClick(position: Int) {
