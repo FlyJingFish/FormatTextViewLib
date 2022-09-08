@@ -329,11 +329,15 @@ class FormatTextView : AppCompatTextView {
         }
         var userDefaultDelete = true
         if (deleteLine && (formatText.deleteLineColor != 0 || formatText.deleteLineWidth != 0f)) {
+            val textPaint = TextPaint()
+            textPaint.textSize = if (textSize>0) sp2px(textSize.toFloat()) else getTextSize()
+            val fm = textPaint.fontMetrics
+
             val deleteLineText = LineText(
                 start,
                 end,
                 if (formatText.deleteLineColor != 0) resources.getColor(formatText.deleteLineColor) else textColor,
-                0f,
+                fm.ascent + (fm.top - fm.ascent),
                 if (formatText.deleteLineWidth == 0f) dp2px(1f) else dp2px(formatText.deleteLineWidth)
             )
             deleteLineTexts.add(deleteLineText)
@@ -461,7 +465,7 @@ class FormatTextView : AppCompatTextView {
             for (i in deleteLineText.start until deleteLineText.end) {
                 val bound = getDeleteLineBound(i)
                 pts[ptsIndex + 0] = bound.left.toFloat()
-                pts[ptsIndex + 1] = (bound.bottom + bound.top).toFloat()
+                pts[ptsIndex + 1] = bound.bottom.toFloat() + deleteLineText.lineTop/4
                 pts[ptsIndex + 2] = bound.right.toFloat()
                 pts[ptsIndex + 3] = pts[ptsIndex + 1]
                 ptsIndex += 4
@@ -477,10 +481,8 @@ class FormatTextView : AppCompatTextView {
         val layout = layout
         val bound = Rect()
         val line = layout.getLineForOffset(index)
-        layout.getLineBounds(line,bound)
-        val lineAscent = layout.getLineAscent(line)
-        bound.top = layout.getLineTop(line)
-        bound.bottom = -lineAscent*3/4
+        val baseline = layout.getLineBaseline(line)
+        bound.bottom = baseline
         bound.left = layout.getPrimaryHorizontal(index).toInt()
         bound.right = layout.getPrimaryHorizontal(index + 1).toInt()
         if (bound.right < bound.left) {
