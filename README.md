@@ -14,7 +14,7 @@
 ### 4、支持给每个位置的富文本添加点击事件
 
 
-<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220907_145501.jpg" width="405px" height="842px" alt="show" />
+<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220908_184829.jpg" width="405px" height="842px" alt="show" />
 
 
 第一步，根目录build.gradle

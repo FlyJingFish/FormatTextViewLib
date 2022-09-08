@@ -82,9 +82,6 @@ class MainActivity : AppCompatActivity() {
                 textColor = R.color.colorAccent
                 bold = false
                 italic = true
-                underline = true
-                underlineColor = R.color.color_red
-                underlineTopForBaseline = 10f
                 strValue = "你们你们"
                 deleteLine = true
                 deleteLineColor = R.color.color_red
