@@ -1,5 +1,6 @@
 package com.flyjingfish.formattextview
 
+import android.os.Build
 import android.text.style.ImageSpan
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -13,7 +14,16 @@ class FormatImage : BaseFormat() {
         val ALIGN_BASELINE: Int = ImageSpan.ALIGN_BASELINE
 
         @kotlin.jvm.JvmField
-        var ALIGN_CENTER: Int = ImageSpan.ALIGN_CENTER
+        val ALIGN_CENTER_CROP: Int = 10
+
+        @kotlin.jvm.JvmField
+        val ALIGN_CENTER: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ImageSpan.ALIGN_CENTER
+        } else {
+            ALIGN_CENTER_CROP
+        }
+
+
     }
 
 
