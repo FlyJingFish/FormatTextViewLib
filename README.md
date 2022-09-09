@@ -79,7 +79,7 @@
                 italic = true
                 underline = true
                 underlineColor = R.color.color_red
-                underlineTopForBaseline = 10f
+                underlineMarginTop = 10f
                 underlineWidth = 2f
                 resValue = R.string.we
             },
@@ -134,7 +134,7 @@ textView.setOnInflateImageListener(new FormatTextView.OnInflateImageListener() {
 });
 textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
         new FormatText().setTextColor(R.color.colorAccent).setBold(false)
-                .setUnderlineColor(R.color.color_red).setUnderlineTopForBaseline(10f).setUnderlineWidth(2f)
+                .setUnderlineColor(R.color.color_red).setUnderlineMarginTop(10f).setUnderlineWidth(2f)
                 .setUnderline(true).setItalic(true).setResValue(R.string.we),
         new FormatImage().setImagePlaceHolder(R.mipmap.ic_launcher_round)
                 .setImageUrlValue("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.itc.cn%2Fq_70%2Fimages03%2F20210227%2F6687c969b58d486fa2f23d8488b96ae4.jpeg&refer=http%3A%2F%2Fp0.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1661701773&t=19043990158a1d11c2a334146020e2ce")
@@ -155,9 +155,9 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 ### 下划线常见问题
 如果您设置了下划线以下样式：
 
-**underlineColor、underlineTopForBaseline、underlineWidth**
+**underlineColor、underlineMarginTop、underlineWidth**
 
-那么下划线将采用绘制下划线方案，**underlineTopForBaseline**不设置（即为0）默认绘制在Baseline那根线位置，如果设置数值过大并且文本长到换行，则需要设置行间距，否则会出现下滑线压在下一行的问题，你可通过设置lineSpacingExtra或lineSpacingMultiplier来解决问题
+那么下划线将采用绘制下划线方案，**underlineMarginTop**不设置（即为0）默认绘制在Baseline那根线位置，如果设置数值过大并且文本长到换行，则需要设置行间距，否则会出现下滑线压在下一行的问题，你可通过设置lineSpacingExtra或lineSpacingMultiplier来解决问题
 
 ## FormatText 参数一览
 |属性|参数类型|描述|
@@ -171,7 +171,7 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 |underline|boolean|文字是否下划线|
 |underlineColor|@ColorRes int|文字下划线颜色|
 |underlineWidth|float|文字下划线线宽|
-|underlineTopForBaseline|float|文字下划线距离文字baseline的距离|
+|underlineMarginTop|float|文字下划线向下偏移的距离|
 |deleteLine|boolean|文字是否删除线|
 |deleteLineColor|@ColorRes int|文字删除线颜色|
 |deleteLineWidth|float|文字删除线线宽|
