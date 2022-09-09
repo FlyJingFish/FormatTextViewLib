@@ -157,7 +157,7 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 
 **underlineColor、underlineMarginTop、underlineWidth**
 
-那么下划线将采用绘制下划线方案，**underlineMarginTop**不设置（即为0）默认绘制在Baseline那根线位置，如果设置数值过大并且文本长到换行，则需要设置行间距，否则会出现下滑线压在下一行的问题，你可通过设置lineSpacingExtra或lineSpacingMultiplier来解决问题
+那么下划线将采用绘制下划线方案，**underlineMarginTop**不设置（即为0）绘制在默认的删除线位置，如果设置数值过大并且文本长到换行，则需要设置行间距，否则会出现下滑线压在下一行的问题，你可通过设置lineSpacingExtra或lineSpacingMultiplier来解决问题
 
 ## FormatText 参数一览
 |属性|参数类型|描述|
