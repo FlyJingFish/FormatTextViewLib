@@ -37,7 +37,7 @@ class FormatText : BaseFormat() {
     var underlineWidth = 0f
 
     @JvmField
-    var underlineTopForBaseline = 0f
+    var underlineMarginTop = 0f
 
     @JvmField
     var deleteLine = false
@@ -96,8 +96,8 @@ class FormatText : BaseFormat() {
         return this
     }
 
-    fun setUnderlineTopForBaseline(underlineTopForBaseline: Float): FormatText {
-        this.underlineTopForBaseline = underlineTopForBaseline
+    fun setUnderlineMarginTop(underlineMarginTop: Float): FormatText {
+        this.underlineMarginTop = underlineMarginTop
         return this
     }
 

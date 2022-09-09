@@ -316,12 +316,16 @@ class FormatTextView : AppCompatTextView {
         } else {
             currentTextColor
         }
-        if (underline && (formatText.underlineColor != 0 || formatText.underlineTopForBaseline != 0f || formatText.underlineWidth != 0f)) {
+        if (underline && (formatText.underlineColor != 0 || formatText.underlineMarginTop != 0f || formatText.underlineWidth != 0f)) {
+            val textPaint = TextPaint()
+            textPaint.textSize = if (textSize>0) sp2px(textSize.toFloat()) else getTextSize()
+            val fm = textPaint.fontMetrics
+
             val underLineText = LineText(
                 start,
                 end,
                 if (formatText.underlineColor != 0) resources.getColor(formatText.underlineColor) else textColor,
-                dp2px(formatText.underlineTopForBaseline),
+                dp2px(formatText.underlineMarginTop) + fm.descent/3,
                 if (formatText.underlineWidth == 0f) dp2px(1f) else dp2px(formatText.underlineWidth)
             )
             underLineTexts.add(underLineText)
@@ -337,7 +341,7 @@ class FormatTextView : AppCompatTextView {
                 start,
                 end,
                 if (formatText.deleteLineColor != 0) resources.getColor(formatText.deleteLineColor) else textColor,
-                fm.ascent + (fm.top - fm.ascent),
+                (fm.descent - fm.ascent)/2 - fm.descent,
                 if (formatText.deleteLineWidth == 0f) dp2px(1f) else dp2px(formatText.deleteLineWidth)
             )
             deleteLineTexts.add(deleteLineText)
@@ -437,7 +441,7 @@ class FormatTextView : AppCompatTextView {
             for (i in underLineText.start until underLineText.end) {
                 val bound = getUnderLineBound(i)
                 pts[ptsIndex + 0] = bound.left.toFloat()
-                pts[ptsIndex + 1] = bound.bottom.toFloat() + underLineText.lineTop
+                pts[ptsIndex + 1] = bound.bottom.toFloat() + underLineText.lineWidth/2 +underLineText.lineTop
                 pts[ptsIndex + 2] = bound.right.toFloat()
                 pts[ptsIndex + 3] = pts[ptsIndex + 1]
                 ptsIndex += 4
@@ -465,7 +469,7 @@ class FormatTextView : AppCompatTextView {
             for (i in deleteLineText.start until deleteLineText.end) {
                 val bound = getDeleteLineBound(i)
                 pts[ptsIndex + 0] = bound.left.toFloat()
-                pts[ptsIndex + 1] = bound.bottom.toFloat() + deleteLineText.lineTop/4
+                pts[ptsIndex + 1] = bound.bottom.toFloat() - deleteLineText.lineTop
                 pts[ptsIndex + 2] = bound.right.toFloat()
                 pts[ptsIndex + 3] = pts[ptsIndex + 1]
                 ptsIndex += 4

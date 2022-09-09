@@ -50,7 +50,7 @@ public class SecondActivity extends AppCompatActivity {
         });
         formatTextView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
                 new FormatText().setTextColor(R.color.colorAccent).setBold(false)
-                        .setUnderlineColor(R.color.color_red).setUnderlineTopForBaseline(10f).setUnderlineWidth(2f)
+                        .setUnderlineColor(R.color.color_red).setUnderlineMarginTop(10f).setUnderlineWidth(2f)
                         .setUnderline(true).setItalic(true).setResValue(R.string.we),
 //            FormatText.setTextColor(R.color.colorPrimaryDark).setTextBold(false)
 //                .setUnderlineColor(R.color.color_red).setUnderlineTopForBaseline(10f).setUnderlineWidth(2f)

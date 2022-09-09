@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 italic = true
                 underline = true
                 underlineColor = R.color.color_red
-                underlineTopForBaseline = 10f
+                underlineMarginTop = 10f
                 underlineWidth = 2f
                 resValue = R.string.we
             },
