@@ -159,6 +159,10 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 
 那么下划线将采用绘制下划线方案，**underlineMarginTop**不设置（即为0）绘制在默认的删除线位置，如果设置数值过大并且文本长到换行，则需要设置行间距，否则会出现下滑线压在下一行的问题，你可通过设置lineSpacingExtra或lineSpacingMultiplier来解决问题
 
+### verticalAlignment 常见问题
+
+ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心对齐问题，在图片设置超过行高时将会出现裁剪问题，如果您图片很大还是建议使用ALIGN_BASELINE
+
 ## FormatText 参数一览
 |属性|参数类型|描述|
 |---|:---:|:---:|

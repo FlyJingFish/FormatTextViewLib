@@ -20,7 +20,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.flyjingfish.FormatTexttextview.FormatText
 import java.lang.NullPointerException
 import androidx.core.text.TextUtilsCompat
-import com.flyjingfish.formattextview.FormatImage.StaticField.ALIGN_CENTER_CROP
 import java.util.*
 import kotlin.math.max
 
@@ -282,7 +281,7 @@ class FormatTextView : AppCompatTextView {
             bottom: Int,
             paint: Paint
         ) {
-            if (verticalAlignment == ALIGN_CENTER_CROP) {
+            if (verticalAlignment == FormatImage.ALIGN_CENTER) {
                 val b = drawable
                 val fm = paint.fontMetricsInt
                 val transY = (y + fm.descent + y + fm.ascent) / 2 - b.bounds.bottom / 2
