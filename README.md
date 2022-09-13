@@ -53,14 +53,14 @@
             Glide.with(this@MainActivity).asDrawable().load(
                 formatImage!!.imageUrlValue
             )
-//            if (formatImage!!.width > 0 && formatImage!!.height > 0) {
-//                requestBuilder.apply(
-//                    RequestOptions().override(
-//                        formatImage!!.width.toInt(),
-//                        formatImage!!.height.toInt()
-//                    ).centerCrop()
-//                )
-//            }
+        if (formatImage.width > 0 && formatImage.height > 0) {
+            requestBuilder.apply(
+                RequestOptions().override(
+                    formatImage.width.toInt(),
+                    formatImage.height.toInt()
+                ).centerCrop()
+            )
+        }
         requestBuilder.into(object : CustomTarget<Drawable?>() {
             override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
                 drawableListener?.onReturnDrawable(resource)
@@ -116,9 +116,9 @@ textView.setOnInflateImageListener(new FormatTextView.OnInflateImageListener() {
     @Override
     public void onInflate(FormatImage formatImage, final FormatTextView.OnReturnDrawableListener drawableListener) {
         RequestBuilder<Drawable> requestBuilder = Glide.with(SecondActivity.this).asDrawable().load(formatImage.imageUrlValue);
-//        if (formatImage.width > 0 && formatImage.height > 0) {
-//            requestBuilder.apply(new RequestOptions().override(((int) formatImage.width), ((int) formatImage.height)).centerCrop());
-//        }
+        if (formatImage.width > 0 && formatImage.height > 0) {
+            requestBuilder.apply(new RequestOptions().override(((int) formatImage.width), ((int) formatImage.height)).centerCrop());
+        }
         requestBuilder.into(new CustomTarget<Drawable>() {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
