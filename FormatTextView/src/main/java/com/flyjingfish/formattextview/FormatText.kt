@@ -27,7 +27,7 @@ class FormatText : BaseFormat() {
     var resValue = 0
 
     @JvmField
-    var textSize = 0
+    var textSize = 0f
 
     @JvmField
     @ColorRes
@@ -80,7 +80,7 @@ class FormatText : BaseFormat() {
         return this
     }
 
-    fun setTextSize(textSize: Int): FormatText {
+    fun setTextSize(textSize: Float): FormatText {
         this.textSize = textSize
         return this
     }

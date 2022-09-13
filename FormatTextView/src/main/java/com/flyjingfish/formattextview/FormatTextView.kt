@@ -304,7 +304,7 @@ class FormatTextView : AppCompatTextView {
         val color: Int = formatText.textColor
         val underline: Boolean = formatText.underline
         val deleteLine: Boolean = formatText.deleteLine
-        val textSize: Int = formatText.textSize
+        val textSize: Float = formatText.textSize
         val bold: Boolean = formatText.bold
         val italic: Boolean = formatText.italic
         val start = htmlBuilder.getSpanStart(urlSpan)
@@ -318,7 +318,7 @@ class FormatTextView : AppCompatTextView {
         }
         if (underline && (formatText.underlineColor != 0 || formatText.underlineMarginTop != 0f || formatText.underlineWidth != 0f)) {
             val textPaint = TextPaint()
-            textPaint.textSize = if (textSize>0) sp2px(textSize.toFloat()) else getTextSize()
+            textPaint.textSize = if (textSize>0) sp2px(textSize) else getTextSize()
             val fm = textPaint.fontMetrics
 
             val underLineText = LineText(
@@ -334,7 +334,7 @@ class FormatTextView : AppCompatTextView {
         var userDefaultDelete = true
         if (deleteLine && (formatText.deleteLineColor != 0 || formatText.deleteLineWidth != 0f)) {
             val textPaint = TextPaint()
-            textPaint.textSize = if (textSize>0) sp2px(textSize.toFloat()) else getTextSize()
+            textPaint.textSize = if (textSize>0) sp2px(textSize) else getTextSize()
             val fm = textPaint.fontMetrics
 
             val deleteLineText = LineText(

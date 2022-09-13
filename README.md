@@ -73,7 +73,7 @@
   //设置数据
  textView.setFormatTextBean("%1\$s欢迎欢迎欢迎欢迎欢迎欢迎%3\$s欢迎欢迎欢迎%2\$s",
             FormatText().apply {
-                textSize = 30
+                textSize = 30f
                 textColor = R.color.colorAccent
                 bold = false
                 italic = true
@@ -171,7 +171,7 @@ ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心�
 |italic|boolean|文字是否斜体|
 |strValue|String|文字String类型值|
 |resValue|@StringRes int|文字文本资源Id|
-|textSize|int|文字字体大小(单位：SP)|
+|textSize|float|文字字体大小(单位：SP)|
 |underline|boolean|文字是否下划线|
 |underlineColor|@ColorRes int|文字下划线颜色|
 |underlineWidth|float|文字下划线线宽|
@@ -187,8 +187,8 @@ ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心�
 |imageUrlValue|String|网络图片Url|
 |imageResValue|@DrawableRes int|本地图片资源Id|
 |imagePlaceHolder|@DrawableRes int|网络图片加载时图片资源Id|
-|width|int|图片宽度(单位：DP)|
-|height|int|图片高度(单位：DP)|
+|width|float|图片宽度(单位：DP)|
+|height|float|图片高度(单位：DP)|
 |verticalAlignment|int|图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
 |marginLeft|float|图片距离左侧距离(单位：DP)|
 |marginRight|float|图片距离右侧距离(单位：DP)|
