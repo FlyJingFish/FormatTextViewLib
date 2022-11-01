@@ -17,9 +17,6 @@ class HtmlImage {
 
 
     @JvmField
-    var imageUrlValue: String? = null
-
-    @JvmField
     @DrawableRes
     var imagePlaceHolder = 0
 
@@ -32,11 +29,6 @@ class HtmlImage {
     @JvmField
     var verticalAlignment = ALIGN_BASELINE
 
-
-    fun setImageUrlValue(imageUrlValue: String?): HtmlImage {
-        this.imageUrlValue = imageUrlValue
-        return this
-    }
 
     fun setMaxWidth(width: Float): HtmlImage {
         this.maxWidth = width

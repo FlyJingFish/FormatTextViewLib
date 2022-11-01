@@ -5,23 +5,30 @@
 
 # 特色功能
 
-### 1、本库支持字体设置字体颜色，加粗，斜体，下划线，删除线，字体大小
+## FormatTextView 功能介绍
 
-### 2、本库支持下划线支持设置线宽，距离文字距离，下划线颜色
+### 1、支持字体设置字体颜色，加粗，斜体，下划线，删除线，字体大小
 
-### 3、本库支持删除线支持设置线宽，删除线颜色
+### 2、支持下划线支持设置线宽，距离文字距离，下划线颜色
 
-### 4、本库支持设置图片，大小，左右距离，加载本地、网络图片
+### 3、支持删除线支持设置线宽，删除线颜色
+
+### 4、支持设置图片，大小，左右距离，加载本地、网络图片
 
 ### 5、支持给每个位置的富文本添加点击事件
 
 ### 6、支持给每个位置的富文本设置背景色
 
+## HtmlTextView 功能介绍
+
+### 1、支持加载网络图片
+
+### 2、支持为存在链接的标签添加点击事件
 
 <img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220908_184829.jpg" width="405px" height="842px" alt="show" />
 
 
-第一步，根目录build.gradle
+# 第一步，根目录build.gradle
 
 ```gradle
     allprojects {
@@ -31,14 +38,16 @@
         }
     }
 ```
-第二步，需要引用的build.gradle （最新版本[![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)）
+# 第二步，需要引用的build.gradle （最新版本[![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)）
 
 ```gradle
     dependencies {
         implementation 'com.github.FlyJingFish:FormatTextViewLib:2.1.5'
     }
 ```
-第三步，使用示例
+# 第三步，使用说明
+
+## FormatTextView 使用说明
 
 ### Kotlin调用示例
 
@@ -198,6 +207,73 @@ ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心�
 
 ## 我的更多开源库推荐
 
+## HtmlTextView 使用说明
+
+### Kotlin调用示例
+
+```kotlin
+ //如果包含网络图片必须先设置以下方法
+ text7.setOnInflateImageListener(object : HtmlTextView.OnInflateImageListener{
+    override fun onInflate(
+        source: String?,
+        drawableListener: HtmlTextView.OnReturnDrawableListener?
+    ) {
+        val requestBuilder: RequestBuilder<Drawable> =
+            Glide.with(this@MainActivity).asDrawable().load(
+                source
+            )
+        requestBuilder.into(object : CustomTarget<Drawable?>() {
+            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
+                drawableListener?.onReturnDrawable(resource)
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {}
+        })
+    }
+})
+text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<img src=\"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.itc.cn%2Fq_70%2Fimages03%2F20210227%2F6687c969b58d486fa2f23d8488b96ae4.jpeg&refer=http%3A%2F%2Fp0.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1661701773&t=19043990158a1d11c2a334146020e2ce\"></img>",
+    HtmlImage().apply
+    {
+        maxWidth = 160f
+        maxHeight = 160f
+        verticalAlignment = ImageSpan.ALIGN_BASELINE
+        imagePlaceHolder = R.mipmap.ic_launcher
+    }
+)
+```
+
+### Java调用示例
+
+```java
+text7.setOnInflateImageListener(new HtmlTextView.OnInflateImageListener() {
+    @Override
+    public void onInflate(@Nullable String source, @Nullable final HtmlTextView.OnReturnDrawableListener drawableListener) {
+        RequestBuilder<Drawable> requestBuilder = Glide.with(SecondActivity.this).asDrawable().load(source);
+        requestBuilder.into(new CustomTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                drawableListener.onReturnDrawable(resource);
+            }
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+
+            }
+        });
+    }
+});
+
+        text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<img src=\"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.itc.cn%2Fq_70%2Fimages03%2F20210227%2F6687c969b58d486fa2f23d8488b96ae4.jpeg&refer=http%3A%2F%2Fp0.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1661701773&t=19043990158a1d11c2a334146020e2ce\"></img>",
+        new HtmlImage().setMaxHeight(100).setMaxWidth(100));
+```
+
+## HtmlImage 参数一览
+|属性|参数类型|描述|
+|---|:---:|:---:|
+|imagePlaceHolder|@DrawableRes int|网络图片加载时图片资源Id|
+|maxWidth|float|图片宽度(单位：DP)|
+|maxHeight|float|图片高度(单位：DP)|
+|verticalAlignment|int|图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
 
 支持不操作Bitmap的圆图或圆角图，可绘制圆环背景边框或圆角框背景边框，除ImageView自带属性外新增4种显示模式；另外更有可绘制任意图形的图片只有你想不到，没有它做不到
 

@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         text7.setOnInflateImageListener(object : HtmlTextView.OnInflateImageListener{
             override fun onInflate(
                 source: String?,
-                drawableListener: FormatTextView.OnReturnDrawableListener?
+                drawableListener: HtmlTextView.OnReturnDrawableListener?
             ) {
                 val requestBuilder: RequestBuilder<Drawable> =
                     Glide.with(this@MainActivity).asDrawable().load(

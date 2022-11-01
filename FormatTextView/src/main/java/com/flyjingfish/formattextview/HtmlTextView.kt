@@ -170,7 +170,7 @@ class HtmlTextView : BaseTextView {
         if (onInflateImageListener != null) {
             onInflateImageListener?.onInflate(
                 imageSpan.source,
-                object : FormatTextView.OnReturnDrawableListener {
+                object : OnReturnDrawableListener {
                     override fun onReturnDrawable(d: Drawable) {
                         val insetDrawable = InsetDrawable(
                             d,
@@ -224,8 +224,10 @@ class HtmlTextView : BaseTextView {
     fun setOnInflateImageListener(onInflateImageListener: OnInflateImageListener?) {
         this.onInflateImageListener = onInflateImageListener
     }
-
+    interface OnReturnDrawableListener {
+        fun onReturnDrawable(drawable: Drawable)
+    }
     interface OnInflateImageListener {
-        fun onInflate(source: String?, drawableListener: FormatTextView.OnReturnDrawableListener?)
+        fun onInflate(source: String?, drawableListener: OnReturnDrawableListener?)
     }
 }
