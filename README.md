@@ -199,7 +199,7 @@ ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心�
 ## 我的更多开源库推荐
 
 
-支持不操作Bitmap的圆图或圆角图，可绘制圆环背景边框或圆角框背景边框，除ImageView自带属性外新增4种显示模式
+支持不操作Bitmap的圆图或圆角图，可绘制圆环背景边框或圆角框背景边框，除ImageView自带属性外新增4种显示模式；另外更有可绘制任意图形的图片只有你想不到，没有它做不到
 
 - [ShapeImageView](https://github.com/FlyJingFish/ShapeImageView)
 
