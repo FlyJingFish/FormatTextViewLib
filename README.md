@@ -205,8 +205,6 @@ ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心�
 |marginEnd|float|图片距离右侧(Rtl:左侧)距离(单位：DP)|
 |backgroundColor|@ColorRes int|图片区域背景色|
 
-## 我的更多开源库推荐
-
 ## 二、HtmlTextView 使用说明
 
 ### Kotlin调用示例
@@ -275,7 +273,7 @@ text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<
 |maxHeight|float|图片高度(单位：DP)|
 |verticalAlignment|int|图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
 
-# 番外
+# 我的更多开源库推荐
 
 支持不操作Bitmap的圆图或圆角图，可绘制圆环背景边框或圆角框背景边框，除ImageView自带属性外新增4种显示模式；另外更有可绘制任意图形的图片只有你想不到，没有它做不到
 
