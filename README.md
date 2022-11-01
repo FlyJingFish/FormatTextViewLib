@@ -7,28 +7,28 @@
 
 ## FormatTextView 功能介绍
 
-### 1、支持字体设置字体颜色，加粗，斜体，下划线，删除线，字体大小
+**1、支持字体设置字体颜色，加粗，斜体，下划线，删除线，字体大小**
 
-### 2、支持下划线支持设置线宽，距离文字距离，下划线颜色
+**2、支持下划线支持设置线宽，距离文字距离，下划线颜色**
 
-### 3、支持删除线支持设置线宽，删除线颜色
+**3、支持删除线支持设置线宽，删除线颜色**
 
-### 4、支持设置图片，大小，左右距离，加载本地、网络图片
+**4、支持设置图片，大小，左右距离，加载本地、网络图片**
 
-### 5、支持给每个位置的富文本添加点击事件
+**5、支持给每个位置的富文本添加点击事件**
 
-### 6、支持给每个位置的富文本设置背景色
+**6、支持给每个位置的富文本设置背景色**
 
-## HtmlTextView 功能介绍
+## HtmlTextView 功能介绍**
 
-### 1、支持加载网络图片
+**1、支持加载网络图片**
 
-### 2、支持为存在链接的标签添加点击事件
+**2、支持为存在链接的标签添加点击事件**
 
 <img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220908_184829.jpg" width="405px" height="842px" alt="show" />
 
 
-# 第一步，根目录build.gradle
+## 第一步，根目录build.gradle
 
 ```gradle
     allprojects {
@@ -38,16 +38,16 @@
         }
     }
 ```
-# 第二步，需要引用的build.gradle （最新版本[![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)）
+## 第二步，需要引用的build.gradle （最新版本[![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)）
 
 ```gradle
     dependencies {
-        implementation 'com.github.FlyJingFish:FormatTextViewLib:2.1.5'
+        implementation 'com.github.FlyJingFish:FormatTextViewLib:2.1.7'
     }
 ```
-# 第三步，使用说明
+## 第三步，使用说明
 
-## FormatTextView 使用说明
+## 一、FormatTextView 使用说明
 
 ### Kotlin调用示例
 
@@ -207,7 +207,7 @@ ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心�
 
 ## 我的更多开源库推荐
 
-## HtmlTextView 使用说明
+## 二、HtmlTextView 使用说明
 
 ### Kotlin调用示例
 
@@ -274,6 +274,8 @@ text7.setOnInflateImageListener(new HtmlTextView.OnInflateImageListener() {
 |maxWidth|float|图片宽度(单位：DP)|
 |maxHeight|float|图片高度(单位：DP)|
 |verticalAlignment|int|图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
+
+# 番外
 
 支持不操作Bitmap的圆图或圆角图，可绘制圆环背景边框或圆角框背景边框，除ImageView自带属性外新增4种显示模式；另外更有可绘制任意图形的图片只有你想不到，没有它做不到
 
