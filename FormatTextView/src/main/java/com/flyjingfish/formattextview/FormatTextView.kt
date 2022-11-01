@@ -24,7 +24,7 @@ import java.util.*
 import kotlin.math.max
 
 
-class FormatTextView : AppCompatTextView {
+class FormatTextView : BaseTextView {
 
     private var onFormatClickListener: OnFormatClickListener? = null
     private var onInflateImageListener: OnInflateImageListener? = null
@@ -62,15 +62,17 @@ class FormatTextView : AppCompatTextView {
                     } else {
                         false
                     }
-                formatImage.width = dp2px(formatImage.width)
-                formatImage.height = dp2px(formatImage.height)
-                formatImage.marginLeft = dp2px(
+                formatImage.width = Utils.dp2px(context, formatImage.width)
+                formatImage.height = Utils.dp2px(context, formatImage.height)
+                formatImage.marginLeft = Utils.dp2px(
+                    context,
                     max(
                         if (isRtl) formatImage.marginEnd else formatImage.marginStart,
                         formatImage.marginLeft
                     )
                 )
-                formatImage.marginRight = dp2px(
+                formatImage.marginRight = Utils.dp2px(
+                    context,
                     max(
                         if (isRtl) formatImage.marginStart else formatImage.marginEnd,
                         formatImage.marginRight
@@ -213,7 +215,7 @@ class FormatTextView : AppCompatTextView {
             val imageSpan = FormatImageSpan(drawable, formatImage.verticalAlignment)
             htmlBuilder.setSpan(imageSpan, start, end, flags)
             if (onInflateImageListener != null) {
-                onInflateImageListener!!.onInflate(
+                onInflateImageListener?.onInflate(
                     formatImage,
                     object : OnReturnDrawableListener {
                         override fun onReturnDrawable(d: Drawable) {
@@ -247,55 +249,6 @@ class FormatTextView : AppCompatTextView {
         setCommonLinkStyle(htmlBuilder, urlSpan, formatImage)
     }
 
-    private fun getImageSpanWidthHeight(
-        viewWidth: Float,
-        viewHeight: Float,
-        drawable: Drawable
-    ): FloatArray {
-        val drawableWidth = drawable.intrinsicWidth
-        val drawableHeight = drawable.intrinsicHeight
-        val imageHeightWidthRatio = drawableHeight * 1f / drawableWidth
-        val viewHeightWidthRatio: Float = viewHeight / viewWidth
-        val wh = FloatArray(2)
-        if (imageHeightWidthRatio > viewHeightWidthRatio) {
-            wh[0] = viewHeight / imageHeightWidthRatio
-            wh[1] = viewHeight
-        } else {
-            wh[0] = viewWidth
-            wh[1] = viewWidth * imageHeightWidthRatio
-        }
-        return wh
-    }
-
-    class FormatImageSpan(drawable: Drawable, verticalAlignment: Int) :
-        ImageSpan(drawable, verticalAlignment) {
-
-        override fun draw(
-            canvas: Canvas,
-            text: CharSequence?,
-            start: Int,
-            end: Int,
-            x: Float,
-            top: Int,
-            y: Int,
-            bottom: Int,
-            paint: Paint
-        ) {
-            if (verticalAlignment == FormatImage.ALIGN_CENTER) {
-                val b = drawable
-                val fm = paint.fontMetricsInt
-                val transY = (y + fm.descent + y + fm.ascent) / 2 - b.bounds.bottom / 2
-                canvas.save()
-                canvas.translate(x, transY.toFloat())
-                b.draw(canvas)
-                canvas.restore()
-            } else {
-                super.draw(canvas, text, start, end, x, top, y, bottom, paint)
-            }
-        }
-
-    }
-
     private fun setTextLinkStyle(
         htmlBuilder: SpannableStringBuilder,
         urlSpan: URLSpan,
@@ -318,15 +271,18 @@ class FormatTextView : AppCompatTextView {
         }
         if (underline && (formatText.underlineColor != 0 || formatText.underlineMarginTop != 0f || formatText.underlineWidth != 0f)) {
             val textPaint = TextPaint()
-            textPaint.textSize = if (textSize>0) sp2px(textSize) else getTextSize()
+            textPaint.textSize = if (textSize > 0) Utils.sp2px(context, textSize) else getTextSize()
             val fm = textPaint.fontMetrics
 
             val underLineText = LineText(
                 start,
                 end,
                 if (formatText.underlineColor != 0) resources.getColor(formatText.underlineColor) else textColor,
-                dp2px(formatText.underlineMarginTop) + fm.descent/3,
-                if (formatText.underlineWidth == 0f) dp2px(1f) else dp2px(formatText.underlineWidth)
+                Utils.dp2px(context, formatText.underlineMarginTop) + fm.descent / 3,
+                if (formatText.underlineWidth == 0f) Utils.dp2px(context, 1f) else Utils.dp2px(
+                    context,
+                    formatText.underlineWidth
+                )
             )
             underLineTexts.add(underLineText)
             userDefaultUnder = false
@@ -334,15 +290,18 @@ class FormatTextView : AppCompatTextView {
         var userDefaultDelete = true
         if (deleteLine && (formatText.deleteLineColor != 0 || formatText.deleteLineWidth != 0f)) {
             val textPaint = TextPaint()
-            textPaint.textSize = if (textSize>0) sp2px(textSize) else getTextSize()
+            textPaint.textSize = if (textSize > 0) Utils.sp2px(context, textSize) else getTextSize()
             val fm = textPaint.fontMetrics
 
             val deleteLineText = LineText(
                 start,
                 end,
                 if (formatText.deleteLineColor != 0) resources.getColor(formatText.deleteLineColor) else textColor,
-                (fm.descent - fm.ascent)/2 - fm.descent,
-                if (formatText.deleteLineWidth == 0f) dp2px(1f) else dp2px(formatText.deleteLineWidth)
+                (fm.descent - fm.ascent) / 2 - fm.descent,
+                if (formatText.deleteLineWidth == 0f) Utils.dp2px(context, 1f) else Utils.dp2px(
+                    context,
+                    formatText.deleteLineWidth
+                )
             )
             deleteLineTexts.add(deleteLineText)
             userDefaultDelete = false
@@ -363,7 +322,12 @@ class FormatTextView : AppCompatTextView {
         }
         htmlBuilder.setSpan(clickableSpan, start, end, flags)
         if (textSize > 0) {
-            htmlBuilder.setSpan(AbsoluteSizeSpan(sp2px(textSize.toFloat()).toInt(), false), start, end, flags)
+            htmlBuilder.setSpan(
+                AbsoluteSizeSpan(
+                    Utils.sp2px(context, textSize.toFloat()).toInt(),
+                    false
+                ), start, end, flags
+            )
         }
         if (bold && italic) {
             htmlBuilder.setSpan(StyleSpan(Typeface.BOLD_ITALIC), start, end, flags)
@@ -441,7 +405,8 @@ class FormatTextView : AppCompatTextView {
             for (i in underLineText.start until underLineText.end) {
                 val bound = getUnderLineBound(i)
                 pts[ptsIndex + 0] = bound.left.toFloat()
-                pts[ptsIndex + 1] = bound.bottom.toFloat() + underLineText.lineWidth/2 +underLineText.lineTop
+                pts[ptsIndex + 1] =
+                    bound.bottom.toFloat() + underLineText.lineWidth / 2 + underLineText.lineTop
                 pts[ptsIndex + 2] = bound.right.toFloat()
                 pts[ptsIndex + 3] = pts[ptsIndex + 1]
                 ptsIndex += 4
@@ -545,10 +510,4 @@ class FormatTextView : AppCompatTextView {
         this.onInflateImageListener = onInflateImageListener
     }
 
-    private fun dp2px(dp: Float): Float {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
-    }
-    private fun sp2px(sp: Float): Float {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, resources.displayMetrics)
-    }
 }
