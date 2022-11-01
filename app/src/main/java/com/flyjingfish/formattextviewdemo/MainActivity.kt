@@ -3,6 +3,7 @@ package com.flyjingfish.formattextviewdemo
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
@@ -12,6 +13,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.flyjingfish.FormatTexttextview.FormatText
 import com.flyjingfish.formattextview.FormatImage
 import com.flyjingfish.formattextview.FormatTextView
+import com.flyjingfish.formattextview.HtmlTextView
 import com.flyjingfish.formattextview.OnFormatClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -101,7 +103,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<img src=\"url_test\"></img>");
+        text7.setOnHtmlClickListener(object :HtmlTextView.OnHtmlClickListener{
+            override fun onLabelClick(url: String?) {
+                Toast.makeText(this@MainActivity,"onClick-Html"+url,Toast.LENGTH_SHORT).show()
+                text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<img src=\"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.itc.cn%2Fq_70%2Fimages03%2F20210227%2F6687c969b58d486fa2f23d8488b96ae4.jpeg&refer=http%3A%2F%2Fp0.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1661701773&t=19043990158a1d11c2a334146020e2ce\"></img>");
 
+            }
 
+        });
     }
 }

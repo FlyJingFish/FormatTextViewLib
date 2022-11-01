@@ -42,5 +42,13 @@
         android:lineSpacingExtra="20dp"
         android:text="Hello World!" />
 
+    <com.flyjingfish.formattextview.HtmlTextView
+        android:id="@+id/text7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:lineSpacingExtra="20dp"
+        android:text="Hello World!" />
+
 
 </LinearLayout>
