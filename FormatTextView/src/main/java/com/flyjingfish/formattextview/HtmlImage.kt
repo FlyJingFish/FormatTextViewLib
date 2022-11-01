@@ -1,6 +1,7 @@
 package com.flyjingfish.formattextview
 
 import android.text.style.ImageSpan
+import androidx.annotation.DrawableRes
 
 class HtmlImage {
     companion object StaticField {
@@ -17,6 +18,10 @@ class HtmlImage {
 
     @JvmField
     var imageUrlValue: String? = null
+
+    @JvmField
+    @DrawableRes
+    var imagePlaceHolder = 0
 
     @JvmField
     var maxWidth = 0f
@@ -48,5 +53,8 @@ class HtmlImage {
         return this
     }
 
-
+    fun setImagePlaceHolder(@DrawableRes imagePlaceHolder: Int): HtmlImage {
+        this.imagePlaceHolder = imagePlaceHolder
+        return this
+    }
 }

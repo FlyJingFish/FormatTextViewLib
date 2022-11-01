@@ -131,11 +131,36 @@ class HtmlTextView : BaseTextView {
             context,
             htmlImage.maxWidth
         ) else imageSpan.drawable.intrinsicWidth.toFloat()
+
         val viewHeight: Float = if (htmlImage != null && htmlImage.maxHeight > 0) Utils.dp2px(
             context,
             htmlImage.maxHeight
         ) else imageSpan.drawable.intrinsicHeight.toFloat()
+
         val drawable = LevelListDrawable()
+        if (htmlImage != null && htmlImage.imagePlaceHolder != 0) {
+            val d = resources.getDrawable(htmlImage.imagePlaceHolder)
+            val wh = getImageSpanWidthHeight(
+                viewWidth,
+                viewHeight,
+                d
+            )
+            val insetDrawable =
+                InsetDrawable(
+                    d,
+                    0,
+                    0,
+                    0,
+                    0
+                )
+            drawable.addLevel(1, 1, insetDrawable)
+            drawable.setBounds(
+                0, 0,
+                wh[0].toInt(),
+                wh[1].toInt()
+            )
+            drawable.level = 1
+        }
         htmlBuilder.setSpan(
             FormatImageSpan(
                 drawable,

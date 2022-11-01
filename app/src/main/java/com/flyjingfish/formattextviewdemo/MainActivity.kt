@@ -124,6 +124,7 @@ class MainActivity : AppCompatActivity() {
                 maxWidth = 160f
                 maxHeight = 160f
                 verticalAlignment = ImageSpan.ALIGN_BASELINE
+                imagePlaceHolder = R.mipmap.ic_launcher
             }
         )
         text7.setOnHtmlClickListener(object :HtmlTextView.OnHtmlClickListener{
@@ -135,6 +136,7 @@ class MainActivity : AppCompatActivity() {
                      maxWidth = 160f
                      maxHeight = 160f
                      verticalAlignment = ImageSpan.ALIGN_BASELINE
+                     imagePlaceHolder = R.mipmap.ic_launcher
                  }
                 )
 
