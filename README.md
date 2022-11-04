@@ -12,13 +12,13 @@
 
 ## FormatTextView function introduction
 
-**1. Support font to set font color, bold, italic, underline, strikethrough, font size**
+**1. Support setting font color, bold, italic, underline, strikethrough, font size**
 
-**2, support underline support to set line width, distance from text, underline color**
+**2, support underline to set line width, distance from text, color**
 
-**3. Support strikethrough Support to set line width, strikethrough color**
+**3. Support strikethrough to set line width and color**
 
-**4. Support setting picture, size, left and right distance, loading local and network pictures**
+**4. Support setting picture, picture size, left and right distance, loading local and network pictures**
 
 **5. Support adding click events to the rich text of each position**
 
