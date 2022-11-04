@@ -1,60 +1,58 @@
-#FormatTextViewLib
-
+# FormatTextViewLib
 [![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)
 
-## [中文版使用说明](https://github.com/FlyJingFish/FormatTextViewLib/blob/master/README-zh.md)
+## 多数app登陆首页都需要显示用户协议和隐私政策并且需要能够点击，遇到需要翻译多个国家语言的，多个TextView拼接会导致语序不对，而且换行也是个问题
 
-## Most apps need to display the user agreement and privacy policy on the home page and need to be able to click. If you need to translate multiple national languages, the splicing of multiple TextViews will cause the word order to be wrong, and line breaks are also a problem.
+# 特色功能
 
-# special function
+## FormatTextView 功能介绍
 
-## FormatTextView function introduction
+**1、支持字体设置字体颜色，加粗，斜体，下划线，删除线，字体大小**
 
-**1. Support font to set font color, bold, italic, underline, strikethrough, font size**
+**2、支持下划线支持设置线宽，距离文字距离，下划线颜色**
 
-**2, support underline support to set line width, distance from text, underline color**
+**3、支持删除线支持设置线宽，删除线颜色**
 
-**3. Support strikethrough Support to set line width, strikethrough color**
+**4、支持设置图片，大小，左右距离，加载本地、网络图片**
 
-**4. Support setting picture, size, left and right distance, loading local and network pictures**
+**5、支持给每个位置的富文本添加点击事件**
 
-**5. Support adding click events to the rich text of each position**
+**6、支持给每个位置的富文本设置背景色**
 
-**6, support to set the background color for the rich text of each position**
+## HtmlTextView 功能介绍
 
-## HtmlTextView function introduction
+**1、支持加载网络图片**
 
-**1. Support loading network pictures**
-
-**2. Support adding click events to tags with links**
+**2、支持为存在链接的标签添加点击事件**
 
 <img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220908_184829.jpg" width="405px" height="842px" alt="show" />
 
-## The first step, the root directory build.gradle
+
+## 第一步，根目录build.gradle
 
 ```gradle
-     allprojects {
-         repositories {
-             ...
-             maven { url 'https://jitpack.io' }
-         }
-     }
-````
-## The second step, the build.gradle that needs to be referenced (the latest version [![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib ))
+    allprojects {
+        repositories {
+            ...
+            maven { url 'https://jitpack.io' }
+        }
+    }
+```
+## 第二步，需要引用的build.gradle （最新版本[![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)）
 
 ```gradle
-     dependencies {
-         implementation 'com.github.FlyJingFish:FormatTextViewLib:2.1.7'
-     }
-````
-## The third step, instructions for use
+    dependencies {
+        implementation 'com.github.FlyJingFish:FormatTextViewLib:2.1.7'
+    }
+```
+## 第三步，使用说明
 
-## 1. Instructions for FormatTextView
+## 一、FormatTextView 使用说明
 
-### Kotlin call example
+### Kotlin调用示例
 
 ```kotlin
-  //If you include network pictures, you must first set the following methods
+  //如果包含网络图片必须先设置以下方法
   textView.setOnInflateImageListener(object : FormatTextView.OnInflateImageListener {
     override fun onInflate(
         formatImage: FormatImage?,
@@ -81,7 +79,7 @@
         })
     }
 })
-  //set data
+  //设置数据
  textView.setFormatTextBean("%1\$s欢迎欢迎欢迎欢迎欢迎欢迎%3\$s欢迎欢迎欢迎%2\$s",
             FormatText().apply {
                 textSize = 30f
@@ -112,7 +110,7 @@
                 marginStart = 10f
                 marginEnd = 10f
             })
-// Set up click listener
+// 设置点击的监听
  textView.setOnFormatClickListener(object : OnFormatClickListener{
             override fun onLabelClick(position: Int) {//position就是设置数据的顺序
                 Toast.makeText(this@MainActivity,"onItemClick-item"+position,Toast.LENGTH_SHORT).show()
@@ -120,7 +118,7 @@
         })
 ```
 
-### Java calling example
+### Java调用示例
 
 ```java
 textView.setOnInflateImageListener(new FormatTextView.OnInflateImageListener() {
@@ -163,53 +161,53 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
                 .setMarginEnd(20f));
 ```
 
-### Underscore FAQ
-If you set the following styles for underline:
+### 下划线常见问题
+如果您设置了下划线以下样式：
 
-**underlineColor, underlineMarginTop, underlineWidth**
+**underlineColor、underlineMarginTop、underlineWidth**
 
-Then the underline will be drawn in the underline scheme. **underlineMarginTop** is not set (ie 0) and drawn at the default strikethrough position. If the set value is too large and the text is long to a new line, you need to set the line spacing, otherwise there will be a glide line. The problem of pressing on the next line, you can solve the problem by setting lineSpacingExtra or lineSpacingMultiplier
+那么下划线将采用绘制下划线方案，**underlineMarginTop**不设置（即为0）绘制在默认的删除线位置，如果设置数值过大并且文本长到换行，则需要设置行间距，否则会出现下滑线压在下一行的问题，你可通过设置lineSpacingExtra或lineSpacingMultiplier来解决问题
 
-### verticalAlignment FAQ
+### verticalAlignment 常见问题
 
-ALIGN_CENTER adds an alignment method to the current library to solve the alignment problem in the center of small icons and text. When the image setting exceeds the line height, there will be a cropping problem. If your image is large, it is recommended to use ALIGN_BASELINE
+ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心对齐问题，在图片设置超过行高时将会出现裁剪问题，如果您图片很大还是建议使用ALIGN_BASELINE
 
-## FormatText parameter list
-|property|parameter type|description|
+## FormatText 参数一览
+|属性|参数类型|描述|
 |---|:---:|:---:|
-|textColor|@ColorRes int|Text resource color Id|
-|bold|boolean|Whether the text is bold|
-|italic|boolean|Whether the text is italic|
-|strValue|String|Text String type value|
-|resValue|@StringRes int|Text ResourceId|
-|textSize|float|Text font size (unit: SP)|
-|underline|boolean|Whether the text is underlined|
-|underlineColor|@ColorRes int|Text underline color|
-|underlineWidth|float|Text underline width|
-|underlineMarginTop|float|The distance by which the text underline is offset down|
-|deleteLine|boolean|Delete line or not|
-|deleteLineColor|@ColorRes int|Text strikethrough color|
-|deleteLineWidth|float|Text strikethrough line width|
-|backgroundColor|@ColorRes int|Text area background color|
+|textColor|@ColorRes int|文字资源颜色Id|
+|bold|boolean|文字是否加粗|
+|italic|boolean|文字是否斜体|
+|strValue|String|文字String类型值|
+|resValue|@StringRes int|文字文本资源Id|
+|textSize|float|文字字体大小(单位：SP)|
+|underline|boolean|文字是否下划线|
+|underlineColor|@ColorRes int|文字下划线颜色|
+|underlineWidth|float|文字下划线线宽|
+|underlineMarginTop|float|文字下划线向下偏移的距离|
+|deleteLine|boolean|文字是否删除线|
+|deleteLineColor|@ColorRes int|文字删除线颜色|
+|deleteLineWidth|float|文字删除线线宽|
+|backgroundColor|@ColorRes int|文字区域背景色|
 
-## FormatImage parameter list
-|property|parameter type|description|
+## FormatImage 参数一览
+|属性|参数类型|描述|
 |---|:---:|:---:|
-|imageUrlValue|String|Network Image Url|
-|imageResValue|@DrawableRes int|Local Image Resource Id|
-|imagePlaceHolder|@DrawableRes int|Id of the image resource when the network image is loaded|
-|width|float|Image width (unit: DP)|
-|height|float|Image height (unit: DP)|
-|verticalAlignment|int|Image alignment (ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
-|marginLeft|float|Image distance to the left (unit: DP)|
-|marginRight|float|Image distance to the right (unit: DP)|
-|marginStart|float|Image distance from left (Rtl:right) (unit: DP)|
-|marginEnd|float|Image distance to the right (Rtl:left) distance (unit: DP)|
-|backgroundColor|@ColorRes int|Image area background color|
+|imageUrlValue|String|网络图片Url|
+|imageResValue|@DrawableRes int|本地图片资源Id|
+|imagePlaceHolder|@DrawableRes int|网络图片加载时图片资源Id|
+|width|float|图片宽度(单位：DP)|
+|height|float|图片高度(单位：DP)|
+|verticalAlignment|int|图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
+|marginLeft|float|图片距离左侧距离(单位：DP)|
+|marginRight|float|图片距离右侧距离(单位：DP)|
+|marginStart|float|图片距离左侧(Rtl:右侧)距离(单位：DP)|
+|marginEnd|float|图片距离右侧(Rtl:左侧)距离(单位：DP)|
+|backgroundColor|@ColorRes int|图片区域背景色|
 
-## Two, HtmlTextView instructions
+## 二、HtmlTextView 使用说明
 
-### Kotlin call example
+### Kotlin调用示例
 
 ```kotlin
  //如果包含网络图片必须先设置以下方法
@@ -242,7 +240,7 @@ text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<
 )
 ```
 
-### Java calling example
+### Java调用示例
 
 ```java
 text7.setOnInflateImageListener(new HtmlTextView.OnInflateImageListener() {
@@ -267,21 +265,21 @@ text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<
         new HtmlImage().setMaxHeight(100).setMaxWidth(100));
 ```
 
-## HtmlImage parameter list
-|property|parameter type|description|
+## HtmlImage 参数一览
+|属性|参数类型|描述|
 |---|:---:|:---:|
-|imagePlaceHolder|@DrawableRes int|Id of the image resource when the network image is loaded|
-|maxWidth|float|Image width (unit: DP)|
-|maxHeight|float|Image height (unit: DP)|
-|verticalAlignment|int|Image alignment (ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
+|imagePlaceHolder|@DrawableRes int|网络图片加载时图片资源Id|
+|maxWidth|float|图片宽度(单位：DP)|
+|maxHeight|float|图片高度(单位：DP)|
+|verticalAlignment|int|图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
 
-# My more open source library recommendations
+# 我的更多开源库推荐
 
-Supports circle or rounded corners without Bitmap operation, can draw circle background borders or rounded box background borders, in addition to the built-in properties of ImageView, 4 new display modes are added; in addition, there are pictures that can draw arbitrary graphics only you can't think of , can't be done without it
+支持不操作Bitmap的圆图或圆角图，可绘制圆环背景边框或圆角框背景边框，除ImageView自带属性外新增4种显示模式；另外更有可绘制任意图形的图片只有你想不到，没有它做不到
 
 - [ShapeImageView](https://github.com/FlyJingFish/ShapeImageView)
 
-An image viewer that supports clicking on the small image to view the animation opening effect of the larger image
+支持点击小图查看大图的动画打开效果的图片查看器
 
-- [OpenImage](https://github.com/FlyJingFish/OpenImage) (ShapeImageView built-in)
+- [OpenImage](https://github.com/FlyJingFish/OpenImage)（已内置ShapeImageView）
 
