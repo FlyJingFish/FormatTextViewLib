@@ -266,12 +266,12 @@ text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<
 ```
 
 ## HtmlImage 参数一览
-|属性|参数类型|描述|
-|---|:---:|:---:|
-|imagePlaceHolder|@DrawableRes int|网络图片加载时图片资源Id|
-|maxWidth|float|图片宽度(单位：DP)|
-|maxHeight|float|图片高度(单位：DP)|
-|verticalAlignment|int|图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
+|属性|参数类型|                        描述                        |
+|---|:---:|:------------------------------------------------:|
+|imagePlaceHolder|@DrawableRes int|                  网络图片加载时图片资源Id                   |
+|maxWidth|float|                  图片最大宽度(单位：DP)                   |
+|maxHeight|float|                   图片最大高度(单位：DP)                    |
+|verticalAlignment|int| 图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM) |
 
 # 我的更多开源库推荐
 

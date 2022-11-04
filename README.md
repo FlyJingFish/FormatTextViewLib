@@ -270,11 +270,11 @@ text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<
 
 ## HtmlImage parameter list
 |property|parameter type|description|
-|---|:---:|:---:|
-|imagePlaceHolder|@DrawableRes int|Id of the image resource when the network image is loaded|
-|maxWidth|float|Image width (unit: DP)|
-|maxHeight|float|Image height (unit: DP)|
-|verticalAlignment|int|Image alignment (ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
+|---|:---:|:-------------------------------------- ----------:|
+|imagePlaceHolder|@DrawableRes int| Id of the image resource when the network image is loaded |
+|maxWidth|float| The maximum width of the picture (unit: DP) |
+|maxHeight|float| Maximum image height (unit: DP) |
+|verticalAlignment|int| Image alignment (ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM) |
 
 # My more open source library recommendations
 
