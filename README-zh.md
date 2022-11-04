@@ -3,6 +3,8 @@
 
 ## 多数app登陆首页都需要显示用户协议和隐私政策并且需要能够点击，遇到需要翻译多个国家语言的，多个TextView拼接会导致语序不对，而且换行也是个问题
 
+<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220908_184829.jpg" width="405px" height="842px" alt="show" />
+
 # 特色功能
 
 ## FormatTextView 功能介绍
@@ -24,8 +26,6 @@
 **1、支持加载网络图片**
 
 **2、支持为存在链接的标签添加点击事件**
-
-<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220908_184829.jpg" width="405px" height="842px" alt="show" />
 
 
 ## 第一步，根目录build.gradle

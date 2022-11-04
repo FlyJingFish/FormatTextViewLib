@@ -6,6 +6,8 @@
 
 ## Most apps need to display the user agreement and privacy policy on the home page and need to be able to click. If you need to translate multiple national languages, the splicing of multiple TextViews will cause the word order to be wrong, and line breaks are also a problem.
 
+<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220908_184829.jpg" width="405px" height="842px" alt="show" />
+
 # special function
 
 ## FormatTextView function introduction
@@ -28,7 +30,6 @@
 
 **2. Support adding click events to tags with links**
 
-<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20220908_184829.jpg" width="405px" height="842px" alt="show" />
 
 ## The first step, the root directory build.gradle
 
