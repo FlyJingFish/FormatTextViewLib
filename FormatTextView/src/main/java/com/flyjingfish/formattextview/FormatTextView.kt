@@ -15,10 +15,8 @@ import android.util.AttributeSet
 import android.util.LayoutDirection
 import android.view.View
 import androidx.annotation.StringRes
-import java.lang.NullPointerException
 import androidx.core.text.TextUtilsCompat
 import java.util.*
-import kotlin.math.max
 
 
 class FormatTextView : BaseTextView {
@@ -83,8 +81,8 @@ class FormatTextView : BaseTextView {
     }
 
     fun setFormatText(formatTextValue: String, vararg args: Int) {
-        val formatTexts: Array<FormatText?> = arrayOfNulls<FormatText>(args.size)
-        for (i in 0 until args.size) {
+        val formatTexts: Array<FormatText?> = arrayOfNulls(args.size)
+        for (i in args.indices) {
             formatTexts[i] = FormatText().setResValue(args[i])
         }
         setFormatTextBean(formatTextValue, *formatTexts)
@@ -95,8 +93,8 @@ class FormatTextView : BaseTextView {
     }
 
     fun setFormatText(formatTextValue: String, vararg args: String) {
-        val formatTexts: Array<FormatText?> = arrayOfNulls<FormatText>(args.size)
-        for (i in 0 until args.size) {
+        val formatTexts: Array<FormatText?> = arrayOfNulls(args.size)
+        for (i in args.indices) {
             formatTexts[i] = FormatText().setStrValue(args[i])
         }
         setFormatTextBean(formatTextValue, *formatTexts)
