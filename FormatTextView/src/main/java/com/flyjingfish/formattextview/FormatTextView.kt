@@ -56,29 +56,6 @@ class FormatTextView : BaseTextView {
 
             if (args[i] is FormatImage) {
                 val formatImage = args[i] as FormatImage
-                val isRtl =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == LayoutDirection.RTL
-                    } else {
-                        false
-                    }
-                formatImage.width = Utils.dp2px(context, formatImage.width)
-                formatImage.height = Utils.dp2px(context, formatImage.height)
-                formatImage.marginLeft = Utils.dp2px(
-                    context,
-                    max(
-                        if (isRtl) formatImage.marginEnd else formatImage.marginStart,
-                        formatImage.marginLeft
-                    )
-                )
-                formatImage.marginRight = Utils.dp2px(
-                    context,
-                    max(
-                        if (isRtl) formatImage.marginStart else formatImage.marginEnd,
-                        formatImage.marginRight
-                    )
-                )
-
                 strings[i] =
                     start + "<img src=\"" + (if (formatImage.imageResValue != 0) formatImage.imageResValue else formatImage.imageUrlValue) + "\"></img>" + end
             } else {
@@ -154,12 +131,32 @@ class FormatTextView : BaseTextView {
         urlSpan: URLSpan,
         formatImage: FormatImage
     ) {
+        val isRtl =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == LayoutDirection.RTL
+            } else {
+                false
+            }
+        val imageWidth = Utils.dp2px(context, formatImage.width)
+        val imageHeight = Utils.dp2px(context, formatImage.height)
+        var marginLeft = if (isRtl) formatImage.marginEnd else formatImage.marginStart
+        var marginRight = if (isRtl) formatImage.marginStart else formatImage.marginEnd
+        marginLeft = if (marginLeft == 0f){
+            Utils.dp2px(context, formatImage.marginLeft)
+        }else{
+            Utils.dp2px(context, marginLeft)
+        }
+
+        marginRight = if (marginRight == 0f){
+            Utils.dp2px(context, formatImage.marginRight)
+        }else{
+            Utils.dp2px(context, marginRight)
+        }
+
         val start = htmlBuilder.getSpanStart(urlSpan)
         val end = htmlBuilder.getSpanEnd(urlSpan)
         val flags = htmlBuilder.getSpanFlags(urlSpan)
-        val clickableSpan: ClickableSpan = object : FormatClickableSpan(urlSpan) {
-
-        }
+        val clickableSpan: ClickableSpan = FormatClickableSpan(urlSpan)
 
         htmlBuilder.setSpan(clickableSpan, start, end, flags)
 
@@ -167,22 +164,22 @@ class FormatTextView : BaseTextView {
         if (formatImage.imageResValue != 0) {
             val d = resources.getDrawable(formatImage.imageResValue)
             val wh = getImageSpanWidthHeight(
-                if (formatImage.width != 0f) formatImage.width else d.intrinsicWidth.toFloat(),
-                if (formatImage.height != 0f) formatImage.height else d.intrinsicHeight.toFloat(),
+                if (imageWidth != 0f) imageWidth else d.intrinsicWidth.toFloat(),
+                if (imageHeight != 0f) imageHeight else d.intrinsicHeight.toFloat(),
                 d
             )
             val insetDrawable =
                 InsetDrawable(
                     d,
-                    formatImage.marginLeft.toInt(),
+                    marginLeft.toInt(),
                     0,
-                    formatImage.marginRight.toInt(),
+                    marginRight.toInt(),
                     0
                 )
             drawable.addLevel(1, 1, insetDrawable)
             drawable.setBounds(
                 0, 0,
-                wh[0].toInt() + formatImage.marginLeft.toInt() + formatImage.marginRight.toInt(),
+                wh[0].toInt() + marginLeft.toInt() + marginRight.toInt(),
                 wh[1].toInt()
             )
             drawable.level = 1
@@ -192,22 +189,22 @@ class FormatTextView : BaseTextView {
             if (formatImage.imagePlaceHolder != 0) {
                 val d = resources.getDrawable(formatImage.imagePlaceHolder)
                 val wh = getImageSpanWidthHeight(
-                    if (formatImage.width != 0f) formatImage.width else d.intrinsicWidth.toFloat(),
-                    if (formatImage.height != 0f) formatImage.height else d.intrinsicHeight.toFloat(),
+                    if (imageWidth != 0f) imageWidth else d.intrinsicWidth.toFloat(),
+                    if (imageHeight != 0f) imageHeight else d.intrinsicHeight.toFloat(),
                     d
                 )
                 val insetDrawable =
                     InsetDrawable(
                         d,
-                        formatImage.marginLeft.toInt(),
+                        marginLeft.toInt(),
                         0,
-                        formatImage.marginRight.toInt(),
+                        marginRight.toInt(),
                         0
                     )
                 drawable.addLevel(1, 1, insetDrawable)
                 drawable.setBounds(
                     0, 0,
-                    wh[0].toInt() + formatImage.marginLeft.toInt() + formatImage.marginRight.toInt(),
+                    wh[0].toInt() + marginLeft.toInt() + marginRight.toInt(),
                     wh[1].toInt()
                 )
                 drawable.level = 1
@@ -221,20 +218,20 @@ class FormatTextView : BaseTextView {
                         override fun onReturnDrawable(d: Drawable) {
                             val insetDrawable = InsetDrawable(
                                 d,
-                                formatImage.marginLeft.toInt(),
+                                marginLeft.toInt(),
                                 0,
-                                formatImage.marginRight.toInt(),
+                                marginRight.toInt(),
                                 0
                             )
                             val wh = getImageSpanWidthHeight(
-                                if (formatImage.width != 0f) formatImage.width else d.intrinsicWidth.toFloat(),
-                                if (formatImage.height != 0f) formatImage.height else d.intrinsicHeight.toFloat(),
+                                if (imageWidth != 0f) imageWidth else d.intrinsicWidth.toFloat(),
+                                if (imageHeight != 0f) imageHeight else d.intrinsicHeight.toFloat(),
                                 d
                             )
                             drawable.addLevel(2, 2, insetDrawable)
                             drawable.setBounds(
                                 0, 0,
-                                wh[0].toInt() + formatImage.marginLeft.toInt() + formatImage.marginRight.toInt(),
+                                wh[0].toInt() + marginLeft.toInt() + marginRight.toInt(),
                                 wh[1].toInt()
                             )
                             drawable.level = 2
@@ -324,7 +321,7 @@ class FormatTextView : BaseTextView {
         if (textSize > 0) {
             htmlBuilder.setSpan(
                 AbsoluteSizeSpan(
-                    Utils.sp2px(context, textSize.toFloat()).toInt(),
+                    Utils.sp2px(context, textSize).toInt(),
                     false
                 ), start, end, flags
             )
