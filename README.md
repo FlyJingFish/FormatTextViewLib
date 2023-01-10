@@ -1,4 +1,4 @@
-#FormatTextViewLib
+# FormatTextViewLib
 
 [![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)
 
