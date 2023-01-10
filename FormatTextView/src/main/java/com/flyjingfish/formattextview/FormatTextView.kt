@@ -13,11 +13,8 @@ import android.text.style.*
 import android.text.util.Linkify
 import android.util.AttributeSet
 import android.util.LayoutDirection
-import android.util.TypedValue
 import android.view.View
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.AppCompatTextView
-import com.flyjingfish.FormatTexttextview.FormatText
 import java.lang.NullPointerException
 import androidx.core.text.TextUtilsCompat
 import java.util.*
@@ -137,20 +134,20 @@ class FormatTextView : BaseTextView {
             } else {
                 false
             }
-        val imageWidth = Utils.dp2px(context, formatImage.width)
-        val imageHeight = Utils.dp2px(context, formatImage.height)
+        val imageWidth = dp2px(context, formatImage.width)
+        val imageHeight = dp2px(context, formatImage.height)
         var marginLeft = if (isRtl) formatImage.marginEnd else formatImage.marginStart
         var marginRight = if (isRtl) formatImage.marginStart else formatImage.marginEnd
         marginLeft = if (marginLeft == 0f){
-            Utils.dp2px(context, formatImage.marginLeft)
+            dp2px(context, formatImage.marginLeft)
         }else{
-            Utils.dp2px(context, marginLeft)
+            dp2px(context, marginLeft)
         }
 
         marginRight = if (marginRight == 0f){
-            Utils.dp2px(context, formatImage.marginRight)
+            dp2px(context, formatImage.marginRight)
         }else{
-            Utils.dp2px(context, marginRight)
+            dp2px(context, marginRight)
         }
 
         val start = htmlBuilder.getSpanStart(urlSpan)
@@ -268,15 +265,15 @@ class FormatTextView : BaseTextView {
         }
         if (underline && (formatText.underlineColor != 0 || formatText.underlineMarginTop != 0f || formatText.underlineWidth != 0f)) {
             val textPaint = TextPaint()
-            textPaint.textSize = if (textSize > 0) Utils.sp2px(context, textSize) else getTextSize()
+            textPaint.textSize = if (textSize > 0) sp2px(context, textSize) else getTextSize()
             val fm = textPaint.fontMetrics
 
             val underLineText = LineText(
                 start,
                 end,
                 if (formatText.underlineColor != 0) resources.getColor(formatText.underlineColor) else textColor,
-                Utils.dp2px(context, formatText.underlineMarginTop) + fm.descent / 3,
-                if (formatText.underlineWidth == 0f) Utils.dp2px(context, 1f) else Utils.dp2px(
+                dp2px(context, formatText.underlineMarginTop) + fm.descent / 3,
+                if (formatText.underlineWidth == 0f) dp2px(context, 1f) else dp2px(
                     context,
                     formatText.underlineWidth
                 )
@@ -287,7 +284,7 @@ class FormatTextView : BaseTextView {
         var userDefaultDelete = true
         if (deleteLine && (formatText.deleteLineColor != 0 || formatText.deleteLineWidth != 0f)) {
             val textPaint = TextPaint()
-            textPaint.textSize = if (textSize > 0) Utils.sp2px(context, textSize) else getTextSize()
+            textPaint.textSize = if (textSize > 0) sp2px(context, textSize) else getTextSize()
             val fm = textPaint.fontMetrics
 
             val deleteLineText = LineText(
@@ -295,7 +292,7 @@ class FormatTextView : BaseTextView {
                 end,
                 if (formatText.deleteLineColor != 0) resources.getColor(formatText.deleteLineColor) else textColor,
                 (fm.descent - fm.ascent) / 2 - fm.descent,
-                if (formatText.deleteLineWidth == 0f) Utils.dp2px(context, 1f) else Utils.dp2px(
+                if (formatText.deleteLineWidth == 0f) dp2px(context, 1f) else dp2px(
                     context,
                     formatText.deleteLineWidth
                 )
@@ -321,7 +318,7 @@ class FormatTextView : BaseTextView {
         if (textSize > 0) {
             htmlBuilder.setSpan(
                 AbsoluteSizeSpan(
-                    Utils.sp2px(context, textSize).toInt(),
+                    sp2px(context, textSize).toInt(),
                     false
                 ), start, end, flags
             )

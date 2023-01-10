@@ -12,7 +12,7 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.flyjingfish.FormatTexttextview.FormatText;
+import com.flyjingfish.formattextview.FormatText;
 import com.flyjingfish.formattextview.FormatImage;
 import com.flyjingfish.formattextview.FormatTextView;
 import com.flyjingfish.formattextview.HtmlImage;

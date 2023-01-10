@@ -1,9 +1,7 @@
 package com.flyjingfish.formattextview
 
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
 import android.graphics.drawable.LevelListDrawable
@@ -16,8 +14,6 @@ import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.util.AttributeSet
 import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
-import java.lang.NullPointerException
 
 class HtmlTextView : BaseTextView {
     private var onHtmlClickListener: OnHtmlClickListener? = null
@@ -127,12 +123,12 @@ class HtmlTextView : BaseTextView {
 
         }, start, end, flags)
 
-        val viewWidth: Float = if (htmlImage != null && htmlImage.maxWidth > 0) Utils.dp2px(
+        val viewWidth: Float = if (htmlImage != null && htmlImage.maxWidth > 0) dp2px(
             context,
             htmlImage.maxWidth
         ) else imageSpan.drawable.intrinsicWidth.toFloat()
 
-        val viewHeight: Float = if (htmlImage != null && htmlImage.maxHeight > 0) Utils.dp2px(
+        val viewHeight: Float = if (htmlImage != null && htmlImage.maxHeight > 0) dp2px(
             context,
             htmlImage.maxHeight
         ) else imageSpan.drawable.intrinsicHeight.toFloat()

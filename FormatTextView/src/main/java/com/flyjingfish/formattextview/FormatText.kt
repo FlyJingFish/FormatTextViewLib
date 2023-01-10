@@ -1,8 +1,7 @@
-package com.flyjingfish.FormatTexttextview
+package com.flyjingfish.formattextview
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import com.flyjingfish.formattextview.BaseFormat
 
 class FormatText : BaseFormat() {
 
