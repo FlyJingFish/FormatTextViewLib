@@ -136,6 +136,7 @@ OnFormatClickListener 的 onLabelClick 返回的 position 就是设置数据的�
 
 出现以上两种结果是只是因为 **%1$s** 和 **%2$s** 调换了顺序，但是调用**setFormatTextBean**设置数据的顺序并没有变化，所以当点击**隐私政策**时position两种情况都是0，当点击**用户协议**时position两种情况都是1
 
+**简单来说 setFormatTextBean(str,"隐私政策","用户协议") 中 "隐私政策" 对应 position 是0， "用户协议" 对应 position 是1**
 
 ### Java调用示例
 

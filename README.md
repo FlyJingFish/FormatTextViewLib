@@ -139,6 +139,7 @@ The results of the above two strings are
 
 The above two results appear only because the order of **%1$s** and **%2$s** has been exchanged, but the order of calling **setFormatTextBean** to set the data has not changed, so when clicking **Privacy Both positions are 0 when the policy** is clicked, and both positions are 1 when **User Agreement** is clicked
 
+**Simply speaking, in setFormatTextBean(str,"Privacy Policy","User Agreement"), the corresponding position of "Privacy Policy" is 0, and the corresponding position of "User Agreement" is 1**
 
 ### Java calling example
 
