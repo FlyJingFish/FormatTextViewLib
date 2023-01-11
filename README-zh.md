@@ -118,6 +118,25 @@
         })
 ```
 
+### 特别说明
+
+OnFormatClickListener 的 onLabelClick 返回的 position 就是设置数据的下标
+
+**举个例子**
+
+有这样一段文本  str = "我已阅读并同意%1$s和%2$s" 或者 "我已阅读并同意%2$s和%1$s"
+
+当使用以上两个字符串调用 setFormatTextBean(str,"隐私政策","用户协议") 时
+
+以上两种字符串的结果分别是
+
+1、我已阅读并同意**隐私政策**和**用户协议**
+
+2、我已阅读并同意**用户协议**和**隐私政策**
+
+出现以上两种结果是只是因为 **%1$s** 和 **%2$s** 调换了顺序，但是调用**setFormatTextBean**设置数据的顺序并没有变化，所以当点击**隐私政策**时position两种情况都是0，当点击**用户协议**时position两种情况都是1
+
+
 ### Java调用示例
 
 ```java
@@ -173,37 +192,37 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心对齐问题，在图片设置超过行高时将会出现裁剪问题，如果您图片很大还是建议使用ALIGN_BASELINE
 
 ## FormatText 参数一览
-|属性|参数类型|描述|
-|---|:---:|:---:|
-|textColor|@ColorRes int|文字资源颜色Id|
-|bold|boolean|文字是否加粗|
-|italic|boolean|文字是否斜体|
-|strValue|String|文字String类型值|
-|resValue|@StringRes int|文字文本资源Id|
-|textSize|float|文字字体大小(单位：SP)|
-|underline|boolean|文字是否下划线|
-|underlineColor|@ColorRes int|文字下划线颜色|
-|underlineWidth|float|文字下划线线宽|
-|underlineMarginTop|float|文字下划线向下偏移的距离|
-|deleteLine|boolean|文字是否删除线|
-|deleteLineColor|@ColorRes int|文字删除线颜色|
-|deleteLineWidth|float|文字删除线线宽|
-|backgroundColor|@ColorRes int|文字区域背景色|
+| 属性                 |      参数类型      |      描述       |
+|--------------------|:--------------:|:-------------:|
+| textColor          | @ColorRes int  |   文字资源颜色Id    |
+| bold               |    boolean     |    文字是否加粗     |
+| italic             |    boolean     |    文字是否斜体     |
+| strValue           |     String     |  文字String类型值  |
+| resValue           | @StringRes int |   文字文本资源Id    |
+| textSize           |     float      | 文字字体大小(单位：SP) |
+| underline          |    boolean     |    文字是否下划线    |
+| underlineColor     | @ColorRes int  |    文字下划线颜色    |
+| underlineWidth     |     float      |    文字下划线线宽    |
+| underlineMarginTop |     float      | 文字下划线向下偏移的距离  |
+| deleteLine         |    boolean     |    文字是否删除线    |
+| deleteLineColor    | @ColorRes int  |    文字删除线颜色    |
+| deleteLineWidth    |     float      |    文字删除线线宽    |
+| backgroundColor    | @ColorRes int  |    文字区域背景色    |
 
 ## FormatImage 参数一览
-|属性|参数类型|描述|
-|---|:---:|:---:|
-|imageUrlValue|String|网络图片Url|
-|imageResValue|@DrawableRes int|本地图片资源Id|
-|imagePlaceHolder|@DrawableRes int|网络图片加载时图片资源Id|
-|width|float|图片宽度(单位：DP)|
-|height|float|图片高度(单位：DP)|
-|verticalAlignment|int|图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
-|marginLeft|float|图片距离左侧距离(单位：DP)|
-|marginRight|float|图片距离右侧距离(单位：DP)|
-|marginStart|float|图片距离左侧(Rtl:右侧)距离(单位：DP)|
-|marginEnd|float|图片距离右侧(Rtl:左侧)距离(单位：DP)|
-|backgroundColor|@ColorRes int|图片区域背景色|
+| 属性                |       参数类型       |                        描述                        |
+|-------------------|:----------------:|:------------------------------------------------:|
+| imageUrlValue     |      String      |                     网络图片Url                      |
+| imageResValue     | @DrawableRes int |                     本地图片资源Id                     |
+| imagePlaceHolder  | @DrawableRes int |                  网络图片加载时图片资源Id                   |
+| width             |      float       |                   图片宽度(单位：DP)                    |
+| height            |      float       |                   图片高度(单位：DP)                    |
+| verticalAlignment |       int        | 图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM) |
+| marginLeft        |      float       |                 图片距离左侧距离(单位：DP)                  |
+| marginRight       |      float       |                 图片距离右侧距离(单位：DP)                  |
+| marginStart       |      float       |             图片距离左侧(Rtl:右侧)距离(单位：DP)              |
+| marginEnd         |      float       |             图片距离右侧(Rtl:左侧)距离(单位：DP)              |
+| backgroundColor   |  @ColorRes int   |                     图片区域背景色                      |
 
 ## 二、HtmlTextView 使用说明
 
@@ -266,12 +285,12 @@ text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<
 ```
 
 ## HtmlImage 参数一览
-|属性|参数类型|                        描述                        |
-|---|:---:|:------------------------------------------------:|
-|imagePlaceHolder|@DrawableRes int|                  网络图片加载时图片资源Id                   |
-|maxWidth|float|                  图片最大宽度(单位：DP)                   |
-|maxHeight|float|                   图片最大高度(单位：DP)                    |
-|verticalAlignment|int| 图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM) |
+| 属性                |       参数类型       |                        描述                        |
+|-------------------|:----------------:|:------------------------------------------------:|
+| imagePlaceHolder  | @DrawableRes int |                  网络图片加载时图片资源Id                   |
+| maxWidth          |      float       |                  图片最大宽度(单位：DP)                   |
+| maxHeight         |      float       |                  图片最大高度(单位：DP)                   |
+| verticalAlignment |       int        | 图片对齐方式(ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM) |
 
 # 我的更多开源库推荐
 

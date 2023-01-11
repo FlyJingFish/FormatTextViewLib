@@ -121,6 +121,25 @@
         })
 ```
 
+### Special Note
+
+The position returned by onLabelClick of OnFormatClickListener is the subscript of the set data
+
+**for example**
+
+There is such a text str = "I have read and agree with %1$s and %2$s" or "I have read and agree with %2$s and %1$s"
+
+When calling setFormatTextBean(str,"Privacy Policy","User Agreement") with the above two strings
+
+The results of the above two strings are
+
+1. I have read and agree to **Privacy Policy** and **User Agreement**
+
+2. I have read and agree to **User Agreement** and **Privacy Policy**
+
+The above two results appear only because the order of **%1$s** and **%2$s** has been exchanged, but the order of calling **setFormatTextBean** to set the data has not changed, so when clicking **Privacy Both positions are 0 when the policy** is clicked, and both positions are 1 when **User Agreement** is clicked
+
+
 ### Java calling example
 
 ```java
@@ -176,37 +195,37 @@ Then the underline will be drawn in the underline scheme. **underlineMarginTop**
 ALIGN_CENTER adds an alignment method to the current library to solve the alignment problem in the center of small icons and text. When the image setting exceeds the line height, there will be a cropping problem. If your image is large, it is recommended to use ALIGN_BASELINE
 
 ## FormatText parameter list
-|property|parameter type|description|
-|---|:---:|:---:|
-|textColor|@ColorRes int|Text resource color Id|
-|bold|boolean|Whether the text is bold|
-|italic|boolean|Whether the text is italic|
-|strValue|String|Text String type value|
-|resValue|@StringRes int|Text ResourceId|
-|textSize|float|Text font size (unit: SP)|
-|underline|boolean|Whether the text is underlined|
-|underlineColor|@ColorRes int|Text underline color|
-|underlineWidth|float|Text underline width|
-|underlineMarginTop|float|The distance by which the text underline is offset down|
-|deleteLine|boolean|Delete line or not|
-|deleteLineColor|@ColorRes int|Text strikethrough color|
-|deleteLineWidth|float|Text strikethrough line width|
-|backgroundColor|@ColorRes int|Text area background color|
+| property           | parameter type |                       description                       |
+|--------------------|:--------------:|:-------------------------------------------------------:|
+| textColor          | @ColorRes int  |                 Text resource color Id                  |
+| bold               |    boolean     |                Whether the text is bold                 |
+| italic             |    boolean     |               Whether the text is italic                |
+| strValue           |     String     |                 Text String type value                  |
+| resValue           | @StringRes int |                     Text ResourceId                     |
+| textSize           |     float      |                Text font size (unit: SP)                |
+| underline          |    boolean     |             Whether the text is underlined              |
+| underlineColor     | @ColorRes int  |                  Text underline color                   |
+| underlineWidth     |     float      |                  Text underline width                   |
+| underlineMarginTop |     float      | The distance by which the text underline is offset down |
+| deleteLine         |    boolean     |                   Delete line or not                    |
+| deleteLineColor    | @ColorRes int  |                Text strikethrough color                 |
+| deleteLineWidth    |     float      |              Text strikethrough line width              |
+| backgroundColor    | @ColorRes int  |               Text area background color                |
 
 ## FormatImage parameter list
-|property|parameter type|description|
-|---|:---:|:---:|
-|imageUrlValue|String|Network Image Url|
-|imageResValue|@DrawableRes int|Local Image Resource Id|
-|imagePlaceHolder|@DrawableRes int|Id of the image resource when the network image is loaded|
-|width|float|Image width (unit: DP)|
-|height|float|Image height (unit: DP)|
-|verticalAlignment|int|Image alignment (ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM)|
-|marginLeft|float|Image distance to the left (unit: DP)|
-|marginRight|float|Image distance to the right (unit: DP)|
-|marginStart|float|Image distance from left (Rtl:right) (unit: DP)|
-|marginEnd|float|Image distance to the right (Rtl:left) distance (unit: DP)|
-|backgroundColor|@ColorRes int|Image area background color|
+| property          |  parameter type  |                        description                         |
+|-------------------|:----------------:|:----------------------------------------------------------:|
+| imageUrlValue     |      String      |                     Network Image Url                      |
+| imageResValue     | @DrawableRes int |                  Local Image Resource Id                   |
+| imagePlaceHolder  | @DrawableRes int | Id of the image resource when the network image is loaded  |
+| width             |      float       |                   Image width (unit: DP)                   |
+| height            |      float       |                  Image height (unit: DP)                   |
+| verticalAlignment |       int        | Image alignment (ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM) |
+| marginLeft        |      float       |           Image distance to the left (unit: DP)            |
+| marginRight       |      float       |           Image distance to the right (unit: DP)           |
+| marginStart       |      float       |      Image distance from left (Rtl:right) (unit: DP)       |
+| marginEnd         |      float       | Image distance to the right (Rtl:left) distance (unit: DP) |
+| backgroundColor   |  @ColorRes int   |                Image area background color                 |
 
 ## Two, HtmlTextView instructions
 
@@ -269,12 +288,12 @@ text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<
 ```
 
 ## HtmlImage parameter list
-|property|parameter type|description|
-|---|:---:|:------------------------------------------------:|
-|imagePlaceHolder|@DrawableRes int| Id of the image resource when the network image is loaded |
-|maxWidth|float| The maximum width of the picture (unit: DP) |
-|maxHeight|float| Maximum image height (unit: DP) |
-|verticalAlignment|int| Image alignment (ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM) |
+| property          |  parameter type  |                        description                         |
+|-------------------|:----------------:|:----------------------------------------------------------:|
+| imagePlaceHolder  | @DrawableRes int | Id of the image resource when the network image is loaded  |
+| maxWidth          |      float       |        The maximum width of the picture (unit: DP)         |
+| maxHeight         |      float       |              Maximum image height (unit: DP)               |
+| verticalAlignment |       int        | Image alignment (ALIGN_BASELINE/ALIGN_CENTER/ALIGN_BOTTOM) |
 
 # My more open source library recommendations
 
