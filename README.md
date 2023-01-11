@@ -115,7 +115,7 @@
             })
 // Set up click listener
  textView.setOnFormatClickListener(object : OnFormatClickListener{
-            override fun onLabelClick(position: Int) {//position就是设置数据的顺序
+            override fun onLabelClick(position: Int) {//position is the order in which the data is set
                 Toast.makeText(this@MainActivity,"onItemClick-item"+position,Toast.LENGTH_SHORT).show()
             }
         })
