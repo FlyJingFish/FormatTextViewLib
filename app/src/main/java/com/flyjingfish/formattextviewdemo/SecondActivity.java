@@ -34,9 +34,6 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public void onInflate(FormatImage formatImage, final FormatTextView.OnReturnDrawableListener drawableListener) {
                 RequestBuilder<Drawable> requestBuilder = Glide.with(SecondActivity.this).asDrawable().load(formatImage.imageUrlValue);
-                if (formatImage.width > 0 && formatImage.height > 0) {
-                    requestBuilder.apply(new RequestOptions().override(((int) formatImage.width), ((int) formatImage.height)).centerCrop());
-                }
                 requestBuilder.into(new CustomTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {

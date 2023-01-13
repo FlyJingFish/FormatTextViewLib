@@ -66,10 +66,12 @@
                 formatImage!!.imageUrlValue
             )
         if (formatImage.width > 0 && formatImage.height > 0) {
+            val imageWidth = dp2px(this@DemoActivity, formatImage.width)
+            val imageHeight = dp2px(this@DemoActivity, formatImage.height)
             requestBuilder.apply(
                 RequestOptions().override(
-                    formatImage.width.toInt(),
-                    formatImage.height.toInt()
+                    imageWidth.toInt(),
+                    imageHeight.toInt()
                 ).centerCrop()
             )
         }

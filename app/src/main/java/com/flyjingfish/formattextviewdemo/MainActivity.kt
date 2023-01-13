@@ -40,10 +40,12 @@ class MainActivity : AppCompatActivity() {
                         formatImage!!.imageUrlValue
                     )
                 if (formatImage.width > 0 && formatImage.height > 0) {
+                    val imageWidth = dp2px(this@MainActivity, formatImage.width)
+                    val imageHeight = dp2px(this@MainActivity, formatImage.height)
                     requestBuilder.apply(
                         RequestOptions().override(
-                            formatImage.width.toInt(),
-                            formatImage.height.toInt()
+                            imageWidth.toInt(),
+                            imageHeight.toInt()
                         ).centerCrop()
                     )
                 }
