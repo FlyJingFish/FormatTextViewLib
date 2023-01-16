@@ -4,4 +4,10 @@
     <string name="we">我们</string>
     <string name="you">你</string>
     <string name="ming">小明</string>
+    <string name="xieyi">我已阅读并同意%1$s和%2$s</string>
+    <string name="User_Agreement">用户协议</string>
+    <string name="Privacy_Policy">隐私政策</string>
+    <string name="xiao_ming_book">%1$s看到自己喜欢的卡通相册%2$s原价%3$s现价%4$s</string>
+    <string name="money_200">¥200元</string>
+    <string name="money_120">¥120元</string>
 </resources>

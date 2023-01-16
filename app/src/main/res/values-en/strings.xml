@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="xieyi">I have read and agree to %1$s and %2$s</string>
+    <string name="User_Agreement">User Agreement</string>
+    <string name="Privacy_Policy">Privacy Policy</string>
+    <string name="xiao_ming_book">%1$s saw my favorite cartoon album %2$s original price %3$s current price %4$s</string>
+    <string name="ming">Xiao ming</string>
+    <string name="money_200">¥200</string>
+    <string name="money_120">¥120</string>
+</resources>
