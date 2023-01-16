@@ -37,7 +37,7 @@ class DemoActivity : AppCompatActivity() {
                 bold = false
                 italic = true
                 underline = true
-                underlineColor = R.color.color_red
+                underlineColor = R.color.colorAccent
                 underlineMarginTop = 10f
                 underlineWidth = 2f
                 strValue = "《隐私政策》"
@@ -77,7 +77,7 @@ class DemoActivity : AppCompatActivity() {
                 })
             }
         })
-        text2.setFormatTextBean("%1\$s看到自己喜欢的一个卡通相册%4\$s原价%3\$s现价%2\$s",
+        text2.setFormatTextBean("%1\$s看到自己喜欢的卡通相册%4\$s原价%3\$s现价%2\$s",
             FormatText().apply {
                 textSize = 30f
                 textColor = R.color.colorAccent
@@ -87,24 +87,24 @@ class DemoActivity : AppCompatActivity() {
             },
             FormatText().apply {
                 textSize = 30f
-                textColor = R.color.color_red
+                textColor = R.color.black
                 bold = false
                 italic = true
                 strValue = "¥120元"
                 deleteLine = true
                 deleteLineColor = R.color.color_red
-                deleteLineWidth = 1f
+                deleteLineWidth = 2f
             },
             FormatText().apply {
                 textSize = 30f
                 textColor = R.color.gray
-                bold = false
+                bold = true
                 italic = true
                 strValue = "¥200元"
                 underline = true
                 underlineColor = R.color.colorPrimary
                 underlineMarginTop = 10f
-                underlineWidth = 2f
+                underlineWidth = 3f
             },
             FormatImage().apply {
                 imagePlaceHolder = R.mipmap.ic_launcher_round
