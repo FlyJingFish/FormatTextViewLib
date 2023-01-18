@@ -1,5 +1,11 @@
 # FormatTextViewLib
+
 [![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)
+[![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)
+[![GitHub stars](https://img.shields.io/github/stars/FlyJingFish/FormatTextViewLib.svg)](https://github.com/FlyJingFish/FormatTextViewLib/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/FlyJingFish/FormatTextViewLib.svg)](https://github.com/FlyJingFish/FormatTextViewLib/network)
+[![GitHub issues](https://img.shields.io/github/issues/FlyJingFish/FormatTextViewLib.svg)](https://github.com/FlyJingFish/FormatTextViewLib/issues)
+[![GitHub license](https://img.shields.io/github/license/FlyJingFish/FormatTextViewLib.svg)](https://github.com/FlyJingFish/FormatTextViewLib/blob/master/LICENSE)
 
 ## 多数app登陆首页都需要显示用户协议和隐私政策并且需要能够点击，遇到需要翻译多个国家语言的，多个TextView拼接会导致语序不对，而且换行也是个问题
 
