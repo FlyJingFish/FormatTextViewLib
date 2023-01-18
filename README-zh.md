@@ -1,7 +1,6 @@
 # FormatTextViewLib
 
 [![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)
-[![](https://jitpack.io/v/FlyJingFish/FormatTextViewLib.svg)](https://jitpack.io/#FlyJingFish/FormatTextViewLib)
 [![GitHub stars](https://img.shields.io/github/stars/FlyJingFish/FormatTextViewLib.svg)](https://github.com/FlyJingFish/FormatTextViewLib/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/FlyJingFish/FormatTextViewLib.svg)](https://github.com/FlyJingFish/FormatTextViewLib/network)
 [![GitHub issues](https://img.shields.io/github/issues/FlyJingFish/FormatTextViewLib.svg)](https://github.com/FlyJingFish/FormatTextViewLib/issues)
