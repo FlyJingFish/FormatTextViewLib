@@ -443,11 +443,11 @@ class FormatTextView : BaseTextView {
         val bound = Rect()
         val line = layout.getLineForOffset(index)
         val baseline = layout.getLineBaseline(line)
-        bound.bottom = baseline
-        bound.left = layout.getPrimaryHorizontal(index).toInt()
-        bound.right = layout.getPrimaryHorizontal(index + 1).toInt()
+        bound.bottom = baseline+compoundPaddingTop
+        bound.left = layout.getPrimaryHorizontal(index).toInt()+compoundPaddingLeft
+        bound.right = layout.getPrimaryHorizontal(index + 1).toInt()+compoundPaddingLeft
         if (bound.right < bound.left) {
-            bound.right = layout.getLineRight(line).toInt()
+            bound.right = layout.getLineRight(line).toInt()+compoundPaddingLeft
         }
         return bound;
     }
@@ -456,11 +456,11 @@ class FormatTextView : BaseTextView {
         val layout = layout
         val bound = Rect()
         val line = layout.getLineForOffset(index)
-        bound.bottom = layout.getLineBaseline(line)
-        bound.left = layout.getPrimaryHorizontal(index).toInt()
-        bound.right = layout.getPrimaryHorizontal(index + 1).toInt()
+        bound.bottom = layout.getLineBaseline(line)+compoundPaddingTop
+        bound.left = layout.getPrimaryHorizontal(index).toInt()+compoundPaddingLeft
+        bound.right = layout.getPrimaryHorizontal(index + 1).toInt()+compoundPaddingLeft
         if (bound.right < bound.left) {
-            bound.right = layout.getLineRight(line).toInt()
+            bound.right = layout.getLineRight(line).toInt()+compoundPaddingLeft
         }
         return bound;
     }
