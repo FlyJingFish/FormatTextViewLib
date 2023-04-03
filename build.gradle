@@ -3,7 +3,8 @@ buildscript {
     ext.kotlin_version = "1.4.21"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.0.0"
@@ -17,10 +18,16 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    sdkVersion = 30
+    minSdkVersion = 17
 }

@@ -6,12 +6,12 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.text.style.ImageSpan
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatTextView
+import com.flyjingfish.perfecttextviewlib.PerfectTextView
 
-open class BaseTextView : AppCompatTextView {
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+open class BaseTextView : PerfectTextView {
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr

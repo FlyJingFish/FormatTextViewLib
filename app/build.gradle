@@ -3,13 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion '30.0.2'
+    compileSdkVersion rootProject.ext.sdkVersion
 
     defaultConfig {
         applicationId "com.flyjingfish.formattextviewdemo"
-        minSdkVersion 14
-        targetSdkVersion 31
+        minSdkVersion 17
+        targetSdkVersion rootProject.ext.sdkVersion
         versionCode 1
         versionName "1.0"
 

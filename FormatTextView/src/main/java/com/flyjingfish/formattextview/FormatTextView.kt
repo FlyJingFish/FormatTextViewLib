@@ -28,9 +28,9 @@ class FormatTextView : BaseTextView {
     private val underLineTexts: ArrayList<LineText> = ArrayList()
     private val deleteLineTexts: ArrayList<LineText> = ArrayList()
 
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
@@ -479,7 +479,7 @@ class FormatTextView : BaseTextView {
 
             val underLineText = underLineTexts[underLineTexts.size - 1]
             val line = layout.getLineForOffset(underLineText.end - 1)
-            if (measuredHeight - paddingTop - paddingBottom == layout.height && line == lineCount - 1) {
+            if (line == lineCount - 1 && measuredHeight - compoundPaddingTop - compoundPaddingBottom <= layout.height) {
                 setMeasuredDimension(
                     measuredWidth,
                     measuredHeight + underLineText.lineTop.toInt() + underLineText.lineWidth.toInt()
