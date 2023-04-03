@@ -12,6 +12,10 @@
 
 # 特色功能
 
+## 新增继承 [PerfectTextView](https://github.com/FlyJingFish/PerfectTextView)
+
+**继承[PerfectTextView](https://github.com/FlyJingFish/PerfectTextView) 可使用其所有功能，您可前往查看如何使用[点这里查看](https://github.com/FlyJingFish/PerfectTextView)**
+
 ## FormatTextView 功能介绍
 
 **1、支持设置字体颜色，加粗，斜体，下划线，删除线，字体大小**
@@ -47,7 +51,7 @@
 
 ```gradle
     dependencies {
-        implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.1'
+        implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.2'
     }
 ```
 ## 第三步，使用说明

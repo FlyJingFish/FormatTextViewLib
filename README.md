@@ -14,6 +14,10 @@
 
 # special function
 
+## New inheritance [PerfectTextView](https://github.com/FlyJingFish/PerfectTextView)
+
+**Inherit [PerfectTextView](https://github.com/FlyJingFish/PerfectTextView) to use all its functions, you can go to see how to use [click here to view](https://github.com/FlyJingFish/PerfectTextView)**
+
 ## FormatTextView function introduction
 
 **1. Support setting font color, bold, italic, underline, strikethrough, font size**
