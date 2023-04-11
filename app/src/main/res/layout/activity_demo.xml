@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:padding="10dp"
+    android:id="@+id/root"
     android:orientation="vertical">
 
     <com.flyjingfish.formattextview.FormatTextView

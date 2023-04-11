@@ -2,6 +2,8 @@ package com.flyjingfish.formattextviewdemo
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -119,7 +121,13 @@ class DemoActivity : AppCompatActivity() {
         text2.setOnClickListener {
             Toast.makeText(this@DemoActivity,"onClick-view",Toast.LENGTH_SHORT).show()
         }
-
+        root.setOnClickListener {
+            Toast.makeText(
+                this@DemoActivity,
+                "onClick-root",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
 }
