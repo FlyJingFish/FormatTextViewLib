@@ -303,6 +303,9 @@ class FormatTextView : BaseTextView {
         val clickableSpan: ClickableSpan = object : FormatClickableSpan(urlSpan) {
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
+                if(formatText.ignorePaintShader){
+                    ds.shader = null
+                }
                 //设置颜色
                 ds.color = textColor
                 //设置是否要下划线

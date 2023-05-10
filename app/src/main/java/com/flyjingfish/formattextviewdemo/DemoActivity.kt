@@ -1,9 +1,10 @@
 package com.flyjingfish.formattextviewdemo
 
+import android.graphics.LinearGradient
+import android.graphics.Shader
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.View
-import android.view.View.OnClickListener
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -102,6 +103,7 @@ class DemoActivity : AppCompatActivity() {
                 underlineColor = R.color.colorPrimary
                 underlineMarginTop = 10f
                 underlineWidth = 3f
+                ignorePaintShader = false
             },
             FormatText().apply {
                 textSize = 30f
@@ -128,6 +130,26 @@ class DemoActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+//
+//        text2.viewTreeObserver
+//            .addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+//                override fun onGlobalLayout() {
+//                    text2.viewTreeObserver.removeOnGlobalLayoutListener(this)
+//                    var width: Int = text2.width
+//                    var height: Int = text2.height
+//                    if (text2.layout != null) {
+//                        width = text2.layout.width
+//                        height = text2.layout.height
+//                    }
+//                    val mLinearGradient = LinearGradient(
+//                        0f, 0f, width.toFloat(), height.toFloat(), intArrayOf(
+//                            resources.getColor(R.color.colorPrimary),
+//                            resources.getColor(R.color.color_red)
+//                        ), null, Shader.TileMode.MIRROR
+//                    )
+//                    text2.paint.shader = mLinearGradient
+//                }
+//            })
     }
 
 }

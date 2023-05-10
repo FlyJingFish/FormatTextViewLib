@@ -48,6 +48,9 @@ class FormatText : BaseFormat() {
     @JvmField
     var deleteLineWidth = 0f
 
+    @JvmField
+    var ignorePaintShader = true
+
 
     fun setTextColor(@ColorRes color: Int): FormatText {
         this.textColor = color
@@ -117,6 +120,11 @@ class FormatText : BaseFormat() {
 
     fun setDeleteLineWidth(deleteLineWidth: Float): FormatText {
         this.deleteLineWidth = deleteLineWidth
+        return this
+    }
+
+    fun setIgnorePaintShader(ignorePaintShader: Boolean): FormatText {
+        this.ignorePaintShader = ignorePaintShader
         return this
     }
 
