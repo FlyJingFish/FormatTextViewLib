@@ -43,7 +43,7 @@ class DemoActivity : AppCompatActivity() {
                 underlineMarginTop = 6f
                 underlineWidth = 2f
                 resValue = R.string.Privacy_Policy
-                gradient = Gradient(intArrayOf(Color.BLUE,Color.RED),null,Gradient.Orientation.LEFT_BOTTOM_TO_RIGHT_TOP)
+                gradient = Gradient(intArrayOf(Color.BLUE,Color.RED),null,Gradient.Orientation.TOP_TO_BOTTOM)
             }
         )
         text1.setOnFormatClickListener(object :OnFormatClickListener{
