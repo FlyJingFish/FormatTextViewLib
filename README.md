@@ -6,7 +6,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/FlyJingFish/FormatTextViewLib.svg)](https://github.com/FlyJingFish/FormatTextViewLib/issues)
 [![GitHub license](https://img.shields.io/github/license/FlyJingFish/FormatTextViewLib.svg)](https://github.com/FlyJingFish/FormatTextViewLib/blob/master/LICENSE)
 
-## [中文版使用说明](https://github.com/FlyJingFish/FormatTextViewLib/blob/master/README-zh.md)
+# [中文版使用说明](https://github.com/FlyJingFish/FormatTextViewLib/blob/master/README-zh.md)
 
 ## Most apps need to display the user agreement and privacy policy on the home page and need to be able to click. If you need to translate multiple national languages, the splicing of multiple TextViews will cause the word order to be wrong, and line breaks are also a problem.
 
