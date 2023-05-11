@@ -22,7 +22,7 @@ Support switching languages  | More support for gradient fonts
 
 ## FormatTextView function introduction
 
-**1. Support setting font color, bold, italic, underline, strikethrough, font size**
+**1. Support setting font color or even gradient color, bold, italic, underline, strikethrough, font size**
 
 **2, support underline to set line width, distance from text, color**
 
