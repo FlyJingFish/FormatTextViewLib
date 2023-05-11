@@ -51,6 +51,9 @@ class FormatText : BaseFormat() {
     @JvmField
     var ignorePaintShader = true
 
+    @JvmField
+    var gradient: Gradient? = null
+
 
     fun setTextColor(@ColorRes color: Int): FormatText {
         this.textColor = color
@@ -125,6 +128,11 @@ class FormatText : BaseFormat() {
 
     fun setIgnorePaintShader(ignorePaintShader: Boolean): FormatText {
         this.ignorePaintShader = ignorePaintShader
+        return this
+    }
+
+    fun setIgnorePaintShader(gradient: Gradient): FormatText {
+        this.gradient = gradient
         return this
     }
 

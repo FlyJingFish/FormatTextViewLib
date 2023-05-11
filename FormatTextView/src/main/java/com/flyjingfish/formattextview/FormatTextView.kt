@@ -1,7 +1,14 @@
 package com.flyjingfish.formattextview
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.Shader
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.InsetDrawable
 import android.graphics.drawable.LevelListDrawable
@@ -16,7 +23,7 @@ import android.util.LayoutDirection
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.text.TextUtilsCompat
-import java.util.*
+import java.util.Locale
 
 
 class FormatTextView : BaseTextView {
@@ -25,8 +32,13 @@ class FormatTextView : BaseTextView {
     private var onInflateImageListener: OnInflateImageListener? = null
     private var isClickSpanItem = false
     var isSetOnClick = false
+    private var isDrawGradient = false
     private val underLineTexts: ArrayList<LineText> = ArrayList()
     private val deleteLineTexts: ArrayList<LineText> = ArrayList()
+    private val gradientTexts: ArrayList<LineText> = ArrayList()
+    private val gradientDrawTexts: ArrayList<GradientText> = ArrayList()
+    private var formatArgs: Array<out BaseFormat?>? = null
+    private var richText: String ?= null
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -45,6 +57,7 @@ class FormatTextView : BaseTextView {
         textValue = textValue.replace("\\n".toRegex(), "<br>")
         textValue = textValue.replace("\\r".toRegex(), "<br>")
         val strings = arrayOfNulls<String>(args.size)
+        var isContainGradient = false
         for (i in args.indices) { //%1$s
             val start = "<a href=\"$i\">"
             val end = "</a>"
@@ -64,17 +77,29 @@ class FormatTextView : BaseTextView {
                 value1 = value1?.replace("\\n".toRegex(), "<br>")
                 value1 = value1?.replace("\\r".toRegex(), "<br>")
                 strings[i] = start + value1 + end
+                if (formatText.gradient != null){
+                    isContainGradient = true
+                }
             }
 
 
         }
         val richText = String.format(textValue, *strings)
-
+        formatArgs = args
+        this.richText = richText
+        isDrawGradient = !isContainGradient
+        underLineTexts.clear()
+        deleteLineTexts.clear()
+        gradientTexts.clear()
+        gradientDrawTexts.clear()
         text = getCustomStyleHtml(richText, *args)
         highlightColor = Color.TRANSPARENT
         autoLinkMask = Linkify.WEB_URLS
     }
 
+    private fun resetText(){
+        text = richText?.let { formatArgs?.let { it1 -> getCustomStyleHtml(it, *it1) } }
+    }
 
     fun setFormatText(@StringRes formatTextRes: Int, vararg args: Int) {
         setFormatText(resources.getString(formatTextRes), *args)
@@ -299,11 +324,83 @@ class FormatTextView : BaseTextView {
             userDefaultDelete = false
 
         }
+        //gradient
+        if (!isDrawGradient && formatText.gradient != null) {
+            val textPaint = TextPaint()
+            textPaint.textSize = if (textSize > 0) sp2px(context, textSize) else getTextSize()
+            val fm = textPaint.fontMetrics
+
+            val gradientText = LineText(
+                start,
+                end,
+                0,
+                (fm.descent - fm.ascent) / 2 - fm.descent,
+                0f
+            )
+            gradientTexts.add(gradientText)
+
+        }
+
+        if (isDrawGradient && gradientDrawTexts.size > 0){
+            for (gradientDrawText in gradientDrawTexts) {
+                if (gradientDrawText.start>=start && gradientDrawText.end <= end){
+
+                    val clickableSpan: GradientSpan = object : GradientSpan() {
+                        override fun updateDrawState(ds: TextPaint) {
+                            super.updateDrawState(ds)
+                            var left=0f
+                            var top=0f
+                            var right=0f
+                            var bottom=0f
+                            var orientation = formatText.gradient?.orientation
+                            if (orientation == null){
+                                orientation = Gradient.Orientation.LEFT_TO_RIGHT
+                            }
+                            when (orientation) {
+                                Gradient.Orientation.LEFT_TO_RIGHT -> {
+                                    left = gradientDrawText.rectF.left
+                                    top = gradientDrawText.rectF.top
+                                    right = gradientDrawText.rectF.right
+                                    bottom = gradientDrawText.rectF.top
+                                }
+                                Gradient.Orientation.TOP_TO_BOTTOM -> {
+                                    left = gradientDrawText.rectF.left
+                                    top = gradientDrawText.rectF.top
+                                    right = gradientDrawText.rectF.left
+                                    bottom = gradientDrawText.rectF.bottom
+                                }
+                                Gradient.Orientation.LEFT_TOP_TO_RIGHT_BOTTOM -> {
+                                    left = gradientDrawText.rectF.left
+                                    top = gradientDrawText.rectF.top
+                                    right = gradientDrawText.rectF.right
+                                    bottom = gradientDrawText.rectF.bottom
+                                }
+                                Gradient.Orientation.LEFT_BOTTOM_TO_RIGHT_TOP -> {
+                                    left = gradientDrawText.rectF.left
+                                    top = gradientDrawText.rectF.bottom
+                                    right = gradientDrawText.rectF.right
+                                    bottom = gradientDrawText.rectF.top
+                                }
+                            }
+                            val mLinearGradient = formatText.gradient?.gradientColors?.let {
+                                LinearGradient(
+                                    left, top, right, bottom,
+                                    it, formatText.gradient?.gradientPositions,
+                                    Shader.TileMode.CLAMP
+                                )
+                            }
+                            ds.shader = mLinearGradient
+                        }
+                    }
+                    htmlBuilder.setSpan(clickableSpan, gradientDrawText.start, gradientDrawText.end, flags)
+                }
+            }
+        }
 
         val clickableSpan: ClickableSpan = object : FormatClickableSpan(urlSpan) {
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                if(formatText.ignorePaintShader){
+                if(formatText.ignorePaintShader && formatText.gradient == null){
                     ds.shader = null
                 }
                 //设置颜色
@@ -361,6 +458,13 @@ class FormatTextView : BaseTextView {
         }
     }
 
+    abstract class GradientSpan : CharacterStyle(), UpdateAppearance {
+        override fun updateDrawState(ds: TextPaint) {
+            ds.color = ds.linkColor
+            ds.isUnderlineText = false
+        }
+    }
+
     override fun setOnClickListener(l: OnClickListener?) {
 //        为了处理ClickableSpan和View.OnClickListener点击事件冲突
         super.setOnClickListener {
@@ -382,8 +486,46 @@ class FormatTextView : BaseTextView {
         super.onDraw(canvas)
         drawUnderline(canvas)
         drawDeleteLine(canvas)
+        getGradient()
     }
+    private fun getGradient() {
+        if (gradientTexts.size == 0 || isDrawGradient) {
+            return
+        }
+        //绘制下划线
+        for (lineText in gradientTexts) {
+            val map = HashMap<Int,GradientText>()
+            for (i in lineText.start until lineText.end) {
+                val line = layout.getLineForOffset(i)
+                val bound = getUnderLineBound(i)
+                val left = bound.left.toFloat()
+                val top = bound.bottom.toFloat() - lineText.lineTop*2
+                val right = bound.right.toFloat()
+                val bottom = bound.bottom.toFloat()
+                val rect = RectF(left,top,right, bottom)
+                if (!map.containsKey(line)){
+                    val gradientText = GradientText(rect,i,i+1)
+                    map[line] = gradientText
+                }else{
+                    val gradientText = map[line]
+                    val oldRect = gradientText!!.rectF
+                    if (oldRect.left < rect.left){
+                        oldRect.right = right
+                    }else{
+                        oldRect.left = left
+                    }
+                    gradientText.end = i+1
+                }
+            }
 
+            for ((_,value) in map){
+                gradientDrawTexts.add(value)
+            }
+
+        }
+        isDrawGradient = true
+        resetText()
+    }
     private fun drawUnderline(canvas: Canvas?) {
         if (underLineTexts.size == 0) {
             return
@@ -474,6 +616,12 @@ class FormatTextView : BaseTextView {
         var lineColor: Int,
         var lineTop: Float,
         var lineWidth: Float
+    )
+
+    private class GradientText(
+        var rectF: RectF,
+        var start: Int,
+        var end: Int,
     )
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

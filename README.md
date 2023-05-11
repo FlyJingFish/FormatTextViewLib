@@ -53,7 +53,7 @@
 
 ```gradle
      dependencies {
-         implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.3'
+         implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.4'
      }
 ````
 ## The third step, instructions for use
@@ -222,6 +222,8 @@ ALIGN_CENTER adds an alignment method to the current library to solve the alignm
 | deleteLineColor    | @ColorRes int  |                Text strikethrough color                 |
 | deleteLineWidth    |     float      |              Text strikethrough line width              |
 | backgroundColor    | @ColorRes int  |               Text area background color                |
+| ignorePaintShader  |    boolean     |   Whether the text ignores the Shader of the TextView   |
+| gradient           |    Gradient    |            Text Gradient Color Configuration            |
 
 ## FormatImage parameter list
 | property          |  parameter type  |                        description                         |

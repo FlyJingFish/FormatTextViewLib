@@ -1,5 +1,6 @@
 package com.flyjingfish.formattextviewdemo
 
+import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.graphics.drawable.Drawable
@@ -30,6 +31,7 @@ class DemoActivity : AppCompatActivity() {
                 underlineMarginTop = 6f
                 underlineWidth = 2f
                 resValue = R.string.User_Agreement
+                gradient = Gradient(intArrayOf(Color.GREEN,Color.RED),null,Gradient.Orientation.LEFT_TO_RIGHT)
             },
             FormatText().apply {
                 textSize = 22f
@@ -41,6 +43,7 @@ class DemoActivity : AppCompatActivity() {
                 underlineMarginTop = 6f
                 underlineWidth = 2f
                 resValue = R.string.Privacy_Policy
+                gradient = Gradient(intArrayOf(Color.BLUE,Color.RED),null,Gradient.Orientation.LEFT_BOTTOM_TO_RIGHT_TOP)
             }
         )
         text1.setOnFormatClickListener(object :OnFormatClickListener{
@@ -104,6 +107,7 @@ class DemoActivity : AppCompatActivity() {
                 underlineMarginTop = 10f
                 underlineWidth = 3f
                 ignorePaintShader = false
+                gradient = Gradient(intArrayOf(Color.BLUE,Color.RED),null,Gradient.Orientation.LEFT_BOTTOM_TO_RIGHT_TOP)
             },
             FormatText().apply {
                 textSize = 30f

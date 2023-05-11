@@ -51,7 +51,7 @@
 
 ```gradle
     dependencies {
-        implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.3'
+        implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.4'
     }
 ```
 ## 第三步，使用说明
@@ -204,22 +204,24 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心对齐问题，在图片设置超过行高时将会出现裁剪问题，如果您图片很大还是建议使用ALIGN_BASELINE
 
 ## FormatText 参数一览
-| 属性                 |      参数类型      |      描述       |
-|--------------------|:--------------:|:-------------:|
-| textColor          | @ColorRes int  |   文字资源颜色Id    |
-| bold               |    boolean     |    文字是否加粗     |
-| italic             |    boolean     |    文字是否斜体     |
-| strValue           |     String     |  文字String类型值  |
-| resValue           | @StringRes int |   文字文本资源Id    |
-| textSize           |     float      | 文字字体大小(单位：SP) |
-| underline          |    boolean     |    文字是否下划线    |
-| underlineColor     | @ColorRes int  |    文字下划线颜色    |
-| underlineWidth     |     float      |    文字下划线线宽    |
-| underlineMarginTop |     float      | 文字下划线向下偏移的距离  |
-| deleteLine         |    boolean     |    文字是否删除线    |
-| deleteLineColor    | @ColorRes int  |    文字删除线颜色    |
-| deleteLineWidth    |     float      |    文字删除线线宽    |
-| backgroundColor    | @ColorRes int  |    文字区域背景色    |
+| 属性                 |      参数类型      |          描述           |
+|--------------------|:--------------:|:---------------------:|
+| textColor          | @ColorRes int  |       文字资源颜色Id        |
+| bold               |    boolean     |        文字是否加粗         |
+| italic             |    boolean     |        文字是否斜体         |
+| strValue           |     String     |      文字String类型值      |
+| resValue           | @StringRes int |       文字文本资源Id        |
+| textSize           |     float      |     文字字体大小(单位：SP)     |
+| underline          |    boolean     |        文字是否下划线        |
+| underlineColor     | @ColorRes int  |        文字下划线颜色        |
+| underlineWidth     |     float      |        文字下划线线宽        |
+| underlineMarginTop |     float      |     文字下划线向下偏移的距离      |
+| deleteLine         |    boolean     |        文字是否删除线        |
+| deleteLineColor    | @ColorRes int  |        文字删除线颜色        |
+| deleteLineWidth    |     float      |        文字删除线线宽        |
+| backgroundColor    | @ColorRes int  |        文字区域背景色        |
+| ignorePaintShader  |    boolean     | 文字是否忽略TextView的Shader |
+| gradient           |    Gradient    |        文字渐变色配置        |
 
 ## FormatImage 参数一览
 | 属性                |       参数类型       |                        描述                        |
