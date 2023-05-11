@@ -382,14 +382,19 @@ class FormatTextView : BaseTextView {
                                     bottom = gradientDrawText.rectF.top
                                 }
                             }
-                            val mLinearGradient = formatText.gradient?.gradientColors?.let {
+                            val linearGradient = formatText.gradient?.gradientColors?.let {
                                 LinearGradient(
                                     left, top, right, bottom,
                                     it, formatText.gradient?.gradientPositions,
                                     Shader.TileMode.CLAMP
                                 )
                             }
-                            ds.shader = mLinearGradient
+                            ds.shader = linearGradient
+                            //设置是否要下划线
+                            ds.isUnderlineText = userDefaultUnder && underline
+                            if (userDefaultDelete && deleteLine) {
+                                ds.flags = ds.flags or Paint.STRIKE_THRU_TEXT_FLAG
+                            }
                         }
                     }
                     htmlBuilder.setSpan(clickableSpan, gradientDrawText.start, gradientDrawText.end, flags)

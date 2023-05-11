@@ -205,6 +205,15 @@ If you set the following styles for underline:
 
 Then the underline will be drawn in the underline scheme. **underlineMarginTop** is not set (ie 0) and drawn at the default strikethrough position. If the set value is too large and the text is long to a new line, you need to set the line spacing, otherwise there will be a glide line. The problem of pressing on the next line, you can solve the problem by setting lineSpacingExtra or lineSpacingMultiplier
 
+If you set the gradient font and you do not set **underlineColor, underlineMarginTop, underlineWidth** these 3 items, the underline will also be gradient
+
+### Strikethrough FAQ
+If you set the following styles for underline:
+
+**deleteLineColor、deleteLineWidth**
+
+Then the strikethrough will adopt the strikethrough scheme. If you set the gradient font and you do not set **deleteLineColor, deleteLineWidth**, the strikethrough will also be gradient
+
 ### verticalAlignment FAQ
 
 ALIGN_CENTER adds an alignment method to the current library to solve the alignment problem in the center of small icons and text. When the image setting exceeds the line height, there will be a cropping problem. If your image is large, it is recommended to use ALIGN_BASELINE
