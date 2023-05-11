@@ -1,5 +1,6 @@
 package com.flyjingfish.formattextviewdemo;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.flyjingfish.formattextview.FormatText;
 import com.flyjingfish.formattextview.FormatImage;
 import com.flyjingfish.formattextview.FormatTextView;
+import com.flyjingfish.formattextview.Gradient;
 import com.flyjingfish.formattextview.HtmlImage;
 import com.flyjingfish.formattextview.HtmlTextView;
 
@@ -50,7 +52,7 @@ public class SecondActivity extends AppCompatActivity {
         formatTextView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
                 new FormatText().setTextColor(R.color.colorAccent).setBold(false)
                         .setUnderlineColor(R.color.color_red).setUnderlineMarginTop(10f).setUnderlineWidth(2f)
-                        .setUnderline(true).setItalic(true).setResValue(R.string.we),
+                        .setUnderline(true).setItalic(true).setResValue(R.string.we).setGradient(new Gradient(new int[]{Color.BLUE,Color.RED},null,Gradient.Orientation.LEFT_TO_RIGHT)),
 //            FormatText.setTextColor(R.color.colorPrimaryDark).setTextBold(false)
 //                .setUnderlineColor(R.color.color_red).setUnderlineTopForBaseline(10f).setUnderlineWidth(2f)
 //                .setTextUnderline(true).setTextItalic(false).setTextStrValue("y ou").setTextSizes(60).build(),

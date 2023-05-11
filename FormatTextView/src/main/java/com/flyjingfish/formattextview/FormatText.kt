@@ -131,7 +131,7 @@ class FormatText : BaseFormat() {
         return this
     }
 
-    fun setIgnorePaintShader(gradient: Gradient): FormatText {
+    fun setGradient(gradient: Gradient): FormatText {
         this.gradient = gradient
         return this
     }

@@ -104,6 +104,7 @@
                 underlineMarginTop = 10f
                 underlineWidth = 2f
                 resValue = R.string.we
+                gradient = Gradient(intArrayOf(Color.GREEN,Color.RED),null,Gradient.Orientation.LEFT_TO_RIGHT)
             },
             FormatImage().apply {
                 imagePlaceHolder = R.mipmap.ic_launcher_round
@@ -177,7 +178,8 @@ textView.setOnInflateImageListener(new FormatTextView.OnInflateImageListener() {
 textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
         new FormatText().setTextColor(R.color.colorAccent).setBold(false)
                 .setUnderlineColor(R.color.color_red).setUnderlineMarginTop(10f).setUnderlineWidth(2f)
-                .setUnderline(true).setItalic(true).setResValue(R.string.we),
+                .setUnderline(true).setItalic(true).setResValue(R.string.we)
+                .setGradient(new Gradient(new int[]{Color.BLUE,Color.RED},null,Gradient.Orientation.LEFT_TO_RIGHT)),
         new FormatImage().setImagePlaceHolder(R.mipmap.ic_launcher_round)
                 .setImageUrlValue("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.itc.cn%2Fq_70%2Fimages03%2F20210227%2F6687c969b58d486fa2f23d8488b96ae4.jpeg&refer=http%3A%2F%2Fp0.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1661701773&t=19043990158a1d11c2a334146020e2ce")
                 .setVerticalAlignment(FormatImage.ALIGN_CENTER)
