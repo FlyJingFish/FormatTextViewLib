@@ -55,7 +55,7 @@ Support switching languages  | More support for gradient fonts
 
 ```gradle
      dependencies {
-         implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.5'
+         implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.6'
      }
 ````
 ## The third step, instructions for use
@@ -208,7 +208,7 @@ Then the underline will be drawn in the underline scheme. **underlineMarginTop**
 If you set the gradient font and you do not set **underlineColor, underlineMarginTop, underlineWidth** these 3 items, the underline will also be gradient
 
 ### Strikethrough FAQ
-If you set the following styles for underline:
+If you set the following styles for strikethrough:
 
 **deleteLineColor、deleteLineWidth**
 

@@ -53,7 +53,7 @@
 
 ```gradle
     dependencies {
-        implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.5'
+        implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.6'
     }
 ```
 ## 第三步，使用说明
@@ -206,7 +206,7 @@ textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s�
 如果设置渐变色字体后 在您不设置 **underlineColor、underlineMarginTop、underlineWidth** 这3项的情况下，下划线也将会是渐变色的
 
 ### 删除线常见问题
-如果您设置了下划线以下样式：
+如果您设置了删除线以下样式：
 
 **deleteLineColor、deleteLineWidth**
 
