@@ -55,7 +55,7 @@ Support switching languages  | More support for gradient fonts
 
 ```gradle
      dependencies {
-         implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.4'
+         implementation 'com.github.FlyJingFish:FormatTextViewLib:2.2.5'
      }
 ````
 ## The third step, instructions for use
