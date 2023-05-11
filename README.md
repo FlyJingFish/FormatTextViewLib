@@ -10,7 +10,7 @@
 
 ## Most apps need to display the user agreement and privacy policy on the home page and need to be able to click. If you need to translate multiple national languages, the splicing of multiple TextViews will cause the word order to be wrong, and line breaks are also a problem.
 
-Switch language position can also be accurate  | More support for gradient fonts
+Support switching languages  | More support for gradient fonts
  ------ | ------   
 <img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenrecording_20230116_164552.gif" width="320px" height="640px" alt="show" />|<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20230511_154759.jpg" width="320px" height="640px" alt="show" />|
 

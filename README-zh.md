@@ -8,7 +8,7 @@
 
 ## 多数app登陆首页都需要显示用户协议和隐私政策并且需要能够点击，遇到需要翻译多个国家语言的，多个TextView拼接会导致语序不对，而且换行也是个问题
 
-切换语言位置也能够精准  | 更有支持渐变色字体
+支持切换语言  | 更有支持渐变色字体
  ------ | ------   
 <img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenrecording_20230116_164552.gif" width="320px" height="640px" alt="show" />|<img src="https://github.com/FlyJingFish/FormatTextViewLib/blob/master/screenshot/Screenshot_20230511_154759.jpg" width="320px" height="640px" alt="show" />|
 
