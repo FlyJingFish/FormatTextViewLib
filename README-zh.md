@@ -227,11 +227,11 @@ ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心�
 | textSize           |     float      |     文字字体大小(单位：SP)     |
 | underline          |    boolean     |        文字是否下划线        |
 | underlineColor     | @ColorRes int  |        文字下划线颜色        |
-| underlineWidth     |     float      |        文字下划线线宽        |
-| underlineMarginTop |     float      |     文字下划线向下偏移的距离      |
+| underlineWidth     |     float      |    文字下划线线宽(单位：DP)     |
+| underlineMarginTop |     float      |  文字下划线向下偏移的距离(单位：DP)  |
 | deleteLine         |    boolean     |        文字是否删除线        |
 | deleteLineColor    | @ColorRes int  |        文字删除线颜色        |
-| deleteLineWidth    |     float      |        文字删除线线宽        |
+| deleteLineWidth    |     float      |    文字删除线线宽(单位：DP)     |
 | backgroundColor    | @ColorRes int  |        文字区域背景色        |
 | ignorePaintShader  |    boolean     | 文字是否忽略TextView的Shader |
 | gradient           |    Gradient    |        文字渐变色配置        |

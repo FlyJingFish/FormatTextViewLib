@@ -219,24 +219,24 @@ Then the strikethrough will adopt the strikethrough scheme. If you set the gradi
 ALIGN_CENTER adds an alignment method to the current library to solve the alignment problem in the center of small icons and text. When the image setting exceeds the line height, there will be a cropping problem. If your image is large, it is recommended to use ALIGN_BASELINE
 
 ## FormatText parameter list
-| property           | parameter type |                       description                       |
-|--------------------|:--------------:|:-------------------------------------------------------:|
-| textColor          | @ColorRes int  |                 Text resource color Id                  |
-| bold               |    boolean     |                Whether the text is bold                 |
-| italic             |    boolean     |               Whether the text is italic                |
-| strValue           |     String     |                 Text String type value                  |
-| resValue           | @StringRes int |                     Text ResourceId                     |
-| textSize           |     float      |                Text font size (unit: SP)                |
-| underline          |    boolean     |             Whether the text is underlined              |
-| underlineColor     | @ColorRes int  |                  Text underline color                   |
-| underlineWidth     |     float      |                  Text underline width                   |
-| underlineMarginTop |     float      | The distance by which the text underline is offset down |
-| deleteLine         |    boolean     |                   Delete line or not                    |
-| deleteLineColor    | @ColorRes int  |                Text strikethrough color                 |
-| deleteLineWidth    |     float      |              Text strikethrough line width              |
-| backgroundColor    | @ColorRes int  |               Text area background color                |
-| ignorePaintShader  |    boolean     |   Whether the text ignores the Shader of the TextView   |
-| gradient           |    Gradient    |            Text Gradient Color Configuration            |
+| property           | parameter type |                            description                             |
+|--------------------|:--------------:|:------------------------------------------------------------------:|
+| textColor          | @ColorRes int  |                       Text resource color Id                       |
+| bold               |    boolean     |                      Whether the text is bold                      |
+| italic             |    boolean     |                     Whether the text is italic                     |
+| strValue           |     String     |                       Text String type value                       |
+| resValue           | @StringRes int |                          Text ResourceId                           |
+| textSize           |     float      |                     Text font size (unit: SP)                      |
+| underline          |    boolean     |                   Whether the text is underlined                   |
+| underlineColor     | @ColorRes int  |                        Text underline color                        |
+| underlineWidth     |     float      |                  Text underline width (unit: DP)                   |
+| underlineMarginTop |     float      | The distance by which the text underline is offset down (unit: DP) |
+| deleteLine         |    boolean     |                         Delete line or not                         |
+| deleteLineColor    | @ColorRes int  |                      Text strikethrough color                      |
+| deleteLineWidth    |     float      |              Text strikethrough line width (unit: DP)              |
+| backgroundColor    | @ColorRes int  |                     Text area background color                     |
+| ignorePaintShader  |    boolean     |        Whether the text ignores the Shader of the TextView         |
+| gradient           |    Gradient    |                 Text Gradient Color Configuration                  |
 
 ## FormatImage parameter list
 | property          |  parameter type  |                        description                         |
