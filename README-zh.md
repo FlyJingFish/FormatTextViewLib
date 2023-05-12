@@ -242,7 +242,7 @@ ALIGN_CENTER 为当前库新增对齐方式旨解决在小图标和文本中心�
 |-------------------|:---------------:|:-------------------------------------------------------------------------------------------------------------:|
 | gradientColors    | @ColorInt int[] |                                            渐变色（颜色值为ColorInt 类型）数组                                             |
 | gradientPositions |     float[]     |                              渐变色分布配置（传入null表示颜色均匀分布，否则需要此数组与gradientColors长度一致）                               |
-| orientation       |   Orientation   | LEFT_TO_RIGHT （从左到右）/TOP_TO_BOTTOM （从上到下）/LEFT_TOP_TO_RIGHT_BOTTOM （从左上到右下）/LEFT_BOTTOM_TO_RIGHT_TOP （从左下到右上） |
+| orientation       |      enum       | LEFT_TO_RIGHT （从左到右）/TOP_TO_BOTTOM （从上到下）/LEFT_TOP_TO_RIGHT_BOTTOM （从左上到右下）/LEFT_BOTTOM_TO_RIGHT_TOP （从左下到右上） |
 
 ## FormatImage 参数一览
 | 属性                |       参数类型       |                        描述                        |
