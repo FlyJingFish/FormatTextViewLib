@@ -240,11 +240,11 @@ ALIGN_CENTER adds an alignment method to the current library to solve the alignm
 
 ## Gradient parameter list
 
-| Attribute | Parameter Type | Description |
-|--------------------|:---------------:|:---------- -------------------------------------------------- --------------------------------------------------: |
-| gradientColors | @ColorInt int[] | array of gradient colors (color values are of type ColorInt) |
-| gradientPositions | float[] | Gradient color distribution configuration (this array needs to be consistent with the length of gradientColors) |
-| orientation | Orientation | LEFT_TO_RIGHT (left to right)/TOP_TO_BOTTOM (top to bottom)/LEFT_TOP_TO_RIGHT_BOTTOM (top left to bottom right)/LEFT_BOTTOM_TO_RIGHT_TOP (bottom left to top right) |
+| Attribute         | Parameter Type  |                                                                             Description                                                                             |
+|-------------------|:---------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| gradientColors    | @ColorInt int[] |                                                    array of gradient colors (color values are of type ColorInt)                                                     |
+| gradientPositions |     float[]     |                           Gradient color distribution configuration (this array needs to be consistent with the length of gradientColors)                           |
+| orientation       |   Orientation   | LEFT_TO_RIGHT (left to right)/TOP_TO_BOTTOM (top to bottom)/LEFT_TOP_TO_RIGHT_BOTTOM (top left to bottom right)/LEFT_BOTTOM_TO_RIGHT_TOP (bottom left to top right) |
 
 ## FormatImage parameter list
 | property          |  parameter type  |                        description                         |
