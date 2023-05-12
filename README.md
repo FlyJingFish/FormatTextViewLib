@@ -243,7 +243,7 @@ ALIGN_CENTER adds an alignment method to the current library to solve the alignm
 | Attribute         | Parameter Type  |                                                                             Description                                                                             |
 |-------------------|:---------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 | gradientColors    | @ColorInt int[] |                                                    array of gradient colors (color values are of type ColorInt)                                                     |
-| gradientPositions |     float[]     |                           Gradient color distribution configuration (this array needs to be consistent with the length of gradientColors)                           |
+| gradientPositions |     float[]     |                 Pass in null to indicate that the colors are evenly distributed, otherwise this array needs to be the same length as gradientColors                 |
 | orientation       |   Orientation   | LEFT_TO_RIGHT (left to right)/TOP_TO_BOTTOM (top to bottom)/LEFT_TOP_TO_RIGHT_BOTTOM (top left to bottom right)/LEFT_BOTTOM_TO_RIGHT_TOP (bottom left to top right) |
 
 ## FormatImage parameter list
