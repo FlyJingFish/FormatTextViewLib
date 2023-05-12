@@ -33,6 +33,7 @@ class FormatTextView : BaseTextView {
     private var isClickSpanItem = false
     var isSetOnClick = false
     private var isDrawGradient = false
+    private var isClearTexts = true
     private val underLineTexts: ArrayList<LineText> = ArrayList()
     private val deleteLineTexts: ArrayList<LineText> = ArrayList()
     private val gradientTexts: ArrayList<LineText> = ArrayList()
@@ -52,10 +53,10 @@ class FormatTextView : BaseTextView {
         setFormatTextBean(resources.getString(formatTextRes), *args)
     }
 
-    fun setFormatTextBean(formatTextValue: String, vararg args: BaseFormat?) {
-        var textValue = formatTextValue.replace("\\r\\n".toRegex(), "<br>")
-        textValue = textValue.replace("\\n".toRegex(), "<br>")
-        textValue = textValue.replace("\\r".toRegex(), "<br>")
+    fun setFormatTextBean(formatTextValue: String?, vararg args: BaseFormat?) {
+        var textValue = formatTextValue?.replace("\\r\\n".toRegex(), "<br>")
+        textValue = textValue?.replace("\\n".toRegex(), "<br>")
+        textValue = textValue?.replace("\\r".toRegex(), "<br>")
         val strings = arrayOfNulls<String>(args.size)
         var isContainGradient = false
         for (i in args.indices) { //%1$s
@@ -84,20 +85,40 @@ class FormatTextView : BaseTextView {
 
 
         }
-        val richText = String.format(textValue, *strings)
-        formatArgs = args
-        this.richText = richText
+        if (textValue == null){
+            isClearTexts = true
+            text = ""
+            return
+        }
         isDrawGradient = !isContainGradient
         underLineTexts.clear()
         deleteLineTexts.clear()
         gradientTexts.clear()
         gradientDrawTexts.clear()
+        val richText = String.format(textValue, *strings)
+        formatArgs = args
+        this.richText = richText
+        isClearTexts = false
         text = getCustomStyleHtml(richText, *args)
         highlightColor = Color.TRANSPARENT
         autoLinkMask = Linkify.WEB_URLS
     }
 
+    override fun setText(text: CharSequence?, type: BufferType?) {
+        if (isClearTexts){
+            isDrawGradient = true
+            underLineTexts.clear()
+            deleteLineTexts.clear()
+            gradientTexts.clear()
+            gradientDrawTexts.clear()
+            formatArgs = null
+            this.richText = null
+        }
+        super.setText(text, type)
+    }
+
     private fun resetText(){
+        isClearTexts = false
         text = richText?.let { formatArgs?.let { it1 -> getCustomStyleHtml(it, *it1) } }
     }
 
@@ -105,7 +126,7 @@ class FormatTextView : BaseTextView {
         setFormatText(resources.getString(formatTextRes), *args)
     }
 
-    fun setFormatText(formatTextValue: String, vararg args: Int) {
+    fun setFormatText(formatTextValue: String?, vararg args: Int) {
         val formatTexts: Array<FormatText?> = arrayOfNulls(args.size)
         for (i in args.indices) {
             formatTexts[i] = FormatText().setResValue(args[i])
@@ -117,7 +138,7 @@ class FormatTextView : BaseTextView {
         setFormatText(resources.getString(formatTextRes), *args)
     }
 
-    fun setFormatText(formatTextValue: String, vararg args: String) {
+    fun setFormatText(formatTextValue: String?, vararg args: String) {
         val formatTexts: Array<FormatText?> = arrayOfNulls(args.size)
         for (i in args.indices) {
             formatTexts[i] = FormatText().setStrValue(args[i])
@@ -492,6 +513,7 @@ class FormatTextView : BaseTextView {
         drawUnderline(canvas)
         drawDeleteLine(canvas)
         getGradient()
+        isClearTexts = true
     }
     private fun getGradient() {
         if (gradientTexts.size == 0 || isDrawGradient) {
