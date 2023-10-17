@@ -1,11 +1,9 @@
 package com.flyjingfish.formattextviewdemo
 
 import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -17,10 +15,16 @@ import com.flyjingfish.formattextview.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class DemoActivity : AppCompatActivity() {
+    var wh :FloatArray?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo)
-        text1.setFormatTextBean(R.string.xieyi,
+
+        val w = (wh?.get(0)?.toInt() ?: 0)
+
+        Log.e("DemoActivity","width="+w)
+
+        text1.setFormatText(R.string.xieyi,
             FormatText().apply {
                 textSize = 22f
                 textColor = R.color.colorAccent
@@ -80,7 +84,7 @@ class DemoActivity : AppCompatActivity() {
                 })
             }
         })
-        text2.setFormatTextBean(R.string.xiao_ming_book,
+        text2.setFormatText(R.string.xiao_ming_book,
             FormatText().apply {
                 textSize = 30f
                 textColor = R.color.colorAccent

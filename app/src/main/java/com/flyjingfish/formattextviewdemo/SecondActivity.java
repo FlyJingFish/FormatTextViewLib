@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.flyjingfish.formattextview.FormatText;
@@ -19,6 +18,7 @@ import com.flyjingfish.formattextview.FormatTextView;
 import com.flyjingfish.formattextview.Gradient;
 import com.flyjingfish.formattextview.HtmlImage;
 import com.flyjingfish.formattextview.HtmlTextView;
+import com.flyjingfish.formattextview.UtilsKt;
 
 
 public class SecondActivity extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class SecondActivity extends AppCompatActivity {
         FormatTextView formatTextView = findViewById(R.id.text1);
         formatTextView.setFormatText(R.string.test_text,new int[]{R.string.we,R.string.you});
         formatTextView.setFormatText(R.string.test_text,new String[]{"wo","ni"});
-        formatTextView.setFormatTextBean(R.string.test_text,
+        formatTextView.setFormatText(R.string.test_text,
                 new FormatText().setTextColor(R.color.colorAccent).setStrValue("222"),
                 new FormatText().setTextColor(R.color.colorAccent).setStrValue("111"));
         formatTextView.setOnInflateImageListener(new FormatTextView.OnInflateImageListener() {
@@ -49,7 +49,7 @@ public class SecondActivity extends AppCompatActivity {
                 });
             }
         });
-        formatTextView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
+        formatTextView.setFormatText("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
                 new FormatText().setTextColor(R.color.colorAccent).setBold(false)
                         .setUnderlineColor(R.color.color_red).setUnderlineMarginTop(10f).setUnderlineWidth(2f)
                         .setUnderline(true).setItalic(true).setResValue(R.string.we).setGradient(new Gradient(new int[]{Color.BLUE,Color.RED},null,Gradient.Orientation.LEFT_TO_RIGHT)),

@@ -22,6 +22,7 @@ import android.util.AttributeSet
 import android.util.LayoutDirection
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.text.TextUtilsCompat
 import java.util.Locale
 
@@ -49,11 +50,35 @@ class FormatTextView : BaseTextView {
         defStyleAttr
     )
 
-    fun setFormatTextBean(@StringRes formatTextRes: Int, vararg args: BaseFormat?) {
-        setFormatTextBean(resources.getString(formatTextRes), *args)
+    fun setFormatText(@StringRes formatTextRes: Int, vararg args: Int) {
+        setFormatText(resources.getString(formatTextRes), *args)
     }
 
-    fun setFormatTextBean(formatTextValue: String?, vararg args: BaseFormat?) {
+    fun setFormatText(formatTextValue: String?, vararg args: Int) {
+        val formatTexts: Array<FormatText?> = arrayOfNulls(args.size)
+        for (i in args.indices) {
+            formatTexts[i] = FormatText().setResValue(args[i])
+        }
+        setFormatText(formatTextValue, *formatTexts)
+    }
+
+    fun setFormatText(@StringRes formatTextRes: Int, vararg args: String) {
+        setFormatText(resources.getString(formatTextRes), *args)
+    }
+
+    fun setFormatText(formatTextValue: String?, vararg args: String) {
+        val formatTexts: Array<FormatText?> = arrayOfNulls(args.size)
+        for (i in args.indices) {
+            formatTexts[i] = FormatText().setStrValue(args[i])
+        }
+        setFormatText(formatTextValue, *formatTexts)
+    }
+
+    fun setFormatText(@StringRes formatTextRes: Int, vararg args: BaseFormat?) {
+        setFormatText(resources.getString(formatTextRes), *args)
+    }
+
+    fun setFormatText(formatTextValue: String?, vararg args: BaseFormat?) {
         var textValue = formatTextValue?.replace("\\r\\n".toRegex(), "<br>")
         textValue = textValue?.replace("\\n".toRegex(), "<br>")
         textValue = textValue?.replace("\\r".toRegex(), "<br>")
@@ -122,31 +147,6 @@ class FormatTextView : BaseTextView {
         text = richText?.let { formatArgs?.let { it1 -> getCustomStyleHtml(it, *it1) } }
     }
 
-    fun setFormatText(@StringRes formatTextRes: Int, vararg args: Int) {
-        setFormatText(resources.getString(formatTextRes), *args)
-    }
-
-    fun setFormatText(formatTextValue: String?, vararg args: Int) {
-        val formatTexts: Array<FormatText?> = arrayOfNulls(args.size)
-        for (i in args.indices) {
-            formatTexts[i] = FormatText().setResValue(args[i])
-        }
-        setFormatTextBean(formatTextValue, *formatTexts)
-    }
-
-    fun setFormatText(@StringRes formatTextRes: Int, vararg args: String) {
-        setFormatText(resources.getString(formatTextRes), *args)
-    }
-
-    fun setFormatText(formatTextValue: String?, vararg args: String) {
-        val formatTexts: Array<FormatText?> = arrayOfNulls(args.size)
-        for (i in args.indices) {
-            formatTexts[i] = FormatText().setStrValue(args[i])
-        }
-        setFormatTextBean(formatTextValue, *formatTexts)
-    }
-
-
     private fun getCustomStyleHtml(html: String, vararg args: BaseFormat?): CharSequence? {
         val spannedHtml = Html.fromHtml(html)
         val htmlBuilder = SpannableStringBuilder(spannedHtml)
@@ -178,37 +178,39 @@ class FormatTextView : BaseTextView {
             } else {
                 false
             }
-        val imageWidth = dp2px(context, formatImage.width)
-        val imageHeight = dp2px(context, formatImage.height)
+        val imageWidth = formatImage.width.dp
+        val imageHeight = formatImage.height.dp
         var marginLeft = if (isRtl) formatImage.marginEnd else formatImage.marginStart
         var marginRight = if (isRtl) formatImage.marginStart else formatImage.marginEnd
         marginLeft = if (marginLeft == 0f){
-            dp2px(context, formatImage.marginLeft)
+            formatImage.marginLeft.dp
         }else{
-            dp2px(context, marginLeft)
+            marginLeft.dp
         }
 
         marginRight = if (marginRight == 0f){
-            dp2px(context, formatImage.marginRight)
+            formatImage.marginRight.dp
         }else{
-            dp2px(context, marginRight)
+            marginRight.dp
         }
 
         val start = htmlBuilder.getSpanStart(urlSpan)
         val end = htmlBuilder.getSpanEnd(urlSpan)
         val flags = htmlBuilder.getSpanFlags(urlSpan)
         val clickableSpan: ClickableSpan = FormatClickableSpan(urlSpan)
-
+        htmlBuilder.removeSpan(formatImage)
         htmlBuilder.setSpan(clickableSpan, start, end, flags)
 
         val drawable = LevelListDrawable()
         if (formatImage.imageResValue != 0) {
-            val d = resources.getDrawable(formatImage.imageResValue)
-            val wh = getImageSpanWidthHeight(
-                if (imageWidth != 0f) imageWidth else d.intrinsicWidth.toFloat(),
-                if (imageHeight != 0f) imageHeight else d.intrinsicHeight.toFloat(),
-                d
-            )
+            val d = ContextCompat.getDrawable(context,formatImage.imageResValue)
+            val wh = d?.let {
+                getImageSpanWidthHeight(
+                    if (imageWidth != 0f) imageWidth else d.intrinsicWidth.toFloat(),
+                    if (imageHeight != 0f) imageHeight else d.intrinsicHeight.toFloat(),
+                    d
+                )
+            }
             val insetDrawable =
                 InsetDrawable(
                     d,
@@ -220,20 +222,22 @@ class FormatTextView : BaseTextView {
             drawable.addLevel(1, 1, insetDrawable)
             drawable.setBounds(
                 0, 0,
-                wh[0].toInt() + marginLeft.toInt() + marginRight.toInt(),
-                wh[1].toInt()
+                (wh?.get(0)?.toInt() ?: 0) + marginLeft.toInt() + marginRight.toInt(),
+                (wh?.get(1)?.toInt() ?: 0).toInt()
             )
             drawable.level = 1
             val imageSpan = FormatImageSpan(drawable, formatImage.verticalAlignment)
             htmlBuilder.setSpan(imageSpan, start, end, flags)
         } else {
             if (formatImage.imagePlaceHolder != 0) {
-                val d = resources.getDrawable(formatImage.imagePlaceHolder)
-                val wh = getImageSpanWidthHeight(
-                    if (imageWidth != 0f) imageWidth else d.intrinsicWidth.toFloat(),
-                    if (imageHeight != 0f) imageHeight else d.intrinsicHeight.toFloat(),
-                    d
-                )
+                val d = ContextCompat.getDrawable(context,formatImage.imagePlaceHolder)
+                val wh = d?.let {
+                    getImageSpanWidthHeight(
+                        if (imageWidth != 0f) imageWidth else d.intrinsicWidth.toFloat(),
+                        if (imageHeight != 0f) imageHeight else d.intrinsicHeight.toFloat(),
+                        d
+                    )
+                }
                 val insetDrawable =
                     InsetDrawable(
                         d,
@@ -245,15 +249,15 @@ class FormatTextView : BaseTextView {
                 drawable.addLevel(1, 1, insetDrawable)
                 drawable.setBounds(
                     0, 0,
-                    wh[0].toInt() + marginLeft.toInt() + marginRight.toInt(),
-                    wh[1].toInt()
+                    (wh?.get(0)?.toInt() ?: 0) + marginLeft.toInt() + marginRight.toInt(),
+                    (wh?.get(1)?.toInt() ?: 0).toInt()
                 )
                 drawable.level = 1
             }
             val imageSpan = FormatImageSpan(drawable, formatImage.verticalAlignment)
             htmlBuilder.setSpan(imageSpan, start, end, flags)
             if (onInflateImageListener != null) {
-                onInflateImageListener?.onInflate(
+                onInflateImageListener!!.onInflate(
                     formatImage,
                     object : OnReturnDrawableListener {
                         override fun onReturnDrawable(d: Drawable) {
@@ -309,18 +313,15 @@ class FormatTextView : BaseTextView {
         }
         if (underline && (formatText.underlineColor != 0 || formatText.underlineMarginTop != 0f || formatText.underlineWidth != 0f)) {
             val textPaint = TextPaint()
-            textPaint.textSize = if (textSize > 0) sp2px(context, textSize) else getTextSize()
+            textPaint.textSize = if (textSize > 0) textSize.sp else getTextSize()
             val fm = textPaint.fontMetrics
 
             val underLineText = LineText(
                 start,
                 end,
                 if (formatText.underlineColor != 0) resources.getColor(formatText.underlineColor) else textColor,
-                dp2px(context, formatText.underlineMarginTop) + fm.descent / 3,
-                if (formatText.underlineWidth == 0f) dp2px(context, 1f) else dp2px(
-                    context,
-                    formatText.underlineWidth
-                )
+                formatText.underlineMarginTop.dp + fm.descent / 3,
+                if (formatText.underlineWidth == 0f) 1f.dp else formatText.underlineWidth.dp
             )
             underLineTexts.add(underLineText)
             userDefaultUnder = false
@@ -328,7 +329,7 @@ class FormatTextView : BaseTextView {
         var userDefaultDelete = true
         if (deleteLine && (formatText.deleteLineColor != 0 || formatText.deleteLineWidth != 0f)) {
             val textPaint = TextPaint()
-            textPaint.textSize = if (textSize > 0) sp2px(context, textSize) else getTextSize()
+            textPaint.textSize = if (textSize > 0) textSize.sp else getTextSize()
             val fm = textPaint.fontMetrics
 
             val deleteLineText = LineText(
@@ -336,10 +337,7 @@ class FormatTextView : BaseTextView {
                 end,
                 if (formatText.deleteLineColor != 0) resources.getColor(formatText.deleteLineColor) else textColor,
                 (fm.descent - fm.ascent) / 2 - fm.descent,
-                if (formatText.deleteLineWidth == 0f) dp2px(context, 1f) else dp2px(
-                    context,
-                    formatText.deleteLineWidth
-                )
+                if (formatText.deleteLineWidth == 0f) 1f.dp else formatText.deleteLineWidth.dp
             )
             deleteLineTexts.add(deleteLineText)
             userDefaultDelete = false
@@ -348,7 +346,7 @@ class FormatTextView : BaseTextView {
         //gradient
         if (!isDrawGradient && formatText.gradient != null) {
             val textPaint = TextPaint()
-            textPaint.textSize = if (textSize > 0) sp2px(context, textSize) else getTextSize()
+            textPaint.textSize = if (textSize > 0) textSize.sp else getTextSize()
             val fm = textPaint.fontMetrics
 
             val gradientText = LineText(
@@ -438,11 +436,12 @@ class FormatTextView : BaseTextView {
                 }
             }
         }
+        htmlBuilder.removeSpan(urlSpan)
         htmlBuilder.setSpan(clickableSpan, start, end, flags)
         if (textSize > 0) {
             htmlBuilder.setSpan(
                 AbsoluteSizeSpan(
-                    sp2px(context, textSize).toInt(),
+                    textSize.sp.toInt(),
                     false
                 ), start, end, flags
             )
@@ -476,10 +475,11 @@ class FormatTextView : BaseTextView {
         }
     }
 
-    open inner class FormatClickableSpan(private val urlSpan: URLSpan) : ClickableSpan() {
+    open inner class FormatClickableSpan(urlSpan: URLSpan) : ClickableSpan() {
+        private var position = urlSpan.url.toInt()
+
         override fun onClick(widget: View) {
-            val url = urlSpan.url
-            onFormatClickListener?.onLabelClick(url.toInt())
+            onFormatClickListener?.onLabelClick(position)
             isClickSpanItem = true
         }
     }

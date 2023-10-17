@@ -17,6 +17,10 @@ open class BaseTextView : PerfectTextView {
         defStyleAttr
     )
 
+    init {
+        Utils.applicationContext = context.applicationContext
+    }
+
     fun getImageSpanWidthHeight(
         viewWidth: Float,
         viewHeight: Float,

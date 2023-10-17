@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.style.ImageSpan
-import android.util.Log
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         text2.setFormatText(R.string.test_text, "wo","you")
         text3.setFormatText("%1\$s欢迎%2\$s", R.string.we,R.string.you)
         text4.setFormatText("%1\$s欢迎%2\$s", "wo","you")
-        text5.setFormatTextBean(R.string.test_text,
+        text5.setFormatText(R.string.test_text,
             FormatText().setTextColor(R.color.colorAccent).setBold(true).setUnderline(true).setItalic(true).setResValue(R.string.we).setTextSize(30f),
             FormatImage().setImageResValue(R.mipmap.ic_launcher_round)
                 .setVerticalAlignment(FormatImage.ALIGN_CENTER)
@@ -58,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         })
-        text6.setFormatTextBean("%1\$s欢迎欢迎欢迎欢迎欢迎欢迎%3\$s欢迎欢迎欢迎%2\$s",
+        text6.setFormatText("%1\$s欢迎欢迎欢迎欢迎欢迎欢迎%3\$s欢迎欢迎欢迎%2\$s",
             FormatText().apply {
                 textSize = 30f
                 textColor = R.color.colorAccent
