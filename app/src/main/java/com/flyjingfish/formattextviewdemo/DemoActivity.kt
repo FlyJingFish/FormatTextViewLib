@@ -15,14 +15,9 @@ import com.flyjingfish.formattextview.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class DemoActivity : AppCompatActivity() {
-    var wh :FloatArray?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo)
-
-        val w = (wh?.get(0)?.toInt() ?: 0)
-
-        Log.e("DemoActivity","width="+w)
 
         text1.setFormatText(R.string.xieyi,
             FormatText().apply {
