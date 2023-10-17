@@ -6,13 +6,13 @@ import androidx.annotation.DrawableRes
 
 class FormatImage : BaseFormat() {
     companion object StaticField {
-        @kotlin.jvm.JvmField
+        @JvmField
         val ALIGN_BOTTOM: Int = ImageSpan.ALIGN_BOTTOM
 
-        @kotlin.jvm.JvmField
+        @JvmField
         val ALIGN_BASELINE: Int = ImageSpan.ALIGN_BASELINE
 
-        @kotlin.jvm.JvmField
+        @JvmField
         var ALIGN_CENTER: Int = 10
     }
 
