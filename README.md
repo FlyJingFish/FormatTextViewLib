@@ -95,7 +95,7 @@ Support switching languages  | More support for gradient fonts
     }
 })
   //set data
- textView.setFormatTextBean("%1\$s欢迎欢迎欢迎欢迎欢迎欢迎%3\$s欢迎欢迎欢迎%2\$s",
+ textView.setFormatText("%1\$s欢迎欢迎欢迎欢迎欢迎欢迎%3\$s欢迎欢迎欢迎%2\$s",
             FormatText().apply {
                 textSize = 30f
                 textColor = R.color.colorAccent
@@ -142,7 +142,7 @@ The position returned by onLabelClick of OnFormatClickListener is the subscript 
 
 There is such a text str = "I have read and agree with %1$s and %2$s" or "I have read and agree with %2$s and %1$s"
 
-When calling setFormatTextBean(str,"Privacy Policy","User Agreement") with the above two strings
+When calling setFormatText(str,"Privacy Policy","User Agreement") with the above two strings
 
 The results of the above two strings are
 
@@ -150,9 +150,9 @@ The results of the above two strings are
 
 2. I have read and agree to **User Agreement** and **Privacy Policy**
 
-The above two results appear only because the order of **%1$s** and **%2$s** has been exchanged, but the order of calling **setFormatTextBean** to set the data has not changed, so when clicking **Privacy Both positions are 0 when the policy** is clicked, and both positions are 1 when **User Agreement** is clicked
+The above two results appear only because the order of **%1$s** and **%2$s** has been exchanged, but the order of calling **setFormatText** to set the data has not changed, so when clicking **Privacy Both positions are 0 when the policy** is clicked, and both positions are 1 when **User Agreement** is clicked
 
-**Simply speaking, in setFormatTextBean(str,"Privacy Policy","User Agreement"), the corresponding position of "Privacy Policy" is 0, and the corresponding position of "User Agreement" is 1**
+**Simply speaking, in setFormatText(str,"Privacy Policy","User Agreement"), the corresponding position of "Privacy Policy" is 0, and the corresponding position of "User Agreement" is 1**
 
 ### Java calling example
 
@@ -177,7 +177,7 @@ textView.setOnInflateImageListener(new FormatTextView.OnInflateImageListener() {
         });
     }
 });
-textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
+textView.setFormatText("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
         new FormatText().setTextColor(R.color.colorAccent).setBold(false)
                 .setUnderlineColor(R.color.color_red).setUnderlineMarginTop(10f).setUnderlineWidth(2f)
                 .setUnderline(true).setItalic(true).setResValue(R.string.we)

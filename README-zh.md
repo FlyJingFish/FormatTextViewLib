@@ -93,7 +93,7 @@
     }
 })
   //设置数据
- textView.setFormatTextBean("%1\$s欢迎欢迎欢迎欢迎欢迎欢迎%3\$s欢迎欢迎欢迎%2\$s",
+ textView.setFormatText("%1\$s欢迎欢迎欢迎欢迎欢迎欢迎%3\$s欢迎欢迎欢迎%2\$s",
             FormatText().apply {
                 textSize = 30f
                 textColor = R.color.colorAccent
@@ -140,7 +140,7 @@ OnFormatClickListener 的 onLabelClick 返回的 position 就是设置数据的�
 
 有这样一段文本  str = "我已阅读并同意%1$s和%2$s" 或者 "我已阅读并同意%2$s和%1$s"
 
-当使用以上两个字符串调用 setFormatTextBean(str,"隐私政策","用户协议") 时
+当使用以上两个字符串调用 setFormatText(str,"隐私政策","用户协议") 时
 
 以上两种字符串的结果分别是
 
@@ -148,9 +148,9 @@ OnFormatClickListener 的 onLabelClick 返回的 position 就是设置数据的�
 
 2、我已阅读并同意**用户协议**和**隐私政策**
 
-出现以上两种结果是只是因为 **%1$s** 和 **%2$s** 调换了顺序，但是调用**setFormatTextBean**设置数据的顺序并没有变化，所以当点击**隐私政策**时position两种情况都是0，当点击**用户协议**时position两种情况都是1
+出现以上两种结果是只是因为 **%1$s** 和 **%2$s** 调换了顺序，但是调用**setFormatText**设置数据的顺序并没有变化，所以当点击**隐私政策**时position两种情况都是0，当点击**用户协议**时position两种情况都是1
 
-**简单来说 setFormatTextBean(str,"隐私政策","用户协议") 中 "隐私政策" 对应 position 是0， "用户协议" 对应 position 是1**
+**简单来说 setFormatText(str,"隐私政策","用户协议") 中 "隐私政策" 对应 position 是0， "用户协议" 对应 position 是1**
 
 ### Java调用示例
 
@@ -175,7 +175,7 @@ textView.setOnInflateImageListener(new FormatTextView.OnInflateImageListener() {
         });
     }
 });
-textView.setFormatTextBean("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
+textView.setFormatText("%1$s欢迎欢迎欢迎欢迎欢迎欢迎欢迎%3$s欢迎欢迎欢迎%2$s",
         new FormatText().setTextColor(R.color.colorAccent).setBold(false)
                 .setUnderlineColor(R.color.color_red).setUnderlineMarginTop(10f).setUnderlineWidth(2f)
                 .setUnderline(true).setItalic(true).setResValue(R.string.we)

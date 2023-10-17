@@ -129,6 +129,15 @@ class FormatTextView : BaseTextView {
         autoLinkMask = Linkify.WEB_URLS
     }
 
+    @Deprecated("请直接使用setFormatText", ReplaceWith("setFormatText(formatTextRes, *args)"), DeprecationLevel.ERROR)
+    fun setFormatTextBean(@StringRes formatTextRes: Int, vararg args: BaseFormat?) {
+        setFormatText(formatTextRes, *args)
+    }
+    @Deprecated("请直接使用setFormatText", ReplaceWith("setFormatText(formatTextValue, *args)"), DeprecationLevel.ERROR)
+    fun setFormatTextBean(formatTextValue: String?, vararg args: BaseFormat?) {
+        setFormatText(formatTextValue, *args)
+    }
+
     override fun setText(text: CharSequence?, type: BufferType?) {
         if (isClearTexts){
             isDrawGradient = true
