@@ -331,11 +331,11 @@ text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<
 
 # My more open source library recommendations
 
-Supports circle or rounded corners without Bitmap operation, can draw circle background borders or rounded box background borders, in addition to the built-in properties of ImageView, 4 new display modes are added; in addition, there are pictures that can draw arbitrary graphics only you can't think of , can't be done without it
+## Finally, I recommend some other libraries I wrote
 
-- [ShapeImageView](https://github.com/FlyJingFish/ShapeImageView)
+- [OpenImage makes it easy to click on a small image in the application to view the animated enlargement effect of the large image](https://github.com/FlyJingFish/OpenImage)
 
-An image viewer that supports clicking on the small image to view the animation opening effect of the larger image
+- [AndroidAOP can request permissions, prohibit multiple points, switch threads, etc. with just one annotation. You can also customize your own Aop code](https://github.com/FlyJingFish/AndroidAOP)
 
-- [OpenImage](https://github.com/FlyJingFish/OpenImage) (ShapeImageView built-in)
+- [View more open source libraries on the homepage](https://github.com/FlyJingFish)
 
