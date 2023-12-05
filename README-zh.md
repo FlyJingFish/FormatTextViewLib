@@ -329,11 +329,11 @@ text7.setHtmlText("哈哈哈<a>lala</a>啦啦<a href=\"haha\">haha</a>哈哈哈<
 
 # 我的更多开源库推荐
 
-支持不操作Bitmap的圆图或圆角图，可绘制圆环背景边框或圆角框背景边框，除ImageView自带属性外新增4种显示模式；另外更有可绘制任意图形的图片只有你想不到，没有它做不到
+## 最后推荐我写的另外一些库
 
-- [ShapeImageView](https://github.com/FlyJingFish/ShapeImageView)
+- [OpenImage 轻松实现在应用内点击小图查看大图的动画放大效果](https://github.com/FlyJingFish/OpenImage)
 
-支持点击小图查看大图的动画打开效果的图片查看器
+- [AndroidAOP 一个注解就可请求权限，禁止多点，切换线程等等，更可定制出属于你的 Aop 代码](https://github.com/FlyJingFish/AndroidAOP)
 
-- [OpenImage](https://github.com/FlyJingFish/OpenImage)（已内置ShapeImageView）
+- [主页查看更多开源库](https://github.com/FlyJingFish)
 
